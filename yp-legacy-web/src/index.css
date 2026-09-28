@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+@import './styles/design-system.css';
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+@theme {
+  --color-primary: #002218;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0f382c;
+  --color-on-primary-container: #79a292;
+  --color-inverse-primary: #a6d0be;
+  --color-primary-fixed: #c1ecda;
+  --color-secondary: #196b4f;
+  --color-secondary-accent: #2f7c5f;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #a2f0cc;
+  --color-on-secondary-container: #1f6f53;
+  --color-secondary-fixed: #a5f2cf;
+  --color-tertiary: #0a2118;
+  --color-surface: #f4fbf4;
+  --color-surface-dim: #d4dcd5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eef5ef;
+  --color-surface-container: #e8f0e9;
+  --color-surface-container-high: #e3eae3;
+  --color-surface-container-highest: #dde4de;
+  --color-on-surface: #161d19;
+  --color-on-surface-variant: #414845;
+  --color-outline: #717975;
+  --color-outline-variant: #c1c8c3;
+  --color-surface-tint: #3f6658;
+  --color-background: #f4fbf4;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --spacing-grid-margin-mobile: 1.25rem;
+  --spacing-grid-margin-desktop: 3rem;
+  --spacing-grid-gutter: 1.5rem;
+  --spacing-spacing-2xs: 0.25rem;
+  --spacing-spacing-xs: 0.5rem;
+  --spacing-spacing-sm: 0.75rem;
+  --spacing-spacing-md: 1rem;
+  --spacing-spacing-lg: 1.5rem;
+  --spacing-spacing-xl: 2rem;
+  --spacing-spacing-2xl: 3rem;
+  --spacing-spacing-3xl: 4.5rem;
+  --spacing-spacing-4xl: 6rem;
+
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+
+  --font-display-hero: 'Outfit', sans-serif;
+  --font-headline-lg: 'Outfit', sans-serif;
+  --font-headline-md: 'Outfit', sans-serif;
+  --font-headline-sm: 'Outfit', sans-serif;
+  --font-body-md: 'Hanken Grotesk', sans-serif;
+  --font-body-sm: 'Hanken Grotesk', sans-serif;
+  --font-label-md: 'Hanken Grotesk', sans-serif;
+  --font-label-sm: 'Hanken Grotesk', sans-serif;
+  --font-mono-metric: 'JetBrains Mono', monospace;
+
+  --radius-DEFAULT: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body-md);
+  background: var(--color-background);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.leaflet-container {
+  font-family: var(--font-body-md);
+  z-index: 0;
+}
+
+/* Explicit max-width safeguards to prevent text squishing */
+.max-w-xs { max-width: 20rem !important; }
+.max-w-sm { max-width: 24rem !important; }
+.max-w-md { max-width: 28rem !important; }
+.max-w-lg { max-width: 32rem !important; }
+.max-w-xl { max-width: 36rem !important; }
+.max-w-2xl { max-width: 42rem !important; }
+.max-w-3xl { max-width: 48rem !important; }
+.max-w-4xl { max-width: 56rem !important; }
+.max-w-5xl { max-width: 64rem !important; }
+.max-w-6xl { max-width: 72rem !important; }
+.max-w-7xl { max-width: 80rem !important; }
+

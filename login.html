@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Login — Tree Tag &amp; IEEE CSTF Forest Registry</title>
+  <meta name="description" content="Tree Tag IEEE Biometric Forest Registry login portal."/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg"/>
+  <link rel="alternate icon" href="./favicon.svg"/>
+
+  <!-- Preconnect & Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400..700&family=Outfit:wght@400..700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#002218",
+            "secondary": "#109367",
+            "secondary-hover": "#0c7a54",
+            "surface-container-low": "#eef3fa",
+            "surface-container-highest": "#dde4de",
+            "on-surface": "#161d19",
+            "outline": "#717975"
+          }
+        }
+      }
+    };
+  </script>
+  
+  <!-- Custom Design System Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+</head>
+
+<body class="bg-white font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between">
+  <!-- 1. TOP BAR (.top-bar) -->
+  <div class="top-bar w-full bg-[#1f5d82] text-white" style="min-height: 52px;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-wrap items-center justify-between py-2 sm:py-0" style="min-height: 52px;">
+      <!-- Left Global Links -->
+      <div class="top-links flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 text-[13px] font-medium text-white/90">
+        <a class="hover:underline hover:text-white transition-colors" href="https://www.ieee.org" target="_blank" rel="noopener">IEEE.org</a>
+        <span class="text-white/40">|</span>
+        <a class="hover:underline hover:text-white transition-colors" href="https://ieeexplore.ieee.org" target="_blank" rel="noopener">IEEE <em>Xplore</em> Digital Library</a>
+        <span class="text-white/40">|</span>
+        <a class="hover:underline hover:text-white transition-colors" href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE Standards</a>
+        <span class="text-white/40">|</span>
+        <a class="hover:underline hover:text-white transition-colors" href="https://spectrum.ieee.org" target="_blank" rel="noopener">IEEE Spectrum</a>
+        <span class="text-white/40">|</span>
+        <a class="hover:underline hover:text-white transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">More Sites</a>
+      </div>
+      <!-- Right Socials & Sign In -->
+      <div class="top-right flex items-center space-x-3 sm:space-x-4 mt-1 sm:mt-0">
+        <div class="flex items-center space-x-2 text-white/80">
+          <a class="hover:text-white transition-colors p-1" href="https://www.facebook.com/IEEE.org/" target="_blank" rel="noopener" title="Facebook">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          </a>
+          <a class="hover:text-white transition-colors p-1" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener" title="Twitter / X">
+            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          </a>
+          <a class="hover:text-white transition-colors p-1" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener" title="LinkedIn">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+          </a>
+          <a class="hover:text-white transition-colors p-1" href="https://www.instagram.com/ieeeorg/" target="_blank" rel="noopener" title="Instagram">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+          </a>
+          <a class="hover:text-white transition-colors p-1" href="https://www.youtube.com/user/IEEEorg" target="_blank" rel="noopener" title="YouTube">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+          </a>
+        </div>
+        <span class="text-white/40">|</span>
+        <div class="top-bar-auth flex items-center">
+          <a class="text-[13px] font-semibold text-white hover:underline flex items-center space-x-1" href="login.html">
+            <span class="material-symbols-outlined text-[16px]">account_circle</span>
+            <span>Sign In</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. BRANDING BAR (.branding-bar) -->
+  <div class="branding-bar w-full bg-white py-3 border-b border-gray-200">
+    <div class="branding-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
+      <!-- Left: IEEE Young Professionals CSTF -->
+      <div class="flex items-center justify-center md:justify-start">
+        <a href="index.html">
+          <img alt="IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF)" class="h-9 md:h-11 object-contain" src="./assets/images/ieee-yp-cstf.png"/>
+        </a>
+      </div>
+      <!-- Right: IEEE Diamond Logo -->
+      <div class="flex items-center justify-center md:justify-end">
+        <img alt="Official IEEE Diamond Logo" class="h-9 md:h-11 object-contain" src="./assets/images/ieee-diamond.png"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. NAVIGATION BAR (.main-navbar) -->
+  <nav class="main-navbar w-full bg-[#f47716] text-white shadow-sm py-2 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <!-- Left: Tree Tag Identity -->
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-lg bg-[#002218] flex items-center justify-center text-[#a2f0cc]">
+            <span class="material-symbols-outlined text-[20px]">eco</span>
+          </div>
+          <div class="flex flex-col leading-none">
+            <span class="font-bold text-base tracking-tight">Tree Tag</span>
+            <span class="text-[9px] uppercase tracking-widest text-white/80 font-semibold">Biometric Forest Registry</span>
+          </div>
+        </a>
+      </div>
+      <!-- Center Links -->
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a class="hover:text-white/80 transition-colors flex items-center gap-1" href="map.html">Live Map</a>
+        <a class="hover:text-white/80 transition-colors flex items-center gap-1" href="contest.html">Contest</a>
+        <a class="hover:text-white/80 transition-colors flex items-center gap-1" href="index.html#capture">Capture Tree</a>
+        <a class="hover:text-white/80 transition-colors flex items-center gap-1" href="index.html#mission">Mission</a>
+      </div>
+      </div>
+  </nav>
+
+  <!-- 4. CORE LOGIN CONTENT (Pixel-perfect matching image.png_11) -->
+  <div class="relative w-full flex-1 flex flex-col justify-between overflow-hidden bg-white py-12 md:py-16">
+    <div class="w-full max-w-[420px] mx-auto px-4 z-10">
+      <!-- Header -->
+      <div class="text-center pb-2">
+        <h1 class="font-headline-md text-2xl font-bold text-gray-900 tracking-wider uppercase">
+          LOGIN
+        </h1>
+        <div class="w-full h-px bg-gray-200 mt-3 mx-auto max-w-[340px]"></div>
+      </div>
+
+      <!-- Form -->
+      <form class="mt-6 space-y-4" id="loginForm">
+        <!-- Email -->
+        <div class="space-y-1">
+          <label class="block font-body-md text-sm font-medium text-gray-800" for="emailInput">
+            Email:
+          </label>
+          <input class="w-full px-4 py-2.5 rounded-lg bg-[#eef3fa] text-gray-900 font-body-md text-sm outline-none border border-transparent focus:border-secondary focus:bg-white transition-all shadow-xs" id="emailInput" required type="email" value="jibin.cse22@mbits.ac.in"/>
+        </div>
+
+        <!-- Password with Eye Toggle -->
+        <div class="space-y-1">
+          <label class="block font-body-md text-sm font-medium text-gray-800" for="passwordInput">
+            Password:
+          </label>
+          <div class="relative">
+            <input class="w-full pl-4 pr-11 py-2.5 rounded-lg bg-[#eef3fa] text-gray-900 font-body-md text-sm outline-none border border-transparent focus:border-secondary focus:bg-white transition-all shadow-xs" id="passwordInput" required type="password" value="•••••••••"/>
+            <button aria-label="Toggle password visibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800 transition-colors focus:outline-none flex items-center cursor-pointer" id="togglePasswordBtn" type="button">
+              <span class="material-symbols-outlined text-[20px]" id="eyeIcon">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Submit Button -->
+        <div class="pt-2">
+          <button class="w-full py-2.5 px-6 rounded-lg bg-[#109367] hover:bg-[#0c7a54] text-white font-label-md text-sm tracking-wider uppercase font-bold shadow-sm transition-all duration-200 active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer" id="loginSubmitBtn" type="submit">
+            <span>LOGIN</span>
+          </button>
+        </div>
+
+        <!-- Links -->
+        <div class="pt-2 flex flex-col items-center space-y-1 text-center text-sm text-gray-700">
+          <p>
+            Don't have an account?
+            <a class="text-[#2563eb] hover:underline font-bold ml-1" href="signup.html">
+              Signup
+            </a>
+          </p>
+          <p>
+            Forgot password?
+            <a class="text-[#2563eb] hover:underline font-medium ml-1" href="#" onclick="alert('Password reset link sent to jibin.cse22@mbits.ac.in');">
+              Reset Password
+            </a>
+          </p>
+        </div>
+
+        
+      </form>
+    </div>
+
+    <!-- Bottom Illustration: Bench and Park Trees (Matching image.png_11) -->
+    <div class="w-full max-w-5xl mx-auto px-4 mt-8 relative">
+      <div class="flex items-end">
+        <svg class="h-28 w-auto text-[#109367] select-none" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Tall Tree Left -->
+          <path d="M50 10C35 30 25 60 25 90C25 105 35 110 50 110C65 110 75 105 75 90C75 60 65 30 50 10Z" fill="#136b4a"/>
+          <path d="M50 10C42 30 35 60 35 90C35 105 42 110 50 110" fill="#0c4f36"/>
+          <!-- Shorter Tree Right -->
+          <path d="M95 35C82 50 75 75 75 95C75 105 82 110 95 110C108 110 115 105 115 95C115 75 108 50 95 35Z" fill="#1a845c"/>
+          <!-- Low Bush -->
+          <ellipse cx="120" cy="105" rx="18" ry="12" fill="#0e573c"/>
+          <!-- Park Bench -->
+          <rect x="52" y="94" width="28" height="3" fill="#8c5836"/>
+          <rect x="54" y="86" width="24" height="2" fill="#a46d44"/>
+          <rect x="54" y="90" width="24" height="2" fill="#a46d44"/>
+          <line x1="56" y1="97" x2="56" y2="110" stroke="#5c6370" stroke-width="2"/>
+          <line x1="76" y1="97" x2="76" y2="110" stroke="#5c6370" stroke-width="2"/>
+          <!-- Trash Can -->
+          <rect x="44" y="98" width="6" height="12" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+          <!-- Little Lamp Post -->
+          <line x1="82" y1="80" x2="82" y2="110" stroke="#334155" stroke-width="1.5"/>
+          <polygon points="80,80 84,80 85,76 79,76" fill="#fef08a"/>
+          <!-- Ground Base Line -->
+          <line x1="0" y1="110" x2="200" y2="110" stroke="#b08968" stroke-width="2"/>
+        </svg>
+      </div>
+      <!-- Subtle Divider Line extending across -->
+      <div class="w-full h-px bg-gray-200 mt-0"></div>
+    </div>
+  </div>
+
+  <!-- 5. OFFICIAL IEEE FOOTER EXTRACTED FROM STITCH DESIGN -->
+  <footer class="site-footer w-full bg-[#0a2118] text-white border-t border-[#184a68]/40 font-sans" id="footer">
+    <div id="footer-inner">
+      <div id="footer-widgets">
+        <div class="footer-widgets-inner max-w-[1240px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop pt-12 pb-10">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">forest</span>
+                </div>
+                <span class="font-headline-sm text-xl font-bold text-white tracking-tight">Tree Tag</span>
+              </div>
+              <p class="text-xs text-white/70 max-w-lg leading-relaxed">
+                Industrial-grade afforestation telemetry &amp; GIS registry partnered with IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF).
+              </p>
+            </div>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-semibold text-white mb-3">Stay connected</h2>
+              <div class="flex items-center gap-3 text-white/80">
+                <a aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                </a>
+                <a aria-label="Twitter / X" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a aria-label="Facebook" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.facebook.com/IEEE.org/" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                </a>
+                <a aria-label="YouTube" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.youtube.com/user/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <section class="footer-section pt-8">
+            <ul class="footer-links flex flex-wrap list-none p-0 m-0 gap-x-6 gap-y-3 text-[14px]">
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html">Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="map.html">Telemetry Map</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html#mission">About Mission</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="profile.html">Student Profile</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="login.html">Sign In / Register</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/" target="_blank" rel="noopener">IEEE YP Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">Sitemap</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/contact-us/" target="_blank" rel="noopener">Contact &amp; Support</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/accessibility-statement.html" target="_blank" rel="noopener">Accessibility</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/corporate/governance/p9-26.html" target="_blank" rel="noopener">Nondiscrimination Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://secure.ethicspoint.com/domain/media/en/gui/20410/index.html" target="_blank" rel="noopener">IEEE Ethics Reporting</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/security-privacy.html" target="_blank" rel="noopener">IEEE Privacy Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/help/site-terms-conditions.html" target="_blank" rel="noopener">Terms</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/feedback-ieee-site.html" target="_blank" rel="noopener">Feedback</a></li>
+            </ul>
+            <p class="footer-copyright max-w-[1000px] mt-8 text-[13px] leading-relaxed text-[#cbd5e1]">
+              © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity. Developed in partnership with Tree Tag Precision Afforestation Telemetry Engine.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./assets/js/main.js"></script>
+  <script>
+    // Password toggle
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const pwdInput = document.getElementById('passwordInput');
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (toggleBtn && pwdInput && eyeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        if (pwdInput.type === 'password') {
+          pwdInput.type = 'text';
+          pwdInput.value = 'TreeTag2026!';
+          eyeIcon.textContent = 'visibility_off';
+        } else {
+          pwdInput.type = 'password';
+          pwdInput.value = '•••••••••';
+          eyeIcon.textContent = 'visibility';
+        }
+      });
+    }
+
+    // Login Form Submit Handling
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('emailInput')?.value || 'jibin.cse22@mbits.ac.in';
+        const name = email.includes('jibin') ? 'Jibin Wilson' : email.split('@')[0];
+        
+        if (window.TreeTagAuth) {
+          window.TreeTagAuth.login(name, email);
+          window.TreeTagAuth.showToast(`Welcome back, ${name}! Logged in successfully.`);
+        }
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 500);
+      });
+    }
+  </script>
+</body>
+</html>

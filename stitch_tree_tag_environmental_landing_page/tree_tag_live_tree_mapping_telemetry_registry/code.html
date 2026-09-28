@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tree Tag GIS Map Registry | IEEE Young Professionals CSTF</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Outfit:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#f4fbf4",
+            "inverse-surface": "#2b322e",
+            "tertiary-container": "#20362c",
+            "inverse-primary": "#a6d0be",
+            "on-surface-variant": "#414845",
+            "secondary": "#196b4f",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#c1c8c3",
+            "surface-container": "#e8f0e9",
+            "on-surface": "#161d19",
+            "on-error-container": "#93000a",
+            "surface-variant": "#dde4de",
+            "primary-fixed-dim": "#a6d0be",
+            "tertiary": "#0a2118",
+            "primary": "#002218",
+            "on-secondary-fixed-variant": "#00513a",
+            "on-tertiary-fixed": "#092017",
+            "surface": "#f4fbf4",
+            "surface-container-low": "#eef5ef",
+            "secondary-fixed-dim": "#8ad6b4",
+            "tertiary-fixed": "#cee9da",
+            "on-primary-fixed": "#002117",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#ebf3ec",
+            "outline": "#717975",
+            "primary-fixed": "#c1ecda",
+            "on-secondary-container": "#1f6f53",
+            "on-tertiary-fixed-variant": "#354c41",
+            "secondary-container": "#a2f0cc",
+            "secondary-fixed": "#a5f2cf",
+            "surface-tint": "#3f6658",
+            "on-secondary-fixed": "#002115",
+            "on-background": "#161d19",
+            "tertiary-fixed-dim": "#b3ccbf",
+            "surface-container-highest": "#dde4de",
+            "surface-dim": "#d4dcd5",
+            "on-primary-fixed-variant": "#274e41",
+            "on-tertiary-container": "#869f92",
+            "on-primary-container": "#79a292",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "background": "#f4fbf4",
+            "surface-container-high": "#e3eae3",
+            "primary-container": "#0f382c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Hanken Grotesk", "sans-serif"],
+            "mono-metric": ["JetBrains Mono", "monospace"],
+            "headline-sm": ["Outfit", "sans-serif"],
+            "headline-lg": ["Outfit", "sans-serif"],
+            "display-hero": ["Outfit", "sans-serif"],
+            "body-sm": ["Hanken Grotesk", "sans-serif"],
+            "label-sm": ["Hanken Grotesk", "sans-serif"],
+            "headline-md": ["Outfit", "sans-serif"],
+            "body-md": ["Hanken Grotesk", "sans-serif"],
+            "label-md": ["Hanken Grotesk", "sans-serif"],
+            "vietnam": ["Be Vietnam Pro", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    /* Cartographic Grid Background Simulation */
+    .gis-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(16, 25, 22, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 25, 22, 0.05) 1px, transparent 1px);
+    }
+    
+    .radar-pulse {
+      animation: pulse-ring 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.6); opacity: 0.2; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    
+    /* Glassmorphism custom blur */
+    .glass-gis {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased overflow-x-hidden min-h-screen flex flex-col">
+<!-- IEEE YP / Tree Tag Official Shared Top Bar -->
+<header class="w-full bg-surface-container-lowest border-b border-surface-container-high px-4 sm:px-8 py-3.5 z-40 sticky top-0 shadow-sm">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+<!-- Brand & Project Identity -->
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-surface-bright shadow-sm">
+<svg class="w-5 h-5" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z" fill="currentColor"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-base font-bold text-primary tracking-tight">Tree Tag</span>
+<span class="text-xs px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed-variant font-medium font-mono-metric">GIS v3.4</span>
+</div>
+<p class="text-xs text-on-surface-variant hidden sm:block">IEEE Young Professionals • Climate &amp; Sustainability Taskforce (CSTF)</p>
+</div>
+</div>
+<!-- Center Pill Dock (Profile, Map View [ACTIVE], Trees Registry) -->
+<div class="flex items-center justify-center">
+<div class="inline-flex h-10 items-center rounded-full bg-surface-container p-1 border border-outline-variant/30 shadow-inner">
+<a class="px-4 py-1.5 rounded-full text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[16px]">account_circle</span>
+<span class="hidden md:inline">Profile</span>
+</a>
+<a class="px-4 py-1.5 rounded-full text-xs font-semibold bg-surface-container-lowest text-primary shadow-sm border border-outline-variant/40 flex items-center gap-1.5 transition-all" href="#">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Map View</span>
+</a>
+<a class="px-4 py-1.5 rounded-full text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[16px]">forest</span>
+<span class="hidden md:inline">Trees Registry</span>
+</a>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-2.5">
+<button class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-primary font-label-md text-xs font-bold hover:bg-surface-variant transition-colors border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Export GIS Shapefile</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-primary-container text-surface font-label-md text-xs font-bold hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add_location_alt</span>
+<span>Add Tree Tag</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-secondary/40 overflow-hidden bg-surface-container flex items-center justify-center text-xs font-bold text-primary">
+          JW
+        </div>
+</div>
+</div>
+</header>
+<!-- Live Telemetry Status Banner -->
+<div class="bg-primary text-surface-bright border-b border-tertiary-container px-4 py-2 text-xs flex flex-wrap items-center justify-between gap-3 font-body-sm">
+<div class="max-w-[1440px] mx-auto w-full flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary-fixed"></span>
+</span>
+<span class="font-medium tracking-wide">
+<strong class="font-bold text-secondary-fixed">55,918 Trees Tagged &amp; Mapped</strong>
+<span class="text-surface-variant/80 hidden sm:inline">• Real-time GPS &amp; LoRaWAN Gateway Synced (Kerala Nodes v4.1)</span>
+</span>
+</div>
+<div class="flex items-center gap-4 text-surface-variant/90 text-[11px] font-mono-metric">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary-fixed">sensors</span> LoRaWAN: 99.4% Online
+        </span>
+<span class="hidden md:flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary-fixed">co2</span> 4,312.4 Metric Tons CO₂e
+        </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary-fixed">satellite_alt</span> EPSG:4326 (WGS84)
+        </span>
+</div>
+</div>
+</div>
+<!-- Main GIS Map Viewport & Overlays Container -->
+<main class="relative flex-1 w-full bg-surface-dim overflow-hidden flex flex-col" style="min-height: calc(100vh - 128px);">
+<!-- Background Cartographic Map Canvas (Custom SVG & High-fidelity Map Representation) -->
+<div class="absolute inset-0 z-0 overflow-hidden gis-grid bg-[#e3eae3]">
+<!-- Map Graphic Layer: Topography, Coastline, Waterways of South India / Kerala Coast -->
+<svg class="w-full h-full object-cover opacity-70" fill="none" preserveaspectratio="xMidYMid slice" viewbox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+<!-- Arabian Sea Background -->
+<rect fill="#dae6e2" height="900" width="1600"></rect>
+<!-- Continental Mass (Kerala / Western Ghats corridor) -->
+<path d="M420,0 C450,120 480,240 510,380 C530,480 560,590 620,720 C660,800 700,850 780,900 L1600,900 L1600,0 Z" fill="#ebf3ec" stroke="#c8d6ce" stroke-width="2"></path>
+<!-- Mountainous Western Ghats Elevation contours -->
+<path d="M680,40 C720,160 760,280 810,430 C860,570 910,690 980,820 C1020,870 1080,900 1140,900 L1600,900 L1600,0 L700,0 Z" fill="#dde7df" opacity="0.6"></path>
+<path d="M890,90 C930,220 990,340 1040,490 C1100,640 1180,780 1260,900 L1600,900 L1600,0 L910,0 Z" fill="#d2ded6" opacity="0.45"></path>
+<!-- River Networks / Backwaters (Periyar, Bharathappuzha, Vembanad lake basin) -->
+<path d="M960,240 Q750,290 530,340 Q490,350 480,390" fill="none" stroke="#b0cbcf" stroke-linecap="round" stroke-width="6"></path>
+<path d="M840,480 Q690,520 580,560 Q550,575 540,610" fill="none" stroke="#b0cbcf" stroke-linecap="round" stroke-width="8"></path>
+<!-- Vembanad wetland lagoon -->
+<path d="M570,580 C560,630 580,680 610,740 C590,730 575,690 565,640 Z" fill="#b0cbcf" opacity="0.85"></path>
+<!-- Road & Transit Infrastructure Grid -->
+<path d="M490,50 L530,220 L560,390 L610,570 L670,750 L730,900" opacity="0.7" stroke="#ffffff" stroke-dasharray="6,4" stroke-width="2.5"></path>
+<path d="M520,380 L880,310" opacity="0.6" stroke="#ffffff" stroke-dasharray="4,4" stroke-width="2"></path>
+<path d="M600,560 L940,510" opacity="0.6" stroke="#ffffff" stroke-dasharray="4,4" stroke-width="2"></path>
+</svg>
+<!-- Cartographic Geographic Coordinate Labels -->
+<div class="absolute top-4 left-6 text-[10px] font-mono-metric text-outline tracking-widest select-none uppercase">
+        LAT 10° 51' 12" N / LON 76° 16' 18" E • UTM ZONE 43N
+      </div>
+<div class="absolute bottom-4 right-6 text-[10px] font-mono-metric text-outline tracking-widest select-none">
+        MAP DATUM: WGS84 • MERCATOR PROJECTION • CONTOUR INTERVAL: 25M
+      </div>
+<!-- ==================== GIS CLUSTERS & PINS ==================== -->
+<!-- Cluster 1: Central Kerala / Ernakulam & Kothamangalam (22,069 Trees) -->
+<div class="absolute top-[44%] left-[42%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="absolute -inset-4 rounded-full bg-secondary-container/40 radar-pulse pointer-events-none"></div>
+<div class="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-surface-bright shadow-lg border-2 border-secondary-fixed transition-transform group-hover:scale-110">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-fixed animate-ping"></span>
+<span class="font-mono-metric font-bold text-xs">22,069</span>
+<span class="text-[10px] uppercase font-semibold text-secondary-fixed-dim">EKM</span>
+</div>
+</div>
+<!-- Cluster 2: Northern Kerala / Malappuram & Kozhikode (20,038 Trees) -->
+<div class="absolute top-[28%] left-[37%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="absolute -inset-3 rounded-full bg-secondary/20 radar-pulse pointer-events-none"></div>
+<div class="relative flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-surface-bright shadow-md border border-secondary-container transition-transform group-hover:scale-110">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-mono-metric font-bold text-xs">20,038</span>
+<span class="text-[9px] uppercase font-medium text-surface-container-high">CLT</span>
+</div>
+</div>
+<!-- Cluster 3: South Zone / Thiruvananthapuram & Kollam (10,189 Trees) -->
+<div class="absolute top-[68%] left-[51%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="relative flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-surface-bright shadow-md border border-secondary-container/80 transition-transform group-hover:scale-110">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span class="font-mono-metric font-bold text-xs">10,189</span>
+<span class="text-[9px] uppercase font-medium text-surface-container-high">TVM</span>
+</div>
+</div>
+<!-- Sub Cluster 4: Wayanad High Range (4,620 Trees) -->
+<div class="absolute top-[18%] left-[45%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="relative flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary text-surface shadow-sm border border-surface-bright transition-transform group-hover:scale-105">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-bright"></span>
+<span class="font-mono-metric font-bold text-[11px]">4,620</span>
+<span class="text-[8px] uppercase tracking-wider">WYD</span>
+</div>
+</div>
+<!-- Sub Cluster 5: Idukki Ecological Reserve (3,347 Trees) -->
+<div class="absolute top-[52%] left-[58%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="relative flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary text-surface shadow-sm border border-surface-bright transition-transform group-hover:scale-105">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-bright"></span>
+<span class="font-mono-metric font-bold text-[11px]">3,347</span>
+<span class="text-[8px] uppercase tracking-wider">IDK</span>
+</div>
+</div>
+<!-- Sub Cluster 6: Palakkad Gap Corridor (2,154 Trees) -->
+<div class="absolute top-[35%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="relative flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container text-surface-bright shadow-sm border border-outline-variant transition-transform group-hover:scale-105">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span class="font-mono-metric font-semibold text-[10px]">2,154</span>
+</div>
+</div>
+<!-- Sub Cluster 7: Thrissur Agroforestry (1,100 Trees) -->
+<div class="absolute top-[39%] left-[41%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+<div class="relative flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container text-surface-bright shadow-sm border border-outline-variant transition-transform group-hover:scale-105">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span class="font-mono-metric font-semibold text-[10px]">1,100</span>
+</div>
+</div>
+<!-- Micro Clusters -->
+<div class="absolute top-[61%] left-[46%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
+<div class="px-2 py-0.5 rounded-full bg-surface-container-lowest text-primary font-mono-metric font-bold text-[10px] shadow border border-secondary">
+          365
+        </div>
+</div>
+<div class="absolute top-[22%] left-[34%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
+<div class="px-2 py-0.5 rounded-full bg-surface-container-lowest text-primary font-mono-metric font-bold text-[10px] shadow border border-secondary">
+          109
+        </div>
+</div>
+<!-- ==================== INDIVIDUAL TREE PINS & ACTIVE CARD ==================== -->
+<!-- Tree Pin 1 (Neem Tree - Calicut Zone) -->
+<div class="absolute top-[26%] left-[40%] cursor-pointer group" title="Azadirachta indica">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center text-secondary shadow-md hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-[15px]">eco</span>
+</div>
+</div>
+<!-- Tree Pin 2 (Teak - Nilambur Reserve) -->
+<div class="absolute top-[31%] left-[44%] cursor-pointer group" title="Tectona grandis">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-primary flex items-center justify-center text-primary shadow-md hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-[15px]">park</span>
+</div>
+</div>
+<!-- Tree Pin 3 (Mangrove - Kochi Estuary) -->
+<div class="absolute top-[49%] left-[39%] cursor-pointer group" title="Rhizophora mucronata">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-secondary flex items-center justify-center text-secondary shadow-md hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-[15px]">nest_eco_leaf</span>
+</div>
+</div>
+<!-- ==================== ACTIVE SELECTED PIN & CARD LOCKUP ==================== -->
+<!-- Active Node: Tag #KL-EKM-2024-0891 (MBITS Campus, Kothamangalam) -->
+<div class="absolute top-[42%] left-[45%] z-20">
+<!-- Active Target Pin -->
+<div class="relative cursor-pointer group">
+<div class="w-9 h-9 rounded-full bg-secondary text-surface flex items-center justify-center shadow-xl border-2 border-surface-bright ring-4 ring-secondary-container/60 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[18px]">forest</span>
+</div>
+<!-- Pulse Dot -->
+<div class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-error border-2 border-surface-bright animate-bounce"></div>
+</div>
+<!-- Floating Detailed Info Card / Tooltip Popup -->
+<div class="absolute top-12 left-1/2 -translate-x-1/2 sm:left-6 sm:translate-x-0 w-[330px] sm:w-[360px] glass-gis rounded-xl border border-secondary/30 p-4 shadow-2xl backdrop-blur-md text-on-surface z-30">
+<!-- Card Header & Badge -->
+<div class="flex items-start justify-between gap-2 border-b border-outline-variant/30 pb-3 mb-3">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-primary-container text-secondary-fixed text-[10px] font-mono-metric font-bold">
+                  #KL-EKM-2024-0891
+                </span>
+<span class="flex items-center gap-1 text-[11px] font-semibold text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> LoRaWAN Synced
+                </span>
+</div>
+<h3 class="font-headline-sm text-base font-bold text-primary mt-1">Big-leaf Mahogany</h3>
+<p class="text-xs italic text-on-surface-variant">Swietenia macrophylla</p>
+</div>
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-variant transition-colors" title="Close Card">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Quick Metrics Grid -->
+<div class="grid grid-cols-2 gap-2 mb-3">
+<div class="bg-surface-container p-2 rounded">
+<span class="text-[10px] uppercase font-semibold text-on-surface-variant block">Health Index</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-mono-metric font-bold text-base text-primary">98.2%</span>
+<span class="text-[10px] text-secondary font-medium">Optimal</span>
+</div>
+</div>
+<div class="bg-surface-container p-2 rounded">
+<span class="text-[10px] uppercase font-semibold text-on-surface-variant block">Carbon Offset</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-mono-metric font-bold text-base text-primary">48.6</span>
+<span class="text-[10px] text-on-surface-variant font-medium">kg CO₂e/yr</span>
+</div>
+</div>
+</div>
+<!-- Metadata List -->
+<div class="space-y-1.5 text-xs text-on-surface-variant border-b border-outline-variant/30 pb-3 mb-3">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">person</span> Planter:
+              </span>
+<span class="font-semibold text-on-surface">Jibin Wilson</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">account_balance</span> Institution:
+              </span>
+<span class="font-medium text-on-surface truncate max-w-[190px]" title="APJAKTU NSSCELL NRPF / MBITS">APJAKTU NSSCELL • MBITS</span>
+</div>
+<div class="flex items-center justify-between font-mono-metric text-[11px]">
+<span class="flex items-center gap-1.5 text-on-surface-variant font-sans">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Geolocation:
+              </span>
+<span class="text-primary font-medium">10.0528° N, 76.6346° E</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Tagged Date:
+              </span>
+<span class="text-on-surface">Oct 14, 2024 • 11:20 AM IST</span>
+</div>
+</div>
+<!-- Card CTA Action -->
+<div class="flex items-center gap-2">
+<button class="flex-1 py-1.5 rounded bg-primary-container text-surface-bright text-xs font-bold hover:bg-tertiary transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[15px]">analytics</span>
+<span>Full Telemetry</span>
+</button>
+<button class="px-2.5 py-1.5 rounded bg-surface-container text-primary text-xs font-semibold hover:bg-surface-variant transition-colors flex items-center gap-1" title="Share Tree Card">
+<span class="material-symbols-outlined text-[15px]">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== FLOATING MAP CONTROLS & SEARCH BAR (TOP LEFT) ==================== -->
+<div class="absolute top-4 left-4 z-30 flex flex-col gap-2 max-w-[calc(100vw-32px)] sm:max-w-md w-full">
+<!-- Search Input Container -->
+<div class="glass-gis rounded-xl shadow-lg border border-outline-variant/40 p-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline ml-2 text-[20px]">search</span>
+<input class="w-full bg-transparent border-none text-xs sm:text-sm text-on-surface placeholder:text-outline focus:ring-0 py-1 font-body-md focus:outline-none" placeholder="Search Tree ID, Planter, Institution (e.g. MBITS), or Species..." type="text" value="MBITS Kothamangalam"/>
+<button class="p-1 text-outline hover:text-primary transition-colors" title="Clear Search">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-surface-bright text-xs font-semibold hover:bg-primary-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span class="hidden sm:inline">Filter</span>
+</button>
+</div>
+<!-- Quick Filter Chips -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+<button class="px-2.5 py-1 rounded-full bg-primary text-surface-bright font-medium text-[11px] whitespace-nowrap shadow-sm">
+          All Trees (55,918)
+        </button>
+<button class="px-2.5 py-1 rounded-full glass-gis text-on-surface font-medium text-[11px] hover:bg-surface-container whitespace-nowrap border border-outline-variant/30">
+          APJAKTU NSSCELL
+        </button>
+<button class="px-2.5 py-1 rounded-full glass-gis text-on-surface font-medium text-[11px] hover:bg-surface-container whitespace-nowrap border border-outline-variant/30">
+          Swietenia (Mahogany)
+        </button>
+<button class="px-2.5 py-1 rounded-full glass-gis text-on-surface font-medium text-[11px] hover:bg-surface-container whitespace-nowrap border border-outline-variant/30">
+          Teak Reserve
+        </button>
+<button class="px-2.5 py-1 rounded-full glass-gis text-on-surface font-medium text-[11px] hover:bg-surface-container whitespace-nowrap border border-outline-variant/30">
+          Active Beacons Only
+        </button>
+</div>
+</div>
+<!-- ==================== FLOATING MAP LAYER CONTROLS (TOP RIGHT) ==================== -->
+<div class="absolute top-4 right-4 z-30 flex flex-col items-end gap-2">
+<!-- Layer Toggle Group -->
+<div class="glass-gis rounded-xl shadow-lg border border-outline-variant/40 p-1 flex items-center gap-1">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container text-primary font-medium text-xs flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">layers</span>
+<span class="hidden md:inline">Carto GIS</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 font-medium text-xs flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">satellite_alt</span>
+<span class="hidden md:inline">Satellite</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 font-medium text-xs flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">heat_pump</span>
+<span class="hidden md:inline">Carbon Heatmap</span>
+</button>
+</div>
+<!-- Zoom & Recenter Control Stack -->
+<div class="glass-gis rounded-xl shadow-lg border border-outline-variant/40 flex flex-col p-1 gap-1">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<div class="w-full h-px bg-outline-variant/30"></div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<div class="w-full h-px bg-outline-variant/30"></div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface transition-colors" title="Recenter Kerala Nodes">
+<span class="material-symbols-outlined text-[18px]">my_location</span>
+</button>
+<div class="w-full h-px bg-outline-variant/30"></div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface transition-colors" title="Full Screen View">
+<span class="material-symbols-outlined text-[18px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- ==================== GIS LEGEND (BOTTOM LEFT) ==================== -->
+<div class="absolute bottom-6 left-4 z-20 hidden md:block">
+<div class="glass-gis rounded-xl shadow-lg border border-outline-variant/40 p-3 w-64 backdrop-blur-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-sm text-xs font-bold text-primary uppercase tracking-wide">Map Legend</span>
+<span class="text-[10px] text-outline font-mono-metric">Live IoT Feed</span>
+</div>
+<div class="space-y-1.5 text-xs">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-fixed border border-secondary"></span>
+<span>Major Node Cluster</span>
+</span>
+<span class="font-mono-metric text-[11px] text-on-surface-variant font-semibold">&gt;10k Trees</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span>Healthy / Synced Node</span>
+</span>
+<span class="font-mono-metric text-[11px] text-secondary font-semibold">95-100%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#f59e0b]"></span>
+<span>Field Inspection Due</span>
+</span>
+<span class="font-mono-metric text-[11px] text-[#f59e0b] font-semibold">412 Units</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#3b82f6]"></span>
+<span>Planted &lt; 30 Days</span>
+</span>
+<span class="font-mono-metric text-[11px] text-on-surface-variant font-semibold">1,820 Nodes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== COLLAPSIBLE SIDE DRAWER / LIVE STREAM FEED (BOTTOM RIGHT) ==================== -->
+<div class="absolute bottom-4 right-4 z-20 w-[calc(100vw-32px)] sm:w-[380px]">
+<div class="glass-gis rounded-xl shadow-2xl border border-outline-variant/40 overflow-hidden backdrop-blur-md">
+<!-- Drawer Header -->
+<div class="px-4 py-2.5 bg-surface-container flex items-center justify-between border-b border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">nest_clock_farsight_analog</span>
+<span class="font-headline-sm text-xs font-bold text-primary uppercase tracking-wider">Live Planting Stream</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[11px] font-mono-metric text-on-surface-variant">Real-time</span>
+</div>
+</div>
+<!-- Recent Trees Activity Feed -->
+<div class="max-h-48 overflow-y-auto divide-y divide-outline-variant/20 bg-surface-bright/80 p-1">
+<!-- Tree Item 1 -->
+<div class="p-2.5 hover:bg-surface-container transition-colors rounded cursor-pointer flex items-center justify-between gap-3 group">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-secondary group-hover:text-surface transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">park</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-1.5">
+<p class="font-bold text-xs text-primary truncate">Swietenia macrophylla</p>
+<span class="text-[10px] font-mono-metric text-outline">#0891</span>
+</div>
+<p class="text-[11px] text-on-surface-variant truncate">Jibin Wilson • MBITS Kothamangalam</p>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="text-[10px] font-mono-metric font-medium text-secondary block">Just now</span>
+<span class="text-[10px] text-outline">EKM Zone</span>
+</div>
+</div>
+<!-- Tree Item 2 -->
+<div class="p-2.5 hover:bg-surface-container transition-colors rounded cursor-pointer flex items-center justify-between gap-3 group">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-secondary group-hover:text-surface transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">forest</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-1.5">
+<p class="font-bold text-xs text-primary truncate">Tectona grandis (Teak)</p>
+<span class="text-[10px] font-mono-metric text-outline">#0890</span>
+</div>
+<p class="text-[11px] text-on-surface-variant truncate">Ananya S. • TKMCE Kollam</p>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="text-[10px] font-mono-metric font-medium text-on-surface-variant block">4m ago</span>
+<span class="text-[10px] text-outline">TVM Zone</span>
+</div>
+</div>
+<!-- Tree Item 3 -->
+<div class="p-2.5 hover:bg-surface-container transition-colors rounded cursor-pointer flex items-center justify-between gap-3 group">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-secondary group-hover:text-surface transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">eco</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-1.5">
+<p class="font-bold text-xs text-primary truncate">Azadirachta indica (Neem)</p>
+<span class="text-[10px] font-mono-metric text-outline">#0889</span>
+</div>
+<p class="text-[11px] text-on-surface-variant truncate">Kavya Mohan • NSS College Palakkad</p>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="text-[10px] font-mono-metric font-medium text-on-surface-variant block">12m ago</span>
+<span class="text-[10px] text-outline">PGT Zone</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Stats Bar -->
+<div class="px-4 py-2 bg-surface-container/70 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-[11px] text-on-surface-variant">Showing latest nodes</span>
+<a class="text-xs font-semibold text-primary hover:text-secondary flex items-center gap-0.5" href="#">
+<span>View All Registry</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactive Bottom Metric Drawer / KPI Bar (Botanical & IEEE Styled) -->
+<section class="bg-surface-container-lowest border-t border-surface-container-high px-4 sm:px-8 py-3.5 z-20">
+<div class="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Metric 1 -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">forest</span>
+</div>
+<div>
+<span class="text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant block">Total Mapped</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-sm font-bold text-lg text-primary font-mono-metric">55,918</span>
+<span class="text-[11px] font-semibold text-secondary">+12.4%</span>
+</div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container/50 flex items-center justify-center text-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">co2</span>
+</div>
+<div>
+<span class="text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant block">CO₂ Sequestered</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-sm font-bold text-lg text-primary font-mono-metric">4,312 Tons</span>
+<span class="text-[11px] font-semibold text-secondary">+8.1%</span>
+</div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+</div>
+<div>
+<span class="text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant block">Active LoRa Beacons</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-sm font-bold text-lg text-primary font-mono-metric">1,420 Units</span>
+<span class="text-[11px] font-semibold text-secondary">99.2%</span>
+</div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</div>
+<div>
+<span class="text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant block">Regional Clusters</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-sm font-bold text-lg text-primary font-mono-metric">38 Zones</span>
+<span class="text-[11px] font-semibold text-secondary">Kerala + Global</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Footer Shell: IEEE Young Professionals & CSTF -->
+<footer class="bg-primary text-surface-bright/80 border-t border-tertiary-container px-4 sm:px-8 py-4 text-xs font-body-sm">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 bg-secondary-fixed rounded-sm flex items-center justify-center text-primary font-bold text-[9px]">
+            ⚡
+          </div>
+<span class="font-semibold text-surface-bright tracking-tight">IEEE Young Professionals</span>
+</div>
+<span class="text-tertiary-fixed-dim">|</span>
+<span class="text-surface-variant/90">Climate &amp; Sustainability Taskforce (CSTF)</span>
+<span class="text-tertiary-fixed-dim hidden sm:inline">|</span>
+<span class="text-surface-variant/90 hidden sm:inline">APJAKTU NSSCELL NRPF Initiative</span>
+</div>
+<div class="flex items-center gap-6 text-[11px]">
+<a class="hover:text-secondary-fixed transition-colors" href="#">GIS API Documentation</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Species Taxonomy v2</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">LoRa Gateway Protocol</a>
+<a class="hover:text-secondary-fixed transition-colors" href="#">Privacy &amp; Data Ethics</a>
+<span class="text-secondary-fixed-dim font-mono-metric">© 2025 Tree Tag CSTF</span>
+</div>
+</div>
+</footer>
+<!-- Optional Micro-interaction script -->
+<script>
+    // Smooth toggling and pin interaction hooks
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('Tree Tag GIS Mapping Registry initialized. 55,918 nodes synced.');
+    });
+  </script>
+</body></html>

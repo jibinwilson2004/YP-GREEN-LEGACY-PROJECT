@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;family=Outfit:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary-container": "#79a292", "primary-container": "#0f382c", "on-secondary-fixed": "#002115", "surface-tint": "#3f6658", "on-surface-variant": "#414845", "secondary-container": "#a2f0cc", "on-tertiary-fixed": "#092017", "tertiary-container": "#20362c", "on-error-container": "#93000a", "primary-fixed-dim": "#a6d0be", "inverse-surface": "#2b322e", "surface-container-low": "#eef5ef", "inverse-on-surface": "#ebf3ec", "secondary": "#196b4f", "surface-container-lowest": "#ffffff", "surface": "#f4fbf4", "on-secondary": "#ffffff", "on-background": "#161d19", "error-container": "#ffdad6", "primary": "#002218", "on-primary-fixed": "#002117", "secondary-fixed": "#a5f2cf", "on-secondary-fixed-variant": "#00513a", "inverse-primary": "#a6d0be", "on-primary-fixed-variant": "#274e41", "on-secondary-container": "#1f6f53", "on-tertiary-fixed-variant": "#354c41", "surface-dim": "#d4dcd5", "on-primary": "#ffffff", "surface-variant": "#dde4de", "surface-bright": "#f4fbf4", "tertiary-fixed": "#cee9da", "outline": "#717975", "surface-container-high": "#e3eae3", "tertiary-fixed-dim": "#b3ccbf", "on-error": "#ffffff", "outline-variant": "#c1c8c3", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#8ad6b4", "tertiary": "#0a2118", "on-surface": "#161d19", "surface-container": "#e8f0e9", "background": "#f4fbf4", "surface-container-highest": "#dde4de", "error": "#ba1a1a", "on-tertiary-container": "#869f92", "primary-fixed": "#c1ecda" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "grid-margin-mobile": "1.25rem", "spacing-lg": "1.5rem", "spacing-4xl": "6rem", "spacing-xl": "2rem", "grid-margin-desktop": "3rem", "grid-gutter": "1.5rem", "spacing-2xs": "0.25rem", "spacing-2xl": "3rem", "spacing-xs": "0.5rem", "spacing-3xl": "4.5rem", "spacing-sm": "0.75rem", "spacing-md": "1rem" }, "fontFamily": { "body-sm": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "label-sm": ["Hanken Grotesk"], "headline-lg": ["Outfit"], "headline-md": ["Outfit"], "headline-lg-mobile": ["Outfit"], "mono-metric": ["JetBrains Mono"], "display-hero": ["Outfit"], "label-md": ["Hanken Grotesk"], "display-hero-mobile": ["Outfit"], "body-lg": ["Hanken Grotesk"], "headline-sm": ["Outfit"] }, "fontSize": { "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }], "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "mono-metric": ["20px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "500" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(15,56,44,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop flex items-center justify-between"><div class="flex items-center gap-spacing-sm"><img alt="Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh5dNd-RkEhyJ9lY0tWDSKidzv_Ne34F9-K9VnEOZrF1ncJy0mNpZECszU2rSuaGmMd8JT1nMnfe9YkdW7qZNpp-bP2Yn-El_CkYepZyILbgkiSOZrofc70BO-qNl_dpxnHG4wee0bQbuLJ_x-Z5KORtjiDpNOI3ugvB6TR4azrx-e7OTMD3rnBRayDqJk0hwGX0bo_l_c_AikTMKJZefrL8l9L55VIj1Qr_CwSziM3jnK-Fh5P2D3"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Tree Tag</span></div><nav class="hidden md:flex items-center gap-spacing-xl" data-active-classes="text-primary font-bold"><a aria-current="page" class="transition-colors text-primary font-bold" data-path="mission" href="#">Mission</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="services" href="#">Services</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="footprint" href="#">Footprint</a></nav><div class="flex items-center gap-spacing-md"><a class="bg-primary-container text-on-primary font-label-md text-label-md px-spacing-md py-spacing-xs rounded-lg hover:bg-primary transition-colors inline-flex items-center justify-center" data-path="schedule-a-meeting" href="#">Schedule a Meeting</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background flex-1 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop"><div class="flex flex-col w-full">
+<!-- Interactive GIS Header / Filter Strip -->
+<div class="w-full bg-surface-container-lowest shadow-sm rounded-xl p-spacing-md md:p-spacing-lg mb-spacing-md">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-spacing-md pb-spacing-md border-b border-surface-variant">
+<div class="flex flex-col sm:flex-row sm:items-center gap-spacing-sm sm:gap-spacing-md">
+<div>
+<div class="flex items-center gap-spacing-xs">
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Interactive Afforestation Map</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              Live Telemetry Active
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Institutional verification feed across Southern Peninsular India and Sri Lankan Coastal Corridors.
+          </p>
+</div>
+</div>
+<div class="flex items-center flex-wrap gap-spacing-sm">
+<div class="flex items-baseline bg-surface-container px-3 py-1.5 rounded-lg gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Tagged:</span>
+<span class="font-mono-metric text-mono-metric text-primary font-semibold">55,918</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Audited</span>
+</div>
+<div class="inline-flex rounded-lg bg-surface-container-high p-1">
+<button class="px-3 py-1 text-label-sm font-label-md rounded bg-surface-container-lowest text-primary shadow-sm font-semibold transition-all" id="view-cluster-btn">
+            Clusters
+          </button>
+<button class="px-3 py-1 text-label-sm font-label-md rounded text-on-surface-variant hover:text-on-surface transition-all" id="view-heatmap-btn">
+            Heatmap
+          </button>
+<button class="px-3 py-1 text-label-sm font-label-md rounded text-on-surface-variant hover:text-on-surface transition-all" id="view-satellite-btn">
+            Satellite
+          </button>
+</div>
+<button class="inline-flex items-center gap-1.5 bg-primary text-on-primary font-label-md text-label-md px-3.5 py-1.5 rounded-lg hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">download</span>
+          Export Audit Data
+        </button>
+</div>
+</div>
+<!-- Search & Secondary Filter Bar -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-spacing-sm mt-spacing-md items-center">
+<div class="md:col-span-4 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-2 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg outline-none focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline" id="tree-search-input" placeholder="Search by region, species, institution, or tag ID (e.g. TT-9482)..." type="text"/>
+</div>
+<div class="md:col-span-8 flex flex-wrap items-center gap-spacing-xs md:justify-end">
+<!-- Partner Filter -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">group</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Partner:</span>
+<select class="bg-transparent font-label-md text-label-md text-primary font-medium focus:outline-none cursor-pointer">
+<option value="all">All Partners</option>
+<option value="thanal">Thanal Bio-Reserve</option>
+<option value="sustera">Sustera Foundation</option>
+<option value="ecocare">EcoCare Western Ghats</option>
+</select>
+</div>
+<!-- Project Type Filter -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">forest</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Biome:</span>
+<select class="bg-transparent font-label-md text-label-md text-primary font-medium focus:outline-none cursor-pointer">
+<option value="all">All Biomes</option>
+<option value="schools">Schools &amp; Orphanages</option>
+<option value="agroforest">Agroforestry &amp; Riparian</option>
+<option value="urban">Urban Micro-Sanctuary</option>
+</select>
+</div>
+<!-- Verification Status -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Status:</span>
+<select class="bg-transparent font-label-md text-label-md text-primary font-medium focus:outline-none cursor-pointer">
+<option value="all">All Status</option>
+<option selected="" value="verified">Verified Active (100%)</option>
+<option value="sapling">Sapling Stage (&lt;12m)</option>
+<option value="maturing">Maturing Canopy</option>
+</select>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Reset Filters">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Map & Integrated Side Panel Workspace -->
+<div class="relative w-full h-[760px] rounded-xl overflow-hidden shadow-md bg-surface-container-low select-none">
+<!-- Base Vector & Telemetry Map Layer -->
+<div class="absolute inset-0 w-full h-full bg-[#7ec4cb] overflow-hidden" id="map-canvas">
+<!-- Geographic Map SVG Background (Stylized Peninsular India, Kerala, Tamil Nadu, Sri Lanka, Lakshadweep Sea) -->
+<svg class="w-full h-full object-cover" fill="none" preserveaspectratio="xMidYMid slice" viewbox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient cx="50%" cy="50%" id="waterGrad" r="60%">
+<stop offset="0%" stop-color="#67c7cb"></stop>
+<stop offset="100%" stop-color="#55b1b8"></stop>
+</radialgradient>
+<lineargradient id="landGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#e2ece0"></stop>
+<stop offset="50%" stop-color="#d6e6d3"></stop>
+<stop offset="100%" stop-color="#c9dfc6"></stop>
+</lineargradient>
+<filter height="120%" id="mapShadow" width="120%" x="-10%" y="-10%">
+<fedropshadow dx="3" dy="5" flood-color="#0f382c" flood-opacity="0.12" stddeviation="8"></fedropshadow>
+</filter>
+</defs>
+<!-- Ocean Body -->
+<rect fill="url(#waterGrad)" height="1000" width="1600"></rect>
+<!-- Bathymetric Subtle Ripples -->
+<path d="M-100,200 C300,180 500,260 800,210 C1100,160 1400,230 1700,200" fill="none" opacity="0.4" stroke="#87d9dd" stroke-width="1.5"></path>
+<path d="M-100,500 C400,480 600,560 900,510 C1200,460 1500,530 1700,500" fill="none" opacity="0.4" stroke="#87d9dd" stroke-width="1.5"></path>
+<path d="M-100,800 C300,780 700,850 1000,800 C1300,750 1500,820 1700,800" fill="none" opacity="0.4" stroke="#87d9dd" stroke-width="1.5"></path>
+<!-- Landmass: South Peninsular India -->
+<path d="M520,-20 
+                 L1180,-20 
+                 C1160,110 1140,160 1120,220 
+                 C1090,260 1080,310 1060,370 
+                 C1040,430 1010,480 970,550 
+                 C920,620 890,690 850,750 
+                 C830,780 810,810 790,830 
+                 C775,815 760,770 740,710 
+                 C715,640 680,550 660,470 
+                 C640,390 610,310 570,200 
+                 C540,120 525,40 520,-20 Z" fill="url(#landGrad)" filter="url(#mapShadow)" stroke="#b8d3b5" stroke-width="1.5"></path>
+<!-- Landmass: Sri Lanka Island -->
+<path d="M1020,610 
+                 C1060,600 1110,630 1135,670 
+                 C1160,720 1180,780 1170,840 
+                 C1150,910 1100,960 1060,955 
+                 C1020,950 990,890 985,820 
+                 C980,750 990,680 1020,610 Z" fill="url(#landGrad)" filter="url(#mapShadow)" stroke="#b8d3b5" stroke-width="1.5"></path>
+<!-- Lakshadweep Atolls -->
+<ellipse cx="380" cy="340" fill="#cde4ca" rx="9" ry="16" stroke="#b4ceb1"></ellipse>
+<ellipse cx="370" cy="420" fill="#cde4ca" rx="7" ry="12" stroke="#b4ceb1"></ellipse>
+<ellipse cx="410" cy="510" fill="#cde4ca" rx="6" ry="10" stroke="#b4ceb1"></ellipse>
+<ellipse cx="440" cy="740" fill="#cde4ca" rx="8" ry="14" stroke="#b4ceb1"></ellipse>
+<!-- State Borders & River Corridors (Hairline SVG) -->
+<path d="M680,240 Q750,290 860,260 T1040,240" fill="none" stroke="#abbfa9" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M660,470 Q710,500 760,540 T840,650" fill="none" stroke="#abbfa9" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M740,710 Q780,680 830,730" fill="none" stroke="#abbfa9" stroke-dasharray="3 3" stroke-width="1"></path>
+<!-- Periyar / Kaveri River Traces -->
+<path d="M720,490 Q770,470 850,460 T990,440" fill="none" opacity="0.8" stroke="#7ec4cb" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M700,320 Q780,340 890,320 T1080,300" fill="none" opacity="0.7" stroke="#7ec4cb" stroke-linecap="round" stroke-width="2"></path>
+<!-- Regional Geo Text Typography -->
+<text fill="#2d5238" font-family="'Hanken Grotesk', sans-serif" font-size="22" font-weight="600" letter-spacing="4" opacity="0.6" x="690" y="580">KERALA</text>
+<text fill="#2d5238" font-family="'Hanken Grotesk', sans-serif" font-size="22" font-weight="600" letter-spacing="4" opacity="0.6" x="850" y="480">TAMIL NADU</text>
+<text fill="#2d5238" font-family="'Hanken Grotesk', sans-serif" font-size="20" font-weight="600" letter-spacing="3" opacity="0.5" x="730" y="160">KARNATAKA</text>
+<text fill="#2d5238" font-family="'Hanken Grotesk', sans-serif" font-size="22" font-weight="600" letter-spacing="2" opacity="0.6" x="1030" y="780">SRI LANKA</text>
+<text fill="#0f382c" font-family="'Hanken Grotesk', sans-serif" font-size="14" font-weight="600" letter-spacing="2" opacity="0.75" x="340" y="470">LAKSHADWEEP SEA</text>
+<text fill="#0f382c" font-family="'Hanken Grotesk', sans-serif" font-size="13" font-weight="500" letter-spacing="1.5" opacity="0.65" x="910" y="940">Laccadive Sea Corridor</text>
+<!-- Cities labels -->
+<circle cx="1060" cy="230" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="14" font-weight="600" x="1070" y="235">Chennai</text>
+<circle cx="820" cy="180" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="14" font-weight="600" x="830" y="185">Bengaluru</text>
+<circle cx="780" cy="400" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="13" font-weight="600" x="790" y="405">Coimbatore</text>
+<circle cx="700" cy="510" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="13" font-weight="600" x="650" y="525">Kochi</text>
+<circle cx="770" cy="690" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="12" font-weight="600" x="780" y="695">Thiruvananthapuram</text>
+<circle cx="1040" cy="850" fill="#0f382c" r="3.5"></circle>
+<text fill="#161d19" font-family="'Hanken Grotesk', sans-serif" font-size="13" font-weight="600" x="1050" y="855">Colombo</text>
+</svg>
+</div>
+<!-- Telemetry Clusters Overlay (Aligned directly with geospatial nodes from reference) -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Cluster 1: Central Kerala Agroforest (10,189) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 42%; left: 47%;">
+<div class="relative flex items-center justify-center">
+<span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-secondary opacity-30"></span>
+<div class="w-14 h-14 rounded-full bg-secondary text-on-secondary shadow-lg flex flex-col items-center justify-center font-headline-sm text-[15px] font-bold tracking-tight hover:scale-110 transition-transform">
+            10189
+          </div>
+</div>
+<!-- Micro Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col items-center z-30">
+<div class="bg-primary text-on-primary px-3 py-1.5 rounded-lg shadow-xl text-center whitespace-nowrap">
+<p class="font-label-md text-label-md font-semibold">Central Kerala Agro-Corridor</p>
+<p class="font-label-sm text-label-sm text-secondary-container">10,189 trees active • 99.4% vitality</p>
+</div>
+<div class="w-2 h-2 bg-primary rotate-45 -mt-1"></div>
+</div>
+</div>
+<!-- Cluster 2: South Kerala Foothills (4,620) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 61%; left: 51%;">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-secondary shadow-lg flex items-center justify-center font-headline-sm text-[14px] font-bold tracking-tight hover:scale-110 transition-transform">
+          4620
+        </div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col items-center z-30">
+<div class="bg-primary text-on-primary px-3 py-1 rounded shadow-xl text-center whitespace-nowrap">
+<span class="font-label-md text-label-md">Kollam &amp; Pathanamthitta Reserves</span>
+</div>
+</div>
+</div>
+<!-- Cluster 3: Wayanad Green Belt (3,924) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 26%; left: 46%;">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-secondary shadow-lg flex items-center justify-center font-headline-sm text-[14px] font-bold tracking-tight hover:scale-110 transition-transform">
+          3924
+        </div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col items-center z-30">
+<div class="bg-primary text-on-primary px-3 py-1 rounded shadow-xl text-center whitespace-nowrap">
+<span class="font-label-md text-label-md">Wayanad Agroforest Hub</span>
+</div>
+</div>
+</div>
+<!-- Cluster 4: Calicut Urban Fringe (3,347) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 25%; left: 43%;">
+<div class="w-12 h-12 rounded-full bg-secondary text-on-secondary shadow-lg flex items-center justify-center font-headline-sm text-[13px] font-bold tracking-tight hover:scale-110 transition-transform">
+          3347
+        </div>
+</div>
+<!-- Cluster 5: Kochi Coast & Estuary (2,154) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer z-20" id="selected-marker-kochi" style="top: 50%; left: 49%;">
+<div class="relative flex items-center justify-center">
+<span class="absolute inline-flex h-14 w-14 rounded-full bg-secondary opacity-40 animate-ping"></span>
+<div class="w-11 h-11 rounded-full bg-secondary text-on-secondary shadow-xl flex items-center justify-center font-headline-sm text-[13px] font-bold tracking-tight ring-4 ring-surface-container-lowest">
+            2154
+          </div>
+</div>
+<!-- Selected Active Pop-over card (as specified in prompt) -->
+<div class="absolute top-12 left-1/2 -translate-x-1/2 sm:-translate-x-10 w-72 sm:w-80 bg-surface-container-lowest text-on-surface p-spacing-sm rounded-xl shadow-2xl border border-surface-variant pointer-events-auto z-40 transition-all" id="kochi-interactive-card">
+<div class="flex items-start justify-between gap-2 border-b border-surface-variant pb-2">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<h4 class="font-headline-sm text-[15px] font-semibold text-primary leading-tight">Kochi St. Teresa's Micro-Canopy</h4>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('kochi-interactive-card').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="py-2.5 space-y-1.5 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">Tag Reference</span>
+<span class="font-mono-metric text-xs font-semibold text-primary">#TT-2049</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">Botanical Species</span>
+<span class="font-label-md text-label-md text-primary font-medium italic">Terminalia arjuna (Arjuna)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">Batch Count</span>
+<span class="font-label-md text-label-md font-semibold text-primary">450 saplings tagged</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline">Audit Stage</span>
+<span class="text-secondary font-semibold text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified by Thanal
+              </span>
+</div>
+</div>
+<div class="pt-2 border-t border-surface-variant flex items-center justify-between">
+<span class="text-[11px] text-outline">Planted Nov 2023 • Satellite Monitored</span>
+<button class="px-2.5 py-1 bg-secondary text-on-secondary rounded text-xs font-label-md font-medium hover:bg-primary transition-colors">
+              Inspect Node
+            </button>
+</div>
+</div>
+</div>
+<!-- Cluster 6: High Ranges / Idukki (1,100) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 48%; left: 52%;">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-xs font-bold tracking-tight hover:scale-110 transition-transform">
+          1100
+        </div>
+</div>
+<!-- Cluster 7: Palakkad Gap & Foothills (109) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 42%; left: 52%;">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-xs font-bold tracking-tight hover:scale-110 transition-transform">
+          109
+        </div>
+</div>
+<!-- Cluster 8: Bengaluru Green Tech Corridors (2,093 & 39) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 10%; left: 56%;">
+<div class="w-11 h-11 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-[12px] font-bold tracking-tight hover:scale-110 transition-transform">
+          2093
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 15%; left: 55%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          39
+        </div>
+</div>
+<!-- Cluster 9: Chennai Coastal Mangrove (151 & 2) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 12%; left: 70%;">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-[12px] font-bold tracking-tight hover:scale-110 transition-transform">
+          151
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 16%; left: 69%;">
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[10px] font-bold tracking-tight">
+          2
+        </div>
+</div>
+<!-- Cluster 10: Madurai Agro-drylands (2) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 52%; left: 59%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          2
+        </div>
+</div>
+<!-- Cluster 11: Southern Travancore & Kanyakumari (502) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 64%; left: 53%;">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-[12px] font-bold tracking-tight">
+          502
+        </div>
+</div>
+<!-- Cluster 12: Island Marine / Coastal Nurseries (8, 5, 3) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 77%; left: 42%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          8
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 79%; left: 49%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          5
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 86%; left: 43%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          3
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 67%; left: 46%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          2
+        </div>
+</div>
+<!-- Cluster 13: Mysore & Nilgiri Buffer (5) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 17%; left: 48%;">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          5
+        </div>
+</div>
+<!-- Cluster 14: Coimbatore Urban Perimeter (1) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 31%; left: 53%;">
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[10px] font-bold tracking-tight">
+          1
+        </div>
+</div>
+<!-- Cluster 15: Mangaluru Coastline (1960, 15) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 13%; left: 40%;">
+<div class="w-11 h-11 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-[12px] font-bold tracking-tight">
+          1960
+        </div>
+</div>
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 10%; left: 39%;">
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary shadow-sm flex items-center justify-center font-headline-sm text-[10px] font-bold tracking-tight">
+          15
+        </div>
+</div>
+<!-- Cluster 16: Kozhikode (365) -->
+<div class="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" style="top: 33%; left: 45%;">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-headline-sm text-[11px] font-bold tracking-tight">
+          365
+        </div>
+</div>
+</div>
+<!-- Docked Drawer / Collapsible Telemetry Side Panel -->
+<div class="absolute top-4 left-4 bottom-4 w-96 max-w-[calc(100%-2rem)] bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-xl flex flex-col z-30 transition-transform duration-300" id="side-telemetry-panel">
+<!-- Panel Header with Tab and Minimize Toggle -->
+<div class="p-spacing-md border-b border-surface-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">eco</span>
+<div>
+<h3 class="font-headline-sm text-[16px] font-semibold text-primary">Verified Plantings</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Real-time IoT &amp; Field Auditor logs</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" id="toggle-panel-btn">
+<span class="material-symbols-outlined text-[20px]">left_panel_close</span>
+</button>
+</div>
+<!-- Quick Metrics Grid -->
+<div class="grid grid-cols-3 gap-2 p-spacing-sm bg-surface-container-low">
+<div class="p-2 bg-surface-container-lowest rounded-lg">
+<p class="font-label-sm text-[10px] uppercase text-outline">Active Zones</p>
+<p class="font-mono-metric text-[16px] font-bold text-primary">42</p>
+<span class="text-[10px] text-secondary font-medium">9 Regions</span>
+</div>
+<div class="p-2 bg-surface-container-lowest rounded-lg">
+<p class="font-label-sm text-[10px] uppercase text-outline">Survival</p>
+<p class="font-mono-metric text-[16px] font-bold text-secondary">99.8%</p>
+<span class="text-[10px] text-on-surface-variant">Q4 Audited</span>
+</div>
+<div class="p-2 bg-surface-container-lowest rounded-lg">
+<p class="font-label-sm text-[10px] uppercase text-outline">CO₂ Offset</p>
+<p class="font-mono-metric text-[16px] font-bold text-primary">1,420<span class="text-xs font-normal">t</span></p>
+<span class="text-[10px] text-secondary font-medium">Annualized</span>
+</div>
+</div>
+<!-- Scrollable Recent Plantings List -->
+<div class="flex-1 overflow-y-auto p-spacing-sm space-y-2.5 divide-y divide-surface-variant/40">
+<!-- List Item 1 -->
+<div class="pt-2 group cursor-pointer hover:bg-surface-container/60 p-2 rounded-lg transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="inline-block px-2 py-0.5 rounded text-[10px] font-label-md bg-secondary-container text-on-secondary-container font-semibold">
+                Verified Active
+              </span>
+<h4 class="font-headline-sm text-sm font-semibold text-primary mt-1">Teak (Tectona grandis)</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Govt Model HS Campus, Kozhikode</p>
+</div>
+<span class="font-mono-metric text-xs text-outline group-hover:text-primary">#TT-8841</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">pin_drop</span> Kerala Belt
+            </span>
+<span>Planted 2 hrs ago</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="pt-2 group cursor-pointer hover:bg-surface-container/60 p-2 rounded-lg transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="inline-block px-2 py-0.5 rounded text-[10px] font-label-md bg-secondary-container text-on-secondary-container font-semibold">
+                Healthy Growth
+              </span>
+<h4 class="font-headline-sm text-sm font-semibold text-primary mt-1">Indian Rosewood (Dalbergia)</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Sustera Community Cluster, Wayanad</p>
+</div>
+<span class="font-mono-metric text-xs text-outline group-hover:text-primary">#TT-8840</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">pin_drop</span> Wayanad
+            </span>
+<span>Audited Yesterday</span>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="pt-2 group cursor-pointer hover:bg-surface-container/60 p-2 rounded-lg transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="inline-block px-2 py-0.5 rounded text-[10px] font-label-md bg-surface-container-high text-on-surface font-semibold">
+                Newly Planted
+              </span>
+<h4 class="font-headline-sm text-sm font-semibold text-primary mt-1">Neem (Azadirachta indica)</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Old Age Home Sanatorium, Madurai</p>
+</div>
+<span class="font-mono-metric text-xs text-outline group-hover:text-primary">#TT-8839</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">pin_drop</span> Tamil Nadu
+            </span>
+<span>Planted Oct 28</span>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="pt-2 group cursor-pointer hover:bg-surface-container/60 p-2 rounded-lg transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="inline-block px-2 py-0.5 rounded text-[10px] font-label-md bg-secondary-container text-on-secondary-container font-semibold">
+                Verified Active
+              </span>
+<h4 class="font-headline-sm text-sm font-semibold text-primary mt-1">Jackfruit (Artocarpus)</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">EcoCare Riparian Buffer, Palakkad</p>
+</div>
+<span class="font-mono-metric text-xs text-outline group-hover:text-primary">#TT-8838</span>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">pin_drop</span> Central Ghats
+            </span>
+<span>Planted Oct 25</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-spacing-sm bg-surface-container-lowest border-t border-surface-variant">
+<button class="w-full bg-secondary hover:bg-primary text-on-secondary py-2.5 px-3 rounded-lg font-label-md text-label-md font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+          Sponsor a Sapling in this Zone
+        </button>
+</div>
+</div>
+<!-- Floating Expand Button when side panel is minimized -->
+<button class="hidden absolute top-4 left-4 z-20 bg-surface-container-lowest text-primary p-2.5 rounded-lg shadow-lg hover:bg-surface-container transition-colors" id="open-panel-btn">
+<span class="material-symbols-outlined text-[20px]">right_panel_open</span>
+</button>
+<!-- Map Floating Controls (Bottom Right) -->
+<div class="absolute bottom-6 right-6 flex flex-col items-end gap-3 z-30 pointer-events-auto">
+<!-- Layer Quick Controls -->
+<div class="flex bg-surface-container-lowest/95 backdrop-blur-md p-1 rounded-lg shadow-lg border border-surface-variant">
+<button class="p-2 text-on-surface-variant hover:text-primary rounded hover:bg-surface-container-high transition-colors" title="Topographical View">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded hover:bg-surface-container-high transition-colors" title="Drone Mesh Imagery">
+<span class="material-symbols-outlined text-[20px]">flight</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded hover:bg-surface-container-high transition-colors" title="Heat Telemetry">
+<span class="material-symbols-outlined text-[20px]">opacity</span>
+</button>
+</div>
+<!-- Zoom & Compass Controls -->
+<div class="flex flex-col bg-surface-container-lowest/95 backdrop-blur-md rounded-lg shadow-lg border border-surface-variant overflow-hidden">
+<button class="p-2.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors border-b border-surface-variant" id="zoom-in-btn" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<button class="p-2.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors border-b border-surface-variant" id="zoom-out-btn" title="Zoom Out">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button class="p-2.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" title="Center Current Geolocation">
+<span class="material-symbols-outlined text-[20px]">my_location</span>
+</button>
+</div>
+<!-- Legal / Telemetry Attribution Pill -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded text-[10px] text-on-surface-variant shadow-sm border border-surface-variant/80">
+        TreeTag GIS Engine v4.2 • Sentinel-2 Earth Telemetry
+      </div>
+</div>
+</div>
+<!-- Bottom Analytics Strip: Zone Breakdown -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-spacing-md mt-spacing-md">
+<div class="bg-surface-container-lowest p-spacing-md rounded-xl border border-surface-variant">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Top Bio-Corridor</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">terrain</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-primary mt-1">Wayanad Foothills</p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant mt-2">
+<span>14,113 Verified Trees</span>
+<span class="text-secondary font-semibold">+840 this month</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-spacing-md rounded-xl border border-surface-variant">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Urban Micro-Forests</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">apartment</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-primary mt-1">Kochi &amp; Bengaluru</p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant mt-2">
+<span>12,282 Trees Registered</span>
+<span class="text-secondary font-semibold">100% geotagged</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-spacing-md rounded-xl border border-surface-variant">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Coastal &amp; Mangroves</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">water</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-primary mt-1">Malabar &amp; Sri Lanka</p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant mt-2">
+<span>4,810 Marine Buffer Trees</span>
+<span class="text-secondary font-semibold">Tidal resilient</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-spacing-md rounded-xl border border-surface-variant flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Institutional Audit</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">verified_user</span>
+</div>
+<div>
+<p class="font-headline-sm text-[20px] font-semibold text-primary mt-1">Audit Ledger #2024-Q3</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Cryptographic proof synced to ESG registry</p>
+</div>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-secondary hover:text-primary font-semibold mt-2" href="#">
+        View Chain of Custody <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<script>
+  // Panel minimization toggle
+  const sidePanel = document.getElementById('side-telemetry-panel');
+  const togglePanelBtn = document.getElementById('toggle-panel-btn');
+  const openPanelBtn = document.getElementById('open-panel-btn');
+
+  if (togglePanelBtn && sidePanel && openPanelBtn) {
+    togglePanelBtn.addEventListener('click', () => {
+      sidePanel.classList.add('-translate-x-full');
+      openPanelBtn.classList.remove('hidden');
+    });
+
+    openPanelBtn.addEventListener('click', () => {
+      sidePanel.classList.remove('-translate-x-full');
+      openPanelBtn.classList.add('hidden');
+    });
+  }
+
+  // Interactive View Toggles (Visual state indicators)
+  const clusterBtn = document.getElementById('view-cluster-btn');
+  const heatmapBtn = document.getElementById('view-heatmap-btn');
+  const satBtn = document.getElementById('view-satellite-btn');
+  const viewButtons = [clusterBtn, heatmapBtn, satBtn];
+
+  viewButtons.forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      viewButtons.forEach(b => {
+        b.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+      btn.classList.remove('text-on-surface-variant');
+    });
+  });
+
+  // Micro interaction for zoom buttons
+  const mapSvg = document.querySelector('#map-canvas svg');
+  let currentScale = 1;
+
+  document.getElementById('zoom-in-btn')?.addEventListener('click', () => {
+    if (currentScale < 1.4 && mapSvg) {
+      currentScale += 0.1;
+      mapSvg.style.transform = `scale(${currentScale})`;
+      mapSvg.style.transition = 'transform 0.3s ease';
+    }
+  });
+
+  document.getElementById('zoom-out-btn')?.addEventListener('click', () => {
+    if (currentScale > 0.9 && mapSvg) {
+      currentScale -= 0.1;
+      mapSvg.style.transform = `scale(${currentScale})`;
+      mapSvg.style.transition = 'transform 0.3s ease';
+    }
+  });
+</script></main><footer class="w-full bg-surface-container-low py-spacing-xl mt-spacing-4xl"><div class="max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop flex flex-col md:flex-row items-center justify-between gap-spacing-md"><div class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Tree Tag Inc. All rights reserved. Precision Environmental Intelligence.</div><nav class="flex flex-wrap items-center justify-center gap-spacing-xs font-body-sm text-body-sm text-on-surface-variant" data-active-classes="text-primary font-bold"><a class="hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" data-path="about" href="#">About</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" data-path="contact" href="#">Contact</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" data-path="terms" href="#">Terms</a><span class="text-outline-variant">•</span><a class="hover:text-on-surface transition-colors" data-path="privacy" href="#">Privacy</a></nav></div></footer></body></html>

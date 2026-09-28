@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="treeGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#002218"/>
+      <stop offset="50%" stop-color="#0f382c"/>
+      <stop offset="100%" stop-color="#196b4f"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="20" y1="12" x2="44" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a2f0cc"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Shield Rounded Squircle -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#treeGrad)" stroke="#196b4f" stroke-width="2"/>
+
+  <!-- GPS Radar Ring (Telemetry Motif) -->
+  <circle cx="32" cy="30" r="22" stroke="#a2f0cc" stroke-opacity="0.25" stroke-dasharray="3 3" stroke-width="1.5"/>
+  <circle cx="32" cy="30" r="16" stroke="#a2f0cc" stroke-opacity="0.35" stroke-width="1"/>
+
+  <!-- Stylized Geometric Evergreen Pine / Tree Tag Canopy -->
+  <!-- Top Tier -->
+  <path d="M32 10L42 22H36L44 32H37L46 43H18L27 32H20L28 22H22L32 10Z" fill="url(#leafGrad)" filter="url(#glow)"/>
+
+  <!-- Trunk / IoT Sensor Probe -->
+  <rect x="29" y="43" width="6" height="9" rx="2" fill="#79a292"/>
+
+  <!-- Geotag Pulse Node at Center -->
+  <circle cx="32" cy="27" r="3.5" fill="#ffffff" stroke="#002218" stroke-width="1.5"/>
+  <circle cx="32" cy="27" r="1.5" fill="#109367"/>
+
+  <!-- Telemetry Signal Ping Dot (Top-Right) -->
+  <circle cx="48" cy="16" r="3" fill="#22c55e"/>
+  <circle cx="48" cy="16" r="5" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+</svg>

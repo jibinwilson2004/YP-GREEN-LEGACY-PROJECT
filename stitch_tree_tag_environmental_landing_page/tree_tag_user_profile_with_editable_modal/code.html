@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tree Tag - User Profile</title>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- FontAwesome for standard brand and UI icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style data-purpose="custom-theme-variables">
+    :root {
+      --ieee-blue-top: #1f5d82;
+      --ieee-orange-nav: #f47716;
+      --profile-teal-box: #134658;
+      --mint-active-tab: #a7f3d0;
+    }
+  </style>
+<style data-purpose="custom-toggles-and-scroll">
+    /* Custom toggle switch styling */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #22c55e;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #22c55e;
+    }
+    /* Smooth modal transition */
+    #editModal {
+      transition: opacity 0.25s ease-out, visibility 0.25s;
+    }
+    #editModal.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #editModal:not(.hidden) {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-800 flex flex-col min-h-screen font-sans antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="w-full shadow-sm z-30">
+<!-- Top Bar: IEEE Global Bar (#1f5d82) -->
+<div class="bg-[#1f5d82] text-white text-xs px-4 sm:px-8 py-2">
+<div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+<!-- Left Global Links -->
+<nav aria-label="IEEE Network" class="flex flex-wrap items-center space-x-2 text-[11px] sm:text-xs text-slate-200">
+<a class="hover:text-white transition-colors" href="#">IEEE.org</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Xplore Digital Library</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Standards</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Spectrum</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">More Sites</a>
+</nav>
+<!-- Right Social Icons and Sign In -->
+<div class="flex items-center space-x-4 text-slate-200">
+<div class="flex items-center space-x-3 text-xs">
+<a aria-label="Facebook" class="hover:text-white" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+<a aria-label="X Twitter" class="hover:text-white" href="#"><i class="fa-brands fa-x-twitter"></i></a>
+<a aria-label="LinkedIn" class="hover:text-white" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+<a aria-label="Instagram" class="hover:text-white" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a aria-label="YouTube" class="hover:text-white" href="#"><i class="fa-brands fa-youtube"></i></a>
+</div>
+<span class="text-slate-400">|</span>
+<a class="flex items-center space-x-1.5 hover:text-white text-xs font-semibold" href="#">
+<i class="fa-regular fa-circle-user text-sm"></i>
+<span class="">Sign In</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Branding Bar (White Background) -->
+<div class="bg-white border-b border-gray-200 py-3.5 px-4 sm:px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<!-- Left: Young Professionals Taskforce lockup -->
+<div class="flex items-center">
+<img alt="IEEE Young Professionals | Climate &amp; Sustainability Taskforce (CSTF)" class="h-9 sm:h-11 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrhvU_Cp1fbKH3GOyZE-ycbd8BILa82yfDi8nBi0Advyf7JLr0ey1i-s57oxImCLJXuNVHy6PuXdMSoXL1LXaEmuybBvyFaWSRfTS5Pa_EIlj_OvZUgXvXAb_s--MNrqNbYvgwUCODBTg32UZc9YwvRGb5wNKJoyaUAO5H4O79VtetF3gy9tO2R5z8Ndr2oEwOSCpAlaCBpkkb1UoN82Qrb-9-r2OALPp5bB7PNolzrnk79DkKQk_CWUKl-05IDd3N8w"/>
+</div>
+<!-- Center: IEEE Group Insurance Program Badge -->
+<!-- Right: Official IEEE Diamond Logo -->
+<div class="flex items-center">
+<img alt="IEEE Logo" class="h-8 sm:h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQxiPAkc1L6GXvVqGEJgQ2VWHNspip1tEDUMdcuAi5JF43_cbPeY-h888BdfJhsNKZ2VaNH3a4CDINda8npJ-l0f6bBqePa06KdGGgfeV1ok6h9ypH92CnF7eglcEFYsT-u6OOF_ECCJ_2G1M03YbucLN3qUXNurjNJmtbbAFKJLheIFVvcHrw484Fhd0oUvjC3NQLh_wcs8wNiOmOPtm31k0d7Woc7X84Ocuv3ukzdwHsoXSd5B16ZJqpM9e_7kZzZw"/>
+</div>
+</div>
+</div>
+<!-- Orange Navigation Bar (#f47716) -->
+<div class="bg-[#f47716] shadow-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 h-3">
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow w-full max-w-5xl mx-auto px-6 sm:px-12 py-10">
+<div class="bg-white rounded-lg p-6 sm:p-10 shadow-sm border border-gray-100 min-h-[540px] flex flex-col justify-between">
+<!-- Upper Section: User Avatar & Details -->
+<div data-purpose="user-profile-details">
+<!-- Top Profile Avatar & Name Card -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-7 pb-5">
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7 flex-1">
+<!-- Teal avatar box with edit action button -->
+<div class="relative flex-shrink-0 group">
+<div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#104252] rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
+<!-- Illustrated User Avatar SVG -->
+<svg class="w-20 h-20 text-slate-200 mt-2" fill="none" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<!-- Hair -->
+<path d="M35 55C35 30 45 20 60 20C75 20 85 30 85 55V65H35V55Z" fill="#1f2937"></path>
+<!-- Face -->
+<ellipse cx="60" cy="58" fill="#fed7aa" rx="20" ry="22"></ellipse>
+<!-- Cheeks/Blush -->
+<circle cx="50" cy="62" fill="#fca5a5" opacity="0.6" r="3"></circle>
+<circle cx="70" cy="62" fill="#fca5a5" opacity="0.6" r="3"></circle>
+<!-- Collar -->
+<path d="M52 78L60 88L68 78H52Z" fill="#ffffff"></path>
+<!-- Shirt -->
+<path d="M30 110C30 90 44 80 60 80C76 80 90 90 90 110V120H30V110Z" fill="#ef4444"></path>
+</svg>
+</div>
+<!-- Bottom-right edit pencil overlay badge -->
+<button aria-label="Edit Profile Picture" class="open-modal-btn absolute -bottom-1 -right-1 bg-transparent hover:bg-slate-800 text-white rounded p-1 transition cursor-pointer" type="button">
+<svg class="w-5 h-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+<!-- User Name and Academic Info -->
+<div class="flex-1 w-full">
+<div class="flex items-center gap-2 group">
+<h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight" id="display-name">Jibin Wilson</h1>
+<button aria-label="Edit Name" class="open-modal-btn text-gray-400 hover:text-gray-700 opacity-60 hover:opacity-100 transition p-1 cursor-pointer" type="button">
+<i class="fa-solid fa-pen text-xs"></i>
+</button>
+</div>
+<p class="text-sm text-gray-700 font-medium mt-1 tracking-normal flex flex-wrap items-center gap-y-1">
+<span class="hover:text-emerald-700 cursor-pointer open-modal-btn inline-flex items-center gap-1" id="display-role" title="Click to edit role">STUDENT</span>
+<span class="mx-1 text-gray-400">|</span>
+<a class="hover:underline hover:text-emerald-700 open-modal-btn inline-flex items-center gap-1 cursor-pointer" href="mailto:jibin.cse22@mbits.ac.in" id="display-email" title="Click to edit email">jibin.cse22@mbits.ac.in</a>
+<span class="mx-1 text-gray-400">|</span>
+<span class="hover:text-emerald-700 cursor-pointer open-modal-btn inline-flex items-center gap-1" id="display-phone" title="Click to edit phone">7907863486</span>
+</p>
+</div>
+</div>
+<!-- Prominent Edit Profile Button -->
+<div class="self-start sm:self-center">
+<button class="open-modal-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-400 shadow-sm text-xs font-semibold uppercase tracking-wider transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-1" id="btn-open-edit-profile" type="button">
+<i class="fa-regular fa-pen-to-square text-emerald-700 text-sm"></i>
+<span>Edit Profile</span>
+</button>
+</div>
+</div>
+<!-- Horizontal Divider line matching screenshot -->
+<hr class="border-t border-gray-200 mt-2 mb-8"/>
+<!-- Profile Section -->
+<section aria-labelledby="profile-heading" class="space-y-4">
+<h2 class="text-base font-bold text-gray-900 underline decoration-2 underline-offset-4 tracking-tight" id="profile-heading">Profile</h2>
+<!-- Social Media Profile row -->
+<div class="flex items-center space-x-2 text-sm text-gray-800 group">
+<span class="">Social Media Profile:</span>
+<span class="font-normal text-gray-700" id="display-social">N.A</span>
+<button aria-label="Edit Social Media Link" class="open-modal-btn text-gray-400 hover:text-gray-900 transition-colors p-1 cursor-pointer" title="Edit social media link" type="button">
+<svg class="w-4 h-4 ml-0.5 inline-block" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Profile Visibility Switch -->
+<div class="flex items-center space-x-3 pt-1">
+<span class="text-sm text-gray-800">Profile visible to public</span>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="inlineVisibilityToggle" type="checkbox"/>
+<div class="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+</label>
+<span class="text-xs text-gray-500 font-medium ml-1" id="visibilityStatusText">Public</span>
+</div>
+<!-- Institutional Metadata -->
+<div class="space-y-3 pt-1 text-sm text-gray-800 leading-relaxed">
+<p class="group flex items-center gap-2">
+<span class="text-gray-700">Institution:</span>
+<span class="font-bold text-gray-950" id="display-institution">APJAKTU NSSCELL NRPF</span>
+<button aria-label="Edit Institution" class="open-modal-btn text-gray-300 group-hover:text-gray-600 hover:text-gray-900 transition-colors p-0.5" type="button"><i class="fa-solid fa-pen text-[10px]"></i></button>
+</p>
+<p class="group flex items-center gap-2">
+<span class="text-gray-700">Cluster:</span>
+<span class="font-bold text-gray-950" id="display-cluster">EKM</span>
+<button aria-label="Edit Cluster" class="open-modal-btn text-gray-300 group-hover:text-gray-600 hover:text-gray-900 transition-colors p-0.5" type="button"><i class="fa-solid fa-pen text-[10px]"></i></button>
+</p>
+<p class="group flex items-center gap-2">
+<span class="text-gray-700">College:</span>
+<span class="font-bold text-gray-950" id="display-college">MAR BASELIOS INSTITUTE OF TECHNOLOGY AND SCIENCE-MBI</span>
+<button aria-label="Edit College" class="open-modal-btn text-gray-300 group-hover:text-gray-600 hover:text-gray-900 transition-colors p-0.5" type="button"><i class="fa-solid fa-pen text-[10px]"></i></button>
+</p>
+</div>
+</section>
+<!-- Summary Section -->
+<section aria-labelledby="summary-heading" class="mt-8 space-y-3">
+<h2 class="text-base font-bold text-gray-900 underline decoration-2 underline-offset-4 tracking-tight" id="summary-heading">Summary</h2>
+<p class="text-sm text-gray-800"><span class="text-gray-700">Trees:</span> <span class="font-bold text-gray-950 text-base" id="display-trees">1</span></p>
+</section>
+</div>
+<!-- Bottom Floating Dock / Segmented Navigation Navigation (Exact to IMAGE_5) -->
+<div class="w-full pt-10 pb-2 flex flex-col items-center justify-center">
+<div class="w-full border-t border-gray-100 mb-6"></div>
+<nav aria-label="Mobile Dock Bar" class="inline-flex items-center justify-center space-x-6 px-4 py-1">
+<!-- Active "Profile" Tab with Mint Rounded Background -->
+<a class="flex flex-col items-center justify-center px-4 py-2 bg-[#a7f3d0] rounded-xl text-gray-800 transition shadow-sm" href="#">
+<div class="w-7 h-7 rounded-full bg-[#835338] border-2 border-white flex items-center justify-center overflow-hidden">
+<i class="fa-solid fa-user text-amber-100 text-xs mt-1"></i>
+</div>
+<span class="text-xs font-semibold mt-1 text-teal-900">Profile</span>
+</a>
+<!-- "Map" Tab -->
+<a class="flex flex-col items-center justify-center px-3 py-1.5 text-gray-500 hover:text-gray-900 transition" href="#">
+<div class="w-7 h-7 flex items-center justify-center">
+<svg class="w-6 h-6 text-red-500 fill-current" viewbox="0 0 24 24">
+<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-2.5 2.5 1.12 2.5 2.5z"></path>
+</svg>
+</div>
+<span class="text-xs font-medium text-gray-600 mt-1">Map</span>
+</a>
+<!-- "Trees" Tab -->
+<a class="flex flex-col items-center justify-center px-3 py-1.5 text-gray-500 hover:text-gray-900 transition" href="#">
+<div class="w-7 h-7 flex items-center justify-center text-teal-600">
+<i class="fa-solid fa-tree text-xl text-[#0d9488]"></i>
+</div>
+<span class="text-xs font-medium text-gray-600 mt-1">Trees</span>
+</a>
+</nav>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Edit Profile Modal Dialog -->
+<div aria-labelledby="modal-title" aria-modal="true" class="fixed inset-0 z-50 overflow-y-auto hidden" id="editModal" role="dialog">
+<!-- Backdrop blur & overlay -->
+<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" id="modalBackdrop"></div>
+<div class="flex min-h-full items-center justify-center p-4 text-center sm:p-6">
+<div class="relative transform overflow-hidden rounded-xl bg-white text-left shadow-2xl transition-all w-full max-w-2xl border border-gray-200">
+<!-- Modal Header -->
+<div class="bg-gradient-to-r from-[#104252] to-[#1f5d82] px-6 py-4 flex items-center justify-between text-white">
+<div class="flex items-center space-x-2.5">
+<div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-emerald-300">
+<i class="fa-solid fa-user-pen text-sm"></i>
+</div>
+<div>
+<h3 class="text-base font-bold leading-6 tracking-tight text-white" id="modal-title">Edit Profile Information</h3>
+<p class="text-xs text-slate-200">Update your Tree Tag student and institutional details</p>
+</div>
+</div>
+<button aria-label="Close modal" class="rounded-lg p-1.5 text-slate-200 hover:text-white hover:bg-white/10 transition-colors" id="closeModalBtn" type="button">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+<!-- Modal Form -->
+<form class="p-6 sm:p-8 space-y-6" id="editProfileForm">
+<!-- Avatar Upload Trigger Card -->
+<div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+<div class="w-14 h-14 bg-[#104252] rounded-xl flex items-center justify-center flex-shrink-0 text-slate-200">
+<svg class="w-10 h-10 mt-1" fill="none" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<path d="M35 55C35 30 45 20 60 20C75 20 85 30 85 55V65H35V55Z" fill="#1f2937"></path>
+<ellipse cx="60" cy="58" fill="#fed7aa" rx="20" ry="22"></ellipse>
+<path d="M30 110C30 90 44 80 60 80C76 80 90 90 90 110V120H30V110Z" fill="#ef4444"></path>
+</svg>
+</div>
+<div class="flex-1">
+<p class="text-xs font-semibold text-gray-900">Profile Photo</p>
+<p class="text-[11px] text-gray-500">JPG, PNG or GIF. Max size 2MB.</p>
+</div>
+<label class="cursor-pointer inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition">
+<i class="fa-solid fa-camera mr-1.5 text-gray-500"></i> Change
+<input accept="image/*" class="sr-only" type="file"/>
+</label>
+</div>
+<!-- Grid for Form Inputs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Full Name -->
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputName">Full Name <span class="text-rose-500">*</span></label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputName" required="" type="text" value="Jibin Wilson"/>
+</div>
+<!-- Role / Status -->
+<div>
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputRole">Status / Role <span class="text-rose-500">*</span></label>
+<select class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputRole" required="">
+<option selected="" value="STUDENT">STUDENT</option>
+<option value="FACULTY">FACULTY</option>
+<option value="COORDINATOR">COORDINATOR</option>
+<option value="VOLUNTEER">VOLUNTEER</option>
+<option value="ALUMNI">ALUMNI</option>
+</select>
+</div>
+<!-- Phone Number -->
+<div>
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputPhone">Phone Number <span class="text-rose-500">*</span></label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputPhone" required="" type="tel" value="7907863486"/>
+</div>
+<!-- Email Address -->
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputEmail">Email Address <span class="text-rose-500">*</span></label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputEmail" required="" type="email" value="jibin.cse22@mbits.ac.in"/>
+</div>
+<!-- Social Media Profile -->
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputSocial">Social Media Profile (LinkedIn / URL)</label>
+<div class="relative rounded-md shadow-sm">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<i class="fa-brands fa-linkedin text-gray-400"></i>
+</div>
+<input class="w-full rounded-md border-gray-300 pl-9 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputSocial" placeholder="https://linkedin.com/in/username or N.A" type="text" value="N.A"/>
+</div>
+</div>
+<!-- Institution -->
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputInstitution">Institution</label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputInstitution" type="text" value="APJAKTU NSSCELL NRPF"/>
+</div>
+<!-- Cluster -->
+<div>
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputCluster">Cluster</label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputCluster" type="text" value="EKM"/>
+</div>
+<!-- College -->
+<div>
+<label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1" for="inputCollege">College</label>
+<input class="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-emerald-600 focus:ring-emerald-600" id="inputCollege" type="text" value="MAR BASELIOS INSTITUTE OF TECHNOLOGY AND SCIENCE-MBI"/>
+</div>
+</div>
+<!-- Modal Profile Visibility Switch -->
+<div class="pt-3 border-t border-gray-100 flex items-center justify-between">
+<div>
+<span class="text-sm font-semibold text-gray-800">Public Profile Visibility</span>
+<p class="text-xs text-gray-500">Allow community members and taskforces to see your planted trees</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="modalVisibilityToggle" type="checkbox"/>
+<div class="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+</label>
+</div>
+<!-- Modal Actions -->
+<div class="pt-4 border-t border-gray-100 flex items-center justify-end space-x-3">
+<button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors" id="cancelModalBtn" type="button">
+Cancel
+</button>
+<button class="px-5 py-2 text-sm font-semibold text-white bg-[#0f5132] hover:bg-[#0c4128] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-1 transition-all flex items-center gap-1.5" type="submit">
+<i class="fa-solid fa-check text-xs"></i>
+<span>Save Changes</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- END: Edit Profile Modal Dialog -->
+<!-- BEGIN: Success Toast Notification -->
+<div class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none" id="successToast">
+<div class="bg-gray-900 text-white px-4 py-3 rounded-lg shadow-xl flex items-center space-x-3 border border-gray-800">
+<div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">
+<i class="fa-solid fa-check"></i>
+</div>
+<p class="text-sm font-medium text-gray-100" id="toastMessage">Profile updated successfully!</p>
+</div>
+</div>
+<!-- END: Success Toast Notification -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full bg-black text-white mt-auto pt-12 pb-10 px-6 sm:px-12 border-t border-gray-900">
+<div class="max-w-7xl mx-auto space-y-7">
+<!-- Footer Title -->
+<h3 class="text-2xl sm:text-[28px] font-semibold tracking-tight text-white">Stay connected</h3>
+<!-- Secondary Links -->
+<nav aria-label="Footer Quick Links" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-200">
+<a class="hover:underline" href="#">Home</a>
+<a class="hover:underline" href="#">Sitemap</a>
+<a class="hover:underline" href="#">Contact &amp; Support</a>
+<a class="hover:underline" href="#">Accessibility</a>
+<a class="hover:underline" href="#">Nondiscrimination Policy</a>
+<a class="hover:underline" href="#">IEEE Ethics Reporting</a>
+<a class="hover:underline" href="#">IEEE Privacy Policy</a>
+<a class="hover:underline" href="#">Terms</a>
+<a class="hover:underline" href="#">Feedback</a>
+</nav>
+<!-- Copyright & Disclaimer -->
+<p class="text-xs sm:text-sm text-gray-400 max-w-4xl leading-relaxed pt-2">
+        © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
+      </p>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- Interactive Vanilla JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
+    const editModal = document.getElementById('editModal');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const editProfileForm = document.getElementById('editProfileForm');
+    const openModalButtons = document.querySelectorAll('.open-modal-btn');
+    const successToast = document.getElementById('successToast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    // Display fields
+    const dispName = document.getElementById('display-name');
+    const dispRole = document.getElementById('display-role');
+    const dispEmail = document.getElementById('display-email');
+    const dispPhone = document.getElementById('display-phone');
+    const dispSocial = document.getElementById('display-social');
+    const dispInstitution = document.getElementById('display-institution');
+    const dispCluster = document.getElementById('display-cluster');
+    const dispCollege = document.getElementById('display-college');
+    const inlineVisibilityToggle = document.getElementById('inlineVisibilityToggle');
+    const visibilityStatusText = document.getElementById('visibilityStatusText');
+
+    // Form inputs
+    const inputName = document.getElementById('inputName');
+    const inputRole = document.getElementById('inputRole');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputPhone = document.getElementById('inputPhone');
+    const inputSocial = document.getElementById('inputSocial');
+    const inputInstitution = document.getElementById('inputInstitution');
+    const inputCluster = document.getElementById('inputCluster');
+    const inputCollege = document.getElementById('inputCollege');
+    const modalVisibilityToggle = document.getElementById('modalVisibilityToggle');
+
+    // Toast helper
+    function showToast(message) {
+      toastMessage.textContent = message;
+      successToast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      successToast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        successToast.classList.remove('translate-y-0', 'opacity-100');
+        successToast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Open Modal
+    function openModal() {
+      // Sync form values from current DOM
+      inputName.value = dispName.textContent.trim();
+      inputRole.value = dispRole.textContent.trim();
+      inputEmail.value = dispEmail.textContent.trim();
+      inputPhone.value = dispPhone.textContent.trim();
+      inputSocial.value = dispSocial.textContent.trim();
+      inputInstitution.value = dispInstitution.textContent.trim();
+      inputCluster.value = dispCluster.textContent.trim();
+      inputCollege.value = dispCollege.textContent.trim();
+      modalVisibilityToggle.checked = inlineVisibilityToggle.checked;
+
+      editModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      inputName.focus();
+    }
+
+    // Close Modal
+    function closeModal() {
+      editModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // Attach open triggers
+    openModalButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    // Close triggers
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelModalBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+
+    // Escape key closes modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !editModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Handle inline toggle change
+    inlineVisibilityToggle.addEventListener('change', () => {
+      const isPublic = inlineVisibilityToggle.checked;
+      visibilityStatusText.textContent = isPublic ? 'Public' : 'Private';
+      modalVisibilityToggle.checked = isPublic;
+      showToast(isPublic ? 'Profile visibility set to Public' : 'Profile visibility set to Private');
+    });
+
+    // Handle Form Submit
+    editProfileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Update text in UI
+      dispName.textContent = inputName.value.trim() || 'Jibin Wilson';
+      dispRole.textContent = inputRole.value.trim() || 'STUDENT';
+      
+      const newEmail = inputEmail.value.trim() || 'jibin.cse22@mbits.ac.in';
+      dispEmail.textContent = newEmail;
+      dispEmail.setAttribute('href', 'mailto:' + newEmail);
+
+      dispPhone.textContent = inputPhone.value.trim() || '7907863486';
+      
+      const newSocial = inputSocial.value.trim() || 'N.A';
+      dispSocial.textContent = newSocial;
+
+      dispInstitution.textContent = inputInstitution.value.trim() || 'APJAKTU NSSCELL NRPF';
+      dispCluster.textContent = inputCluster.value.trim() || 'EKM';
+      dispCollege.textContent = inputCollege.value.trim() || 'MAR BASELIOS INSTITUTE OF TECHNOLOGY AND SCIENCE-MBI';
+
+      // Update visibility toggle
+      inlineVisibilityToggle.checked = modalVisibilityToggle.checked;
+      visibilityStatusText.textContent = modalVisibilityToggle.checked ? 'Public' : 'Private';
+
+      // Close modal and show notification
+      closeModal();
+      showToast('Profile updated successfully!');
+    });
+  });
+</script>
+</body></html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="en" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Tree Tag - User Profile</title>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- FontAwesome for standard brand and UI icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-theme-variables">
+    :root {
+      --ieee-blue-top: #1f5d82;
+      --ieee-orange-nav: #f47716;
+      --profile-teal-box: #134658;
+      --mint-active-tab: #a7f3d0;
+    }
+  </style>
+<style data-purpose="custom-toggles-and-scroll">
+    /* Custom toggle switch styling */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #22c55e;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #22c55e;
+    }
+  </style>
+<meta content="web_standard" name="shell-type"></head>
+<body class="bg-gray-50 text-slate-800 flex flex-col min-h-screen font-sans antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="w-full z-30 sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200/80 shadow-sm">
+<div class="bg-[#1f5d82] text-white text-xs px-4 sm:px-8 py-1.5">
+<div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+<nav aria-label="IEEE Network" class="flex flex-wrap items-center space-x-2 text-[11px] sm:text-xs text-slate-200">
+<a class="hover:text-white transition-colors" href="#">IEEE.org</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Spectrum</a>
+<span class="text-slate-400">|</span>
+<span class="text-emerald-300 font-medium flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Climate &amp; Sustainability Taskforce (CSTF)</span>
+</nav>
+<div class="flex items-center space-x-4 text-slate-200 text-xs">
+<a class="hover:text-white flex items-center gap-1 font-medium" href="#"><i class="fa-regular fa-circle-user"></i> Sign In</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-8 py-2.5 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 text-decoration-none group" href="#">
+<div class="w-10 h-10 rounded-full bg-[#189d77]/15 flex items-center justify-center border-2 border-[#189d77] text-[#189d77]">
+<svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10.5c-1.93 0-3.5-1.57-3.5-3.5S10.07 5.5 12 5.5s3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zm-1-3.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"></path><path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5 0 .93.51 1.74 1.27 2.16L12 9.5l1.23 1.66c.76-.42 1.27-1.23 1.27-2.16 0-1.38-1.12-2.5-2.5-2.5z" fill="#11775a"></path></svg>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-2xl tracking-tight text-[#169873] leading-none font-sans italic">TreeTag</span>
+<span class="text-[10px] text-gray-500 font-semibold tracking-wider uppercase">IEEE Young Professionals</span>
+</div>
+</a>
+<div class="hidden md:flex items-center gap-2 ml-4 pl-4 border-l border-gray-200">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          55,918 Trees Mapped
+        </span>
+<span class="hidden lg:inline-flex items-center gap-1 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-semibold border border-teal-200">
+<span class="material-symbols-outlined text-sm text-teal-600">eco</span> 4,312.8 t CO₂ Sequestered
+        </span>
+</div>
+</div>
+<nav class="flex items-center gap-6 sm:gap-8 font-medium text-sm text-gray-700">
+<a class="text-[#169873] font-semibold border-b-2 border-[#169873] pb-1 flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-base">map</span> Map
+      </a>
+<a class="hover:text-[#169873] transition-colors" href="#">Blogs</a>
+<a class="hover:text-[#169873] transition-colors" href="#">Login</a>
+<a class="text-[#E24B4B] font-semibold hover:opacity-85 transition-opacity px-3 py-1 rounded-lg hover:bg-red-50" href="#">Business</a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow w-full relative flex flex-col bg-[#65d5e8]">
+<!-- Top floating search & filter bar -->
+<div class="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
+<div class="pointer-events-auto flex items-center bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-200/80 px-3 py-2 w-full max-w-md">
+<span class="material-symbols-outlined text-gray-400 mr-2 text-xl">search</span>
+<input class="bg-transparent border-none text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 w-full p-0" placeholder="Search district, college, species, or tag ID (e.g. #KL-EKM-0891)..." type="text">
+<button class="px-2 py-1 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+      </button>
+</div>
+<div class="pointer-events-auto flex items-center gap-2 bg-white/95 backdrop-blur-md p-1.5 rounded-xl shadow-lg border border-gray-200/80">
+<button class="px-3 py-1.5 rounded-lg bg-[#169873] text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-sm">terrain</span> Map GIS
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">satellite_alt</span> Satellite
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">local_florist</span> Species Heatmap
+      </button>
+</div>
+</div>
+<!-- The Map Canvas Viewport with high-accuracy vector landmass matching Image 3 -->
+<div class="relative w-full h-[760px] md:h-[840px] overflow-hidden select-none bg-[#65d5e8]">
+<!-- SVG Cartographic Landmass & Water -->
+<svg class="absolute inset-0 w-full h-full object-cover" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1920 920" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="seaGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#62d3e7"></stop>
+<stop offset="50%" stop-color="#6ad8ea"></stop>
+<stop offset="100%" stop-color="#5ecfe3"></stop>
+</linearGradient>
+<pattern height="120" id="bathymetryGrid" patternUnits="userSpaceOnUse" width="120">
+<path d="M 120 0 L 0 0 0 120" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"></path>
+</pattern>
+</defs>
+<!-- Sea background (Turquoise Aqua matching Image 3) -->
+<rect fill="url(#seaGrad)" height="920" width="1920"></rect>
+<rect fill="url(#bathymetryGrid)" height="920" width="1920"></rect>
+<!-- Coastal Shallow Shoals -->
+<path d="M 740,0 Q 800,180 830,260 T 910,480 T 960,650 Q 990,760 1060,820 L 1020,920 L 1920,920 L 1920,0 Z" fill="#a8e9e1" opacity="0.45"></path>
+<path d="M 1320,440 Q 1280,560 1290,700 Q 1310,840 1440,920 L 1600,920 Q 1620,700 1520,540 Z" fill="#a8e9e1" opacity="0.4"></path>
+<!-- Peninsular India Landmass (Pale Sage / Khaki Greens from Image 3) -->
+<path d="M 760,-40 C 780,100 810,180 840,240 C 870,300 900,380 920,460 C 940,540 960,620 990,700 C 1010,750 1040,790 1065,830 C 1075,850 1070,870 1050,885 C 1025,875 1010,840 990,800 C 970,750 945,670 925,600 C 905,530 870,420 845,340 C 825,270 790,170 770,90 C 755,20 750,-40 760,-40 Z" fill="#c5e5c2" opacity="0.35"></path>
+<path d="M 765,-40 Q 820,160 850,240 T 925,480 T 995,720 Q 1030,800 1065,845 L 1920,845 L 1920,-40 Z" fill="#e5f1e1" stroke="#badbb6" stroke-width="1.5"></path>
+<!-- Forested Ghats & Reserves (Rich Moss Green) -->
+<path d="M 865,160 Q 910,260 925,380 T 970,580 Q 980,680 1030,760 Q 1000,770 980,720 Q 940,600 900,460 Q 860,330 865,160 Z" fill="#cbe8c7"></path>
+<path d="M 900,280 Q 930,360 945,440 T 985,620 Q 960,640 940,580 Q 910,480 890,380 Z" fill="#b1deb0" opacity="0.6"></path>
+<!-- Sri Lanka Island Landmass -->
+<ellipse cx="1410" cy="740" fill="#e5f1e1" rx="115" ry="175" stroke="#badbb6" stroke-width="1.5" transform="rotate(14 1410 740)"></ellipse>
+<ellipse cx="1405" cy="735" fill="#d2eacb" opacity="0.55" rx="80" ry="125" transform="rotate(14 1405 735)"></ellipse>
+<!-- Realistic Highway & River network strokes -->
+<path d="M 880,180 Q 940,240 1080,210" fill="none" opacity="0.85" stroke="#fce5b2" stroke-width="2.5"></path>
+<path d="M 1080,210 L 1380,150" fill="none" opacity="0.85" stroke="#fce5b2" stroke-width="2.5"></path>
+<path d="M 940,240 Q 1010,380 1050,460 Q 1080,520 1150,560" fill="none" opacity="0.8" stroke="#fce5b2" stroke-width="2"></path>
+<path d="M 925,480 Q 990,520 1060,510 T 1240,490" fill="none" opacity="0.8" stroke="#fce5b2" stroke-width="2"></path>
+<path d="M 850,220 Q 910,230 890,260" fill="none" stroke="#65d5e8" stroke-width="2"></path>
+<path d="M 900,390 Q 940,400 930,430" fill="none" stroke="#65d5e8" stroke-width="2"></path>
+<path d="M 930,550 Q 980,570 965,600" fill="none" stroke="#65d5e8" stroke-width="2"></path>
+</svg>
+<!-- Cartographic Typography matching Google Maps style in Image 3 -->
+<div class="absolute inset-0 pointer-events-none font-sans text-gray-700">
+<!-- Lakshadweep Sea & Basin labels -->
+<div class="absolute top-[410px] left-[520px] text-lg font-bold tracking-wider text-[#406874]/80 uppercase">LAKSHADWEEP</div>
+<div class="absolute top-[180px] left-[520px] text-xs font-medium text-[#406874]">• Chetlat</div>
+<div class="absolute top-[215px] left-[550px] text-xs font-medium text-[#406874]">• Kiltan</div>
+<div class="absolute top-[280px] left-[520px] text-xs font-medium text-[#406874]">• Amini</div>
+<div class="absolute top-[320px] left-[450px] text-xs font-medium text-[#406874]">• Agatti</div>
+<div class="absolute top-[370px] left-[510px] text-xs font-medium text-[#406874]">• Kavaratti</div>
+<div class="absolute top-[650px] left-[550px] text-xs font-medium text-[#406874]">• Minicoy / <span class="text-[11px]">മിനിക്കോയ്</span></div>
+<div class="absolute top-[710px] left-[490px] text-xs font-medium text-[#406874]">• Uligan</div>
+<div class="absolute top-[730px] left-[570px] text-xs font-medium text-[#406874]">• Kelaa</div>
+<div class="absolute top-[825px] left-[1050px] text-xs font-bold tracking-wider text-[#406874]/70 uppercase">Laccadive Sea</div>
+<!-- State & Regional Big Labels -->
+<div class="absolute top-[520px] left-[915px] text-sm font-bold tracking-widest text-[#2f5539]/90 uppercase">KERALAM / <span class="text-xs font-semibold">കേരളം</span></div>
+<div class="absolute top-[240px] left-[1130px] text-base font-bold tracking-wider text-[#2f5539]/80 uppercase">TAMIL NADU / <span class="text-xs font-semibold">தமிழ்நாடு</span></div>
+<div class="absolute top-[205px] left-[1280px] text-sm font-bold text-[#556972]">PUDUCHERRY / <span class="text-xs">பாண்டிச்சேரி</span></div>
+<div class="absolute top-[740px] left-[1350px] text-2xl font-bold tracking-tight text-[#2b4b3b]">Sri Lanka</div>
+<div class="absolute top-[820px] left-[1330px] text-sm font-bold text-gray-800">• Colombo</div>
+<div class="absolute top-[780px] left-[1420px] text-xs font-semibold text-gray-700">• Kandy</div>
+<div class="absolute top-[935px] left-[1380px] text-xs font-semibold text-gray-700">• Galle</div>
+<!-- Karnataka & Tamil Nadu Cities from reference -->
+<div class="absolute top-[40px] left-[780px] text-xs font-bold text-gray-800">Udupi / <span class="text-[11px]">ಉಡುಪಿ</span></div>
+<div class="absolute top-[45px] left-[900px] text-xs font-bold text-gray-800">Chikkamagaluru / <span class="text-[11px]">ಚಿಕ್ಕಮಗಳೂರು</span></div>
+<div class="absolute top-[80px] left-[900px] text-xs font-bold text-gray-800">Hassan / <span class="text-[11px]">ಹಾಸನ</span></div>
+<div class="absolute top-[85px] left-[1070px] text-sm font-bold text-gray-900">Bengaluru / <span class="text-xs">ಬೆಂಗಳೂರು</span></div>
+<div class="absolute top-[140px] left-[960px] text-xs font-bold text-gray-800">Mysuru / <span class="text-[11px]">ಮೈಸೂರು</span></div>
+<div class="absolute top-[65px] left-[1370px] text-base font-bold text-gray-900">Chennai / <span class="text-xs">சென்னை</span></div>
+<div class="absolute top-[85px] left-[1240px] text-xs font-bold text-gray-800">Vellore / <span class="text-[11px]">வேலூர்</span></div>
+<div class="absolute top-[230px] left-[1070px] text-xs font-bold text-gray-800">Salem / <span class="text-[11px]">சேலம்</span></div>
+<div class="absolute top-[310px] left-[1000px] text-sm font-bold text-gray-900">Coimbatore / <span class="text-xs">கோயம்புத்தூர்</span></div>
+<div class="absolute top-[335px] left-[1240px] text-xs font-bold text-gray-800">Thanjavur / <span class="text-[11px]">தஞ்சாவூர்</span></div>
+<div class="absolute top-[445px] left-[1130px] text-sm font-bold text-gray-900">Madurai / <span class="text-xs">மதுரை</span></div>
+<div class="absolute top-[535px] left-[1265px] text-xs font-bold text-gray-800">Rameswaram / <span class="text-[11px]">இராமேஸ்வரம்</span></div>
+<!-- Kerala Cities from reference -->
+<div class="absolute top-[280px] left-[865px] text-xs font-bold text-gray-800">Kozhikode / <span class="text-[11px]">കോഴിക്കോട്</span></div>
+<div class="absolute top-[375px] left-[920px] text-xs font-bold text-gray-800">Thrissur / <span class="text-[11px]">തൃശ്ശൂർ</span></div>
+<div class="absolute top-[455px] left-[920px] text-sm font-bold text-gray-900">Kochi / <span class="text-xs">കൊച്ചി</span></div>
+<div class="absolute top-[505px] left-[840px] text-xs font-bold text-gray-800">Alappuzha / <span class="text-[11px]">ആലപ്പുഴ</span></div>
+<div class="absolute top-[620px] left-[990px] text-xs font-bold text-gray-800">Thiruvananthapuram / <span class="text-[11px]">തിരുവനന്തപുരം</span></div>
+<div class="absolute top-[665px] left-[910px] text-xs font-bold text-gray-800">Nagercoil / <span class="text-[11px]">நாகர்கோவில்</span></div>
+<div class="absolute top-[685px] left-[1065px] text-xs font-bold text-gray-800">Kanniyakumari / <span class="text-[11px]">கன்னியாகுமரி</span></div>
+</div>
+<!-- ================= AUTHENTIC TREE TAG CLUSTERS (Matching Image 3) ================= -->
+<div class="absolute inset-0 pointer-events-none z-10">
+<!-- Cluster: Bengaluru (2093 & 39) -->
+<div class="absolute top-[25px] left-[1060px] pointer-events-auto cursor-pointer flex flex-col items-center group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">2093</div>
+<div class="w-9 h-9 -mt-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">39</div>
+</div>
+<!-- Cluster: Mangaluru / Coastal Karnataka (15 & 1967) -->
+<div class="absolute top-[110px] left-[785px] pointer-events-auto cursor-pointer flex flex-col items-center group -translate-x-1/2 -translate-y-1/2">
+<div class="w-9 h-9 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">15</div>
+<div class="w-11 h-11 -mt-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">1967</div>
+</div>
+<!-- Cluster: Hassan / Mysore (5) -->
+<div class="absolute top-[135px] left-[925px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">5</div>
+</div>
+<!-- Cluster: Chennai coastal (151, 1, 2) -->
+<div class="absolute top-[60px] left-[1350px] pointer-events-auto cursor-pointer flex items-center group -translate-x-1/2 -translate-y-1/2">
+<div class="w-11 h-11 rounded-full bg-[#169873] text-white flex flex-col items-center justify-center font-bold text-xs leading-none shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">
+<span class="">151</span>
+<span class="text-[10px] opacity-90">2</span>
+</div>
+<div class="w-6 h-6 -ml-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-[11px] shadow-sm border border-emerald-400">1</div>
+</div>
+<!-- Cluster: Kannur / Kasaragod (3382 & 3927) -->
+<div class="absolute top-[235px] left-[855px] pointer-events-auto cursor-pointer flex items-center group -translate-x-1/2 -translate-y-1/2">
+<div class="w-11 h-11 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">3382</div>
+<div class="w-11 h-11 -ml-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">3927</div>
+</div>
+<!-- Cluster: Kozhikode (365) -->
+<div class="absolute top-[315px] left-[880px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">365</div>
+</div>
+<!-- Cluster: Thrissur / Palakkad (10240) -->
+<div class="absolute top-[375px] left-[930px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-12 h-12 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">10240</div>
+</div>
+<!-- Cluster: Palakkad Gap (109) -->
+<div class="absolute top-[395px] left-[1020px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">109</div>
+</div>
+<!-- Cluster: Coimbatore (1) -->
+<div class="absolute top-[285px] left-[1035px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-9 h-9 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">1</div>
+</div>
+<!-- Cluster: Madurai (3) -->
+<div class="absolute top-[505px] left-[1160px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">3</div>
+</div>
+<!-- Cluster: Kochi / Ernakulam (2155 & 1100) WITH ACTIVE SPECIMEN DOSSIER CARD -->
+<div class="absolute top-[460px] left-[965px] pointer-events-auto -translate-x-1/2 -translate-y-1/2 z-30">
+<div class="relative flex items-center">
+<div class="w-11 h-11 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border-2 border-white ring-2 ring-emerald-500/50 cursor-pointer hover:scale-105 transition-transform">2155</div>
+<div class="w-10 h-10 -ml-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 cursor-pointer hover:scale-105 transition-transform">1100</div>
+</div>
+<!-- Floating Specimen Details Dossier Card matching Request -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-emerald-600/30 p-4 text-gray-800 animate-in fade-in">
+<div class="flex items-center justify-between pb-2 border-b border-gray-100">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">#KL-EKM-2024-0891</span>
+<span class="flex items-center gap-1 text-[10px] text-emerald-700 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> LoRaWAN</span>
+</div>
+<span class="text-xs font-mono text-gray-400">10.05°N, 76.63°E</span>
+</div>
+<div class="mt-2">
+<h4 class="font-bold text-base text-gray-900 leading-tight">Swietenia macrophylla</h4>
+<p class="text-xs text-gray-500 italic">Big-leaf Mahogany</p>
+<p class="text-xs text-gray-600 mt-1 leading-snug">
+              Planted by <strong class="text-gray-900 font-semibold">Jibin Wilson</strong> • MBITS IEEE CSTF &amp; APJAKTU NSSCELL
+            </p>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-3 p-2 bg-emerald-50/60 rounded-xl border border-emerald-100 text-center">
+<div>
+<div class="text-[9px] uppercase tracking-wider text-gray-500 font-semibold">Biomass</div>
+<div class="font-bold text-xs text-emerald-800 font-mono">14.8 kg</div>
+</div>
+<div>
+<div class="text-[9px] uppercase tracking-wider text-gray-500 font-semibold">Health</div>
+<div class="font-bold text-xs text-emerald-800 font-mono">98.2% Opt.</div>
+</div>
+<div>
+<div class="text-[9px] uppercase tracking-wider text-gray-500 font-semibold">Annual CO₂</div>
+<div class="font-bold text-xs text-emerald-800 font-mono">48.6 kg/yr</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-3 pt-2 border-t border-gray-100">
+<span class="text-[11px] text-emerald-700 font-medium flex items-center gap-1"><span class="material-symbols-outlined text-xs">verified</span> Verified IEEE Tag</span>
+<button class="px-2.5 py-1 rounded-lg bg-[#169873] text-white text-xs font-medium hover:bg-[#117e5f] transition-colors flex items-center gap-1 shadow-sm">
+              Dossier <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<!-- Pointer tail -->
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-white"></div>
+</div>
+</div>
+<!-- Cluster: Kollam / Trivandrum (4648 & 504) -->
+<div class="absolute top-[585px] left-[980px] pointer-events-auto cursor-pointer flex items-center group -translate-x-1/2 -translate-y-1/2">
+<div class="w-11 h-11 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">4648</div>
+<div class="w-9 h-9 -ml-2 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-xs shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">504</div>
+</div>
+<!-- Cluster: South Kerala Coast (2) -->
+<div class="absolute top-[635px] left-[890px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-9 h-9 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">2</div>
+</div>
+<!-- Coastal / Island Clusters from Image 3 (8, 5, 3) -->
+<div class="absolute top-[720px] left-[815px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">8</div>
+</div>
+<div class="absolute top-[740px] left-[950px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">5</div>
+</div>
+<div class="absolute top-[810px] left-[825px] pointer-events-auto cursor-pointer group -translate-x-1/2 -translate-y-1/2">
+<div class="w-10 h-10 rounded-full bg-[#169873] text-white flex items-center justify-center font-bold text-sm shadow-md border border-emerald-400 group-hover:scale-110 transition-transform">3</div>
+</div>
+</div>
+<!-- Google Map UI accents (Bottom Left Google logo & Bottom Right metadata from Image 3) -->
+<div class="absolute bottom-2 left-3 z-20 flex items-center pointer-events-none select-none">
+<span class="font-sans text-xl font-bold tracking-tight text-gray-700/80 drop-shadow-sm flex items-center">
+<span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+</span>
+</div>
+<div class="absolute bottom-1 right-2 z-20 flex items-center gap-2 text-[10px] text-gray-700/80 bg-white/60 backdrop-blur-sm px-2 py-0.5 rounded shadow-xs select-none">
+<a class="hover:underline" href="#">Keyboard shortcuts</a>
+<span class="">Map data ©2026</span>
+<a class="hover:underline" href="#">Terms</a>
+</div>
+<!-- Floating GIS Map Controls on right side -->
+<div class="absolute bottom-8 right-4 z-20 flex flex-col gap-2">
+<div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col">
+<button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors border-b border-gray-100" title="Zoom In">
+<span class="material-symbols-outlined text-lg font-bold">add</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-lg font-bold">remove</span>
+</button>
+</div>
+<button class="w-10 h-10 rounded-xl bg-white shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors" title="Recenter Kerala GIS">
+<span class="material-symbols-outlined text-lg">my_location</span>
+</button>
+<button class="w-10 h-10 rounded-xl bg-white shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors" title="Full screen">
+<span class="material-symbols-outlined text-lg">fullscreen</span>
+</button>
+</div>
+<!-- Bottom-Left Classification Legend Dock -->
+<div class="absolute bottom-8 left-4 z-20 bg-white/95 backdrop-blur-md rounded-xl p-3.5 shadow-xl border border-gray-200/80 max-w-xs">
+<div class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#169873]"></span> Mapping Classification
+      </div>
+<div class="space-y-1.5 text-xs text-gray-600">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#169873] border border-white shadow-xs"></span>
+<span class="">Verified &amp; LoRaWAN Beacon Active (&gt;5k)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#189d77] opacity-80"></span>
+<span class="">Regional Community &amp; Campus Plantings</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#f47716]"></span>
+<span class="">Telemetry Pending Verification</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Integrated Field Tagging Activity & Cluster Audit Drawer underneath Map -->
+<div class="w-full bg-[#f4fbf4] border-t border-emerald-200/60 py-8 px-6 sm:px-12">
+
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full bg-black text-white mt-auto pt-12 pb-10 px-6 sm:px-12 border-t border-gray-900">
+<div class="max-w-7xl mx-auto space-y-7">
+<!-- Footer Title -->
+<h3 class="text-2xl sm:text-[28px] font-semibold tracking-tight text-white">Stay connected</h3>
+<!-- Secondary Links -->
+<nav aria-label="Footer Quick Links" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-200">
+<a class="hover:underline" href="#">Home</a>
+<a class="hover:underline" href="#">Sitemap</a>
+<a class="hover:underline" href="#">Contact &amp; Support</a>
+<a class="hover:underline" href="#">Accessibility</a>
+<a class="hover:underline" href="#">Nondiscrimination Policy</a>
+<a class="hover:underline" href="#">IEEE Ethics Reporting</a>
+<a class="hover:underline" href="#">IEEE Privacy Policy</a>
+<a class="hover:underline" href="#">Terms</a>
+<a class="hover:underline" href="#">Feedback</a>
+</nav>
+<!-- Copyright & Disclaimer -->
+<p class="text-xs sm:text-sm text-gray-400 max-w-4xl leading-relaxed pt-2">
+        © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
+      </p>
+</div>
+</footer>
+<!-- END: MainFooter -->
+
+
+</body></html>

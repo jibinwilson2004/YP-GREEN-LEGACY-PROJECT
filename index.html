@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Tree Tag — Verifiable Precision Afforestation & Telemetry Engine</title>
+  <meta name="description" content="Tree Tag bridges industrial-grade tracking precision with ecological balance. Verified precision afforestation backed by IEEE Young Professionals CSTF."/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg"/>
+  <link rel="alternate icon" href="./favicon.svg"/>
+
+  <!-- Preconnect & Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS v3 CDN with Container & Form Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#002218",
+            "on-primary": "#ffffff",
+            "primary-container": "#0f382c",
+            "on-primary-container": "#79a292",
+            "inverse-primary": "#a6d0be",
+            "primary-fixed": "#c1ecda",
+            "primary-fixed-dim": "#a6d0be",
+            "on-primary-fixed": "#002117",
+            "on-primary-fixed-variant": "#274e41",
+            "secondary": "#196b4f",
+            "secondary-accent": "#2f7c5f",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#a2f0cc",
+            "on-secondary-container": "#1f6f53",
+            "secondary-fixed": "#a5f2cf",
+            "secondary-fixed-dim": "#8ad6b4",
+            "on-secondary-fixed": "#002115",
+            "on-secondary-fixed-variant": "#00513a",
+            "tertiary": "#0a2118",
+            "tertiary-container": "#20362c",
+            "on-tertiary-container": "#869f92",
+            "surface": "#f4fbf4",
+            "surface-dim": "#d4dcd5",
+            "surface-bright": "#f4fbf4",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#eef5ef",
+            "surface-container": "#e8f0e9",
+            "surface-container-high": "#e3eae3",
+            "surface-container-highest": "#dde4de",
+            "on-surface": "#161d19",
+            "on-surface-variant": "#414845",
+            "inverse-surface": "#2b322e",
+            "inverse-on-surface": "#ebf3ec",
+            "outline": "#717975",
+            "outline-variant": "#c1c8c3",
+            "surface-tint": "#3f6658",
+            "background": "#f4fbf4",
+            "on-background": "#161d19",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            sm: "0.125rem",
+            md: "0.375rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "spacing-2xs": "0.25rem",
+            "spacing-xs": "0.5rem",
+            "spacing-sm": "0.75rem",
+            "spacing-md": "1rem",
+            "spacing-lg": "1.5rem",
+            "spacing-xl": "2rem",
+            "spacing-2xl": "3rem",
+            "spacing-3xl": "4.5rem",
+            "spacing-4xl": "6rem",
+            "grid-margin-mobile": "1.25rem",
+            "grid-margin-desktop": "3rem",
+            "grid-gutter": "1.5rem"
+          },
+          fontFamily: {
+            "display-hero": ["Outfit", "sans-serif"],
+            "headline-lg": ["Outfit", "sans-serif"],
+            "headline-md": ["Outfit", "sans-serif"],
+            "headline-sm": ["Outfit", "sans-serif"],
+            "body-lg": ["Hanken Grotesk", "sans-serif"],
+            "body-md": ["Hanken Grotesk", "sans-serif"],
+            "body-sm": ["Hanken Grotesk", "sans-serif"],
+            "label-md": ["Hanken Grotesk", "sans-serif"],
+            "label-sm": ["Hanken Grotesk", "sans-serif"],
+            "mono-metric": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  
+  <!-- Custom Design System Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+  <!-- 1. SLEEK IEEE MASTER UTILITY TOP BAR -->
+  <header class="w-full z-50 sticky top-0 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(15,56,44,0.04)] border-b border-outline-variant/60 font-sans">
+    <div class="w-full bg-[#0a2118] text-white border-b border-[#184a68]/40 text-[13px]">
+      <div class="max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop h-9 flex items-center justify-between">
+        <!-- Left: IEEE Sites Directory -->
+        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap opacity-90 text-[12px] font-normal">
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://www.ieee.org" target="_blank" rel="noopener">IEEE.org</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://ieeexplore.ieee.org" target="_blank" rel="noopener">IEEE Xplore</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE Standards</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://spectrum.ieee.org" target="_blank" rel="noopener">IEEE Spectrum</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">More Sites</a>
+        </div>
+        <!-- Right: Social Links & Sign In -->
+        <div class="flex items-center gap-4 flex-shrink-0 text-[12px]">
+          <div class="hidden sm:flex items-center gap-3 text-white/80">
+            <!-- Facebook -->
+            <a aria-label="Facebook" class="hover:text-white transition-colors" href="https://www.facebook.com/IEEE.org/" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+            </a>
+            <!-- Twitter / X -->
+            <a aria-label="Twitter / X" class="hover:text-white transition-colors" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a aria-label="LinkedIn" class="hover:text-white transition-colors" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+            </a>
+            <!-- YouTube -->
+            <a aria-label="YouTube" class="hover:text-white transition-colors" href="https://www.youtube.com/user/IEEEorg" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+            </a>
+          </div>
+          <span class="opacity-40 select-none hidden sm:inline">|</span>
+          <div class="top-bar-auth flex items-center">
+            <a class="font-medium text-white hover:text-primary-fixed transition-colors flex items-center gap-1" href="login.html">
+              <span class="material-symbols-outlined text-[16px]">account_circle</span>
+              <span>Sign In</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN INTEGRATED NAVIGATION & CO-BRANDING BAR -->
+    <div class="h-20 max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop flex items-center justify-between gap-spacing-md">
+      <!-- Left: Unified Brand & Partnership Lockup -->
+      <div class="flex items-center gap-3 md:gap-4 flex-shrink-0">
+        <!-- Tree Tag Primary Brand -->
+        <a class="flex items-center gap-2.5 group" href="index.html">
+          <img src="./assets/images/logo.png" alt="Tree Tag Logo" class="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-200"/>
+          <div class="flex flex-col leading-none">
+            <span class="font-headline-sm text-[20px] font-bold text-primary tracking-tight">Tree Tag</span>
+            <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest font-semibold mt-0.5">Telemetry Engine</span>
+          </div>
+        </a>
+        <span class="h-7 w-px bg-outline-variant/60 hidden sm:inline-block"></span>
+        <!-- Co-Branded Partner Lockup: IEEE Young Professionals CSTF + IEEE Diamond Logo -->
+        <div class="hidden md:flex items-center gap-3">
+          <img alt="IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF)" class="h-7 w-auto object-contain" src="./assets/images/ieee-yp-cstf.png"/>
+          <span class="h-5 w-px bg-outline-variant/50 hidden lg:inline-block"></span>
+          <img alt="Official IEEE Logo" class="h-6 w-auto object-contain hidden lg:inline-block" src="./assets/images/ieee-diamond.png"/>
+        </div>
+      </div>
+
+      <!-- Right: Navigation Menu & Actions -->
+      <div class="flex items-center gap-spacing-lg">
+        <nav class="hidden md:flex items-center gap-spacing-lg">
+          <a class="font-label-md text-label-md text-primary font-semibold hover:text-secondary transition-colors" href="#mission">Mission</a>
+          <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" href="map.html">
+            <span>Live Map</span>
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+            </span>
+          </a>
+          <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#services">Services</a>
+          <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#footprint">Footprint</a>
+        </nav>
+        <div class="flex items-center gap-spacing-md">
+          <button class="bg-primary hover:bg-secondary text-on-primary font-label-md text-label-md px-spacing-lg py-2.5 rounded shadow-sm transition-all duration-200 inline-flex items-center justify-center hover:shadow hover:-translate-y-0.5 active:translate-y-0 cursor-pointer" data-action="schedule-meeting">
+            Schedule a Meeting
+          </button>
+          
+          <!-- Dynamic Auth Controls (Logged In vs Logged Out) -->
+          <div class="header-auth-controls flex items-center gap-2">
+            <a class="px-3.5 py-1.5 rounded-lg border border-primary/20 text-primary text-xs font-semibold hover:bg-surface-container-high transition-colors" href="login.html">
+              Sign In
+            </a>
+            <a class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant/60 flex items-center justify-center hover:bg-secondary-container transition-colors cursor-pointer text-primary" href="profile.html" title="User Profile">
+              <span class="material-symbols-outlined text-[20px]">person</span>
+            </a>
+          </div>
+
+          <button id="mobileMenuBtn" class="md:hidden w-9 h-9 flex items-center justify-center rounded text-primary hover:bg-surface-container-high" aria-label="Toggle Mobile Menu">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-surface border-b border-outline-variant/60 px-4 py-3 space-y-2">
+      <a class="block py-1.5 font-label-md text-primary font-semibold" href="#mission">Mission</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="map.html">Live Map (55,918 Trees)</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="#services">Services</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="#footprint">Footprint</a>
+      <div class="mobile-auth-controls pt-2 border-t border-outline-variant/40 space-y-1">
+        <a class="block py-1.5 font-label-md text-secondary font-semibold" href="login.html">Login</a>
+        <a class="block py-1.5 font-label-md text-primary font-semibold" href="profile.html">My Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full">
+    <!-- 2. HERO SECTION -->
+    <section class="relative w-full overflow-hidden bg-primary-container text-on-primary min-h-[640px] flex items-center justify-center" id="mission">
+      <!-- Full-Bleed Misty Canopy Background with Gradient Overlay -->
+      <div class="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-1000 ease-out scale-105" style='background-image: url("./assets/images/hero-misty-forest.png");'></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary-container/75 to-background"></div>
+
+      <!-- Hero Content Container -->
+      <div class="relative z-10 max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop pt-24 pb-spacing-3xl flex flex-col items-center text-center">
+        <!-- Main Headline -->
+        <h1 class="font-display-hero text-3xl sm:text-5xl md:text-[56px] leading-tight md:leading-[64px] text-on-primary max-w-4xl tracking-tight mb-spacing-md uppercase drop-shadow-sm">
+          SEEDING THE FUTURE, ONE TREE AT A TIME.
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="font-headline-sm text-lg sm:text-[22px] text-surface-container-high max-w-xl mb-spacing-2xl font-normal opacity-95">
+          Nature's digital-based solution.
+        </p>
+
+        <!-- Dynamic Interactive Telemetry Action Center -->
+        <div class="flex flex-col sm:flex-row items-center gap-spacing-md p-spacing-2xs bg-surface-bright/10 backdrop-blur-xl rounded-xl shadow-xl border border-white/10">
+          <!-- Live Counter Pill -->
+          <div class="flex items-center gap-spacing-sm px-spacing-lg py-2.5 bg-primary/60 rounded-lg">
+            <span class="material-symbols-outlined text-secondary-fixed text-[20px]">forest</span>
+            <span class="font-body-md text-body-md text-on-primary font-medium">Trees tagged:</span>
+            <span class="font-mono-metric text-mono-metric text-secondary-fixed font-bold tracking-tight counter-val" data-target="55918">55,918</span>
+          </div>
+          <!-- CTA Button -->
+          <a class="inline-flex items-center gap-spacing-xs px-spacing-lg py-2.5 bg-secondary-container hover:bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 font-semibold" href="map.html">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span>View Live Map</span>
+          </a>
+        </div>
+
+        <!-- 4 High-Precision Telemetry Metric Cards -->
+        <div class="mt-spacing-3xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-spacing-md w-full max-w-5xl">
+          <!-- Card 1 -->
+          <div class="bg-surface-container-lowest/90 backdrop-blur-md p-spacing-md rounded-lg border border-outline-variant/50 shadow-sm text-left hover-lift">
+            <div class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Sensor Uptime</div>
+            <div class="font-headline-sm text-[24px] font-bold text-primary mt-1">99.98%</div>
+            <div class="font-body-sm text-[12px] text-secondary font-medium mt-0.5 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">verified</span>
+              <span>Cryptographic Proof</span>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="bg-surface-container-lowest/90 backdrop-blur-md p-spacing-md rounded-lg border border-outline-variant/50 shadow-sm text-left hover-lift">
+            <div class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Registry Hash</div>
+            <div class="font-mono-metric text-[22px] font-bold text-primary mt-1">SHA-256</div>
+            <div class="font-body-sm text-[12px] text-secondary font-medium mt-0.5 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">lock</span>
+              <span>Tamper-Evident</span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="bg-surface-container-lowest/90 backdrop-blur-md p-spacing-md rounded-lg border border-outline-variant/50 shadow-sm text-left hover-lift">
+            <div class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Survival Index</div>
+            <div class="font-headline-sm text-[24px] font-bold text-primary mt-1">94.2%</div>
+            <div class="font-body-sm text-[12px] text-secondary font-medium mt-0.5 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">trending_up</span>
+              <span>+6.1% vs Industry</span>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="bg-surface-container-lowest/90 backdrop-blur-md p-spacing-md rounded-lg border border-outline-variant/50 shadow-sm text-left hover-lift">
+            <div class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Audit Frequency</div>
+            <div class="font-headline-sm text-[22px] font-bold text-primary mt-1">Bi-Weekly</div>
+            <div class="font-body-sm text-[12px] text-secondary font-medium mt-0.5 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">satellite_alt</span>
+              <span>Satellite &amp; In-Situ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SENTINEL-2 & LORAWAN VALIDATED FORECAST SECTION -->
+    <section class="w-full max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop py-spacing-2xl">
+      <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-[#092920] text-white text-center py-16 px-6 sm:px-12 border border-secondary/20">
+        <!-- Pine tree illustration background -->
+        <div class="absolute inset-0 w-full h-full bg-cover bg-bottom opacity-25 mix-blend-luminosity select-none pointer-events-none" style='background-image: url("./assets/images/pine-illustration.png");'></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#051712] via-transparent to-[#051712]/80 pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center max-w-2xl mx-auto">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/20 text-secondary-fixed font-label-sm text-[11px] uppercase tracking-widest border border-secondary/30 mb-6">
+            <span class="material-symbols-outlined text-[14px]">satellite_alt</span>
+            <span>SENTINEL-2 &amp; LORAWAN VALIDATED FORECAST</span>
+          </div>
+
+          <!-- Narrative Readout -->
+          <p class="font-headline-md text-xl sm:text-2xl text-surface-container-high font-normal mb-2">
+            Our clients are capturing
+          </p>
+
+          <!-- Grand Metric Value -->
+          <div class="font-display-hero text-5xl sm:text-7xl font-extrabold tracking-tight text-white mb-2 drop-shadow-md">
+            4,312 <span class="text-secondary-fixed">tons CO₂</span>
+          </div>
+
+          <p class="font-headline-sm text-lg sm:text-xl text-surface-container-high font-normal mb-8">
+            in the next 10 years
+          </p>
+
+          <!-- Telemetry Assurance Pills -->
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-bright/10 backdrop-blur-md text-[13px] font-label-sm text-white border border-white/10">
+              <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+              <span>Tamper-evident biomass telemetry</span>
+            </div>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-bright/10 backdrop-blur-md text-[13px] font-label-sm text-white border border-white/10">
+              <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+              <span>Multi-species biodiverse canopy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LIVE AFFORESTATION TELEMETRY MAP PREVIEW SECTION -->
+    <section class="w-full max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop py-spacing-2xl" id="live-map">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-spacing-xl">
+        <div>
+          <div class="section-badge inline-flex items-center gap-2.5 mb-spacing-sm">
+            <span class="section-badge-bar w-1.5 h-4 bg-secondary rounded-full flex-shrink-0"></span>
+            <span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-semibold">LIVE AFFORESTATION TELEMETRY</span>
+          </div>
+          <h2 class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary tracking-tight font-bold">
+            Explore Tagged Trees Across Regions
+          </h2>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-spacing-sm md:mt-0">
+          Every single sapling is geotagged with precision coordinates, species metadata, and verified survival telemetry updated in real time.
+        </p>
+      </div>
+
+      <!-- Interactive Map Card Container -->
+      <div class="relative bg-surface-container-lowest rounded-2xl shadow-xl border border-outline-variant/50 overflow-hidden">
+        <!-- Top Map Interactive Control Bar -->
+        <div class="p-spacing-md md:px-spacing-xl bg-surface-container-low/90 backdrop-blur-md border-b border-surface-variant flex flex-wrap items-center justify-between gap-spacing-md z-20 relative">
+          <!-- Search Box -->
+          <div class="relative flex-1 min-w-[260px] max-w-md">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+            <input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary transition-all" placeholder="Search location, species, or tag ID (e.g. TT-8924)..." type="text"/>
+          </div>
+          <!-- Filter Chips -->
+          <div class="flex flex-wrap items-center gap-spacing-xs overflow-x-auto py-1">
+            <a href="map.html" class="px-spacing-md py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+              <span>All Clusters</span>
+              <span class="text-secondary-fixed text-xs font-mono font-normal">(55,918)</span>
+            </a>
+            <a href="map.html" class="px-spacing-md py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1.5">
+              <span>Kerala</span> <span class="text-on-surface-variant text-xs font-mono">(28,410)</span>
+            </a>
+            <a href="map.html" class="px-spacing-md py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1.5">
+              <span>Tamil Nadu</span> <span class="text-on-surface-variant text-xs font-mono">(18,205)</span>
+            </a>
+            <a href="map.html" class="px-spacing-md py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1.5">
+              <span>Karnataka</span> <span class="text-on-surface-variant text-xs font-mono">(9,303)</span>
+            </a>
+            <a href="map.html" class="px-spacing-md py-1.5 rounded-full bg-secondary-container/60 hover:bg-secondary-container text-on-secondary-container font-label-sm text-label-sm transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">eco</span>
+              <span>Active Plantations</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Map Stage Visual with Genuine Satellite & Cluster Coordinates -->
+        <div class="relative w-full h-[480px] md:h-[560px] bg-[#7ec4cb] overflow-hidden group select-none">
+          <!-- Live Map Imagery Asset -->
+          <img alt="Interactive Tree Tag GIS Afforestation Map" class="w-full h-full object-cover object-center select-none" src="./assets/images/map-satellite.png"/>
+          <!-- Map Overlay Vignette for UI Depth -->
+          <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/25 via-transparent to-black/10"></div>
+
+          <!-- Cluster Interactive Hotspots -->
+          <!-- Wayanad -->
+          <a href="map.html" class="absolute top-[28%] left-[45%] transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" title="Wayanad: 3,347 Trees">
+            <div class="relative flex items-center justify-center">
+              <div class="animate-ping absolute h-10 w-10 rounded-full bg-secondary/40"></div>
+              <div class="h-9 w-9 rounded-full bg-secondary text-white shadow-lg flex items-center justify-center font-label-sm text-[12px] font-bold hover:scale-110 transition-transform">
+                3347
+              </div>
+            </div>
+          </a>
+
+          <!-- Palakkad -->
+          <a href="map.html" class="absolute top-[42%] left-[47%] transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" title="Palakkad Gap: 10,189 Trees">
+            <div class="h-12 w-12 rounded-full bg-primary-container text-white shadow-xl flex flex-col items-center justify-center font-label-sm text-[12px] font-bold ring-2 ring-secondary-container hover:scale-110 transition-transform">
+              10189
+            </div>
+          </a>
+
+          <!-- Bengaluru -->
+          <a href="map.html" class="absolute top-[18%] left-[58%] transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" title="Bengaluru: 2,093 Trees">
+            <div class="h-9 w-9 rounded-full bg-secondary text-white shadow-md flex items-center justify-center font-label-sm text-[12px] font-bold hover:scale-110 transition-transform">
+              2093
+            </div>
+          </a>
+
+          <!-- Kochi -->
+          <a href="map.html" class="absolute top-[52%] left-[48%] transform -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" title="Kochi: 2,154 Trees">
+            <div class="relative flex items-center justify-center">
+              <div class="absolute h-14 w-14 rounded-full bg-secondary/30 animate-pulse"></div>
+              <div class="h-11 w-11 rounded-full bg-primary text-white shadow-2xl flex flex-col items-center justify-center font-label-sm text-[12px] font-bold ring-2 ring-secondary-container hover:scale-110 transition-transform">
+                2154
+              </div>
+            </div>
+          </a>
+
+          <!-- Alappuzha -->
+          <a href="map.html" class="absolute top-[62%] left-[49%] transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer" title="Alappuzha: 4,620 Trees">
+            <div class="h-10 w-10 rounded-full bg-secondary text-white shadow-lg flex items-center justify-center font-label-sm text-[12px] font-semibold hover:scale-110 transition-transform">
+              4620
+            </div>
+          </a>
+
+          <!-- Floating Live Telemetry Badge 1 (Top Left) -->
+          <div class="absolute top-4 left-4 z-20 max-w-xs bg-surface-container-lowest/95 backdrop-blur-md p-spacing-sm rounded-xl shadow-lg border border-outline-variant/70 hidden sm:block">
+            <div class="flex items-center gap-spacing-xs mb-1">
+              <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+              <span class="font-label-sm text-[11px] text-secondary font-bold uppercase tracking-wider">Live Telemetry Ping</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-secondary-container/60 text-secondary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+              </div>
+              <div>
+                <div class="font-headline-sm text-[14px] font-semibold text-primary leading-tight">Mahogany #TT-8924</div>
+                <div class="font-body-sm text-[12px] text-on-surface-variant">Wayanad Sector · Verified 12m ago</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Live Telemetry Badge 2 (Bottom Left) -->
+          <div class="absolute bottom-4 left-4 z-20 max-w-sm bg-surface-container-lowest/95 backdrop-blur-md p-spacing-md rounded-xl shadow-lg border border-outline-variant/70 hidden sm:block">
+            <div class="flex items-center justify-between gap-spacing-md mb-spacing-xs">
+              <div class="flex items-center gap-spacing-xs">
+                <span class="material-symbols-outlined text-secondary text-[18px]">hub</span>
+                <span class="font-label-md text-label-md text-primary font-semibold">Kochi Bio-Corridor</span>
+              </div>
+              <span class="font-mono text-xs px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">10,189 Trees</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant leading-tight mb-spacing-xs">
+              99.6% survival telemetry across 14 public campuses and micro-sanctuaries.
+            </p>
+            <div class="flex items-center justify-between pt-1 border-t border-surface-variant text-[11px] font-label-sm text-outline">
+              <span>Coordinates: 9.9312° N, 76.2673° E</span>
+              <span class="text-secondary font-medium">Auto-Synced</span>
+            </div>
+          </div>
+
+          <!-- View Full Map CTA Overlay -->
+          <div class="absolute bottom-4 right-4 z-20">
+            <a href="map.html" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white font-label-md text-sm px-4 py-2.5 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5">
+              <span class="material-symbols-outlined text-[18px]">map</span>
+              <span>View Full Screen Map</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Telemetry Metrics Ribbon Bar -->
+        <div class="p-spacing-md md:p-spacing-lg bg-surface-container-low border-t border-surface-variant flex flex-col md:flex-row items-center justify-between gap-spacing-lg">
+          <div class="grid grid-cols-3 gap-spacing-lg md:gap-spacing-2xl w-full md:w-auto text-left">
+            <div>
+              <div class="font-mono-metric text-[22px] md:text-[26px] text-primary font-semibold leading-tight">55,918</div>
+              <div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Trees Tagged</div>
+            </div>
+            <div class="border-l border-outline-variant/60 pl-spacing-lg">
+              <div class="font-mono-metric text-[22px] md:text-[26px] text-secondary font-semibold leading-tight">100%</div>
+              <div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Geotagged &amp; Audited</div>
+            </div>
+            <div class="border-l border-outline-variant/60 pl-spacing-lg">
+              <div class="font-mono-metric text-[22px] md:text-[26px] text-primary font-semibold leading-tight">24</div>
+              <div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Active Clusters</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="map.html" class="inline-flex items-center gap-1.5 text-secondary hover:text-primary font-label-md text-sm font-semibold transition-colors">
+              <span>Explore Interactive Registry</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SERVICES SECTION -->
+    <section class="w-full max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop py-spacing-3xl" id="services">
+      <div class="flex flex-col items-start mb-spacing-2xl">
+        <div class="section-badge inline-flex items-center gap-2.5 mb-spacing-sm">
+          <span class="section-badge-bar w-1.5 h-4 bg-secondary rounded-full flex-shrink-0"></span>
+          <span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-semibold">OUR SERVICES</span>
+        </div>
+        <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary tracking-tight font-bold max-w-2xl leading-snug">
+          Precision telemetry meet scalable ecological restoration.
+        </h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">
+          Modular, auditable services tailored to corporate sustainability, verified registry credits, and community stewardship.
+        </p>
+      </div>
+
+      <!-- Services Grid (5 Cards matching Stitch export) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-spacing-lg">
+        <!-- Service 1: CSR -->
+        <div class="bg-surface-container-lowest p-spacing-xl rounded-xl border border-outline-variant/60 shadow-sm hover-lift flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center mb-spacing-md">
+              <span class="material-symbols-outlined text-[26px]">corporate_fare</span>
+            </div>
+            <h3 class="font-headline-sm text-xl font-bold text-primary mb-spacing-xs">Corporate Social Responsibility</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Tech-integrated, transparent CSR projects with trans-national NGO networks like Thanal and Sustera.
+            </p>
+          </div>
+          <a class="inline-flex items-center gap-1.5 text-secondary font-label-md text-sm font-semibold mt-spacing-lg hover:text-primary transition-colors group" href="#services">
+            <span>Explore CSR Models</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Service 2: Carbon Credit -->
+        <div class="bg-surface-container-lowest p-spacing-xl rounded-xl border border-outline-variant/60 shadow-sm hover-lift flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center mb-spacing-md">
+              <span class="material-symbols-outlined text-[26px]">trending_up</span>
+            </div>
+            <h3 class="font-headline-sm text-xl font-bold text-primary mb-spacing-xs">Carbon Credit</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Lucrative investments in reducing carbon footprints to increase company valuation.
+            </p>
+          </div>
+          <a class="inline-flex items-center gap-1.5 text-secondary font-label-md text-sm font-semibold mt-spacing-lg hover:text-primary transition-colors group" href="#services">
+            <span>View Credit Matrix</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Service 3: Custom Models -->
+        <div class="bg-surface-container-lowest p-spacing-xl rounded-xl border border-outline-variant/60 shadow-sm hover-lift flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center mb-spacing-md">
+              <span class="material-symbols-outlined text-[26px]">architecture</span>
+            </div>
+            <h3 class="font-headline-sm text-xl font-bold text-primary mb-spacing-xs">Custom Models</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Creative freedom to build custom environmental projects that align with your long-term organizational goals.
+            </p>
+          </div>
+          <a class="inline-flex items-center gap-1.5 text-secondary font-label-md text-sm font-semibold mt-spacing-lg hover:text-primary transition-colors group" href="#services">
+            <span>Configure Framework</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Service 4: Natural Economic Zones -->
+        <div class="bg-surface-container-lowest p-spacing-xl rounded-xl border border-outline-variant/60 shadow-sm hover-lift flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center mb-spacing-md">
+              <span class="material-symbols-outlined text-[26px]">park</span>
+            </div>
+            <div class="flex items-center justify-between mb-spacing-xs">
+              <h3 class="font-headline-sm text-xl font-bold text-primary">Natural Economic Zones</h3>
+              <span class="text-[10px] font-label-sm uppercase tracking-wider text-outline px-2 py-0.5 bg-surface-container rounded">Oxy Parks</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Designing, curating, and building exclusive green spaces like Oxy parks and workation areas.
+            </p>
+          </div>
+          <a class="inline-flex items-center gap-1.5 text-secondary font-label-md text-sm font-semibold mt-spacing-lg hover:text-primary transition-colors group" href="#services">
+            <span>Explore Spatial Blueprints</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Service 5: Student Engagement -->
+        <div class="bg-surface-container-lowest p-spacing-xl rounded-xl border border-outline-variant/60 shadow-sm hover-lift flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center mb-spacing-md">
+              <span class="material-symbols-outlined text-[26px]">school</span>
+            </div>
+            <h3 class="font-headline-sm text-xl font-bold text-primary mb-spacing-xs">Student Engagement</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              A platform for students to participate in plantation drives, complete with evaluation tools for educators.
+            </p>
+          </div>
+          <a class="inline-flex items-center gap-1.5 text-secondary font-label-md text-sm font-semibold mt-spacing-lg hover:text-primary transition-colors group" href="#services">
+            <span>Academic Toolkits</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PARTNERS SECTION -->
+    <section class="w-full max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop py-spacing-2xl">
+      <div class="bg-surface-container-low p-spacing-xl rounded-2xl border border-outline-variant/40">
+        <div class="flex items-center justify-between mb-spacing-lg">
+          <h3 class="font-headline-sm text-xl font-bold text-primary">Our Partners</h3>
+          <span class="font-label-sm text-[11px] text-outline uppercase tracking-wider font-semibold">NGOS &amp; RESEARCH ALLIANCES</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-spacing-sm">
+          <div class="bg-surface-container-lowest p-spacing-md rounded-lg shadow-xs flex items-center gap-3 border border-surface-variant">
+            <div class="w-9 h-9 rounded-lg bg-secondary-container/60 text-secondary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">groups</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-sm font-bold text-primary">Thanal</span>
+              <span class="font-body-sm text-[11px] text-on-surface-variant">Agroecology Alliance</span>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-spacing-md rounded-lg shadow-xs flex items-center gap-3 border border-surface-variant">
+            <div class="w-9 h-9 rounded-lg bg-secondary-container/60 text-secondary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">energy_savings_leaf</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-sm font-bold text-primary">Sustera</span>
+              <span class="font-body-sm text-[11px] text-on-surface-variant">Climate Resilience</span>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-spacing-md rounded-lg shadow-xs flex items-center gap-3 border border-surface-variant">
+            <div class="w-9 h-9 rounded-lg bg-secondary-container/60 text-secondary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">language</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-sm font-bold text-primary">GreenEarth</span>
+              <span class="font-body-sm text-[11px] text-on-surface-variant">Restoration Collective</span>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-spacing-md rounded-lg shadow-xs flex items-center gap-3 border border-surface-variant">
+            <div class="w-9 h-9 rounded-lg bg-secondary-container/60 text-secondary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">forest</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-sm font-bold text-primary">EcoForest Inst.</span>
+              <span class="font-body-sm text-[11px] text-on-surface-variant">Taxonomy &amp; Audit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. SOCIETAL FOOTPRINT SECTION -->
+    <section class="w-full max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop py-spacing-3xl" id="footprint">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-spacing-2xl items-center">
+        <!-- Left: Activity Ideas Canvas with Horizontal Scroll Wheel -->
+        <div class="lg:col-span-6 relative w-full">
+          <div class="relative w-full rounded-2xl bg-surface-container-lowest/80 border border-outline-variant/60 shadow-xl overflow-hidden p-4 sm:p-5 flex flex-col" id="activityIdeasCanvas">
+            <!-- Clean Top Header Bar -->
+            <div class="mb-4 pb-3 border-b border-outline-variant/40 flex items-center justify-between">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                  <span class="font-label-sm text-[11px] uppercase tracking-widest text-secondary font-bold">ENGAGEMENT IN ACTION</span>
+                </div>
+                <h3 class="font-headline-sm text-lg sm:text-xl font-extrabold text-primary tracking-tight">Activity Ideas</h3>
+              </div>
+            </div>
+
+            <!-- Horizontal Scroll Track -->
+            <div id="activityScrollTrack" class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-1 scrollbar-none" style="scrollbar-width: none;">
+              <!-- Slide 1: Adopt a Tree Challenge -->
+              <div class="activity-card flex-shrink-0 w-full sm:w-[94%] md:w-[96%] snap-center relative rounded-2xl overflow-hidden shadow-lg border border-outline-variant/60 group bg-surface-container">
+                <div class="relative h-[340px] sm:h-[380px] w-full overflow-hidden">
+                  <img src="./assets/images/activity-adopt-tree.jpg" alt="Adopt a Tree Challenge" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-black/40 to-transparent pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none"></div>
+                  
+                  <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/85 backdrop-blur-md text-white font-label-sm text-[11px] uppercase tracking-wider border border-white/20 shadow-md">
+                      <span class="material-symbols-outlined text-[15px] text-secondary-fixed">emoji_events</span>
+                      <span>COMMUNITY CHALLENGE</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] uppercase tracking-wider border border-white/10">1,420+ Saplings</span>
+                  </div>
+
+                  <div class="absolute bottom-24 left-4 right-4 z-10 pointer-events-none">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-secondary-fixed drop-shadow-sm font-semibold">Student Caregiver Program</span>
+                    <h4 class="font-headline-sm text-xl sm:text-2xl font-black text-white drop-shadow-md leading-tight mt-0.5">“Adopt a Tree” Challenge</h4>
+                    <p class="text-white/90 text-xs sm:text-[13px] line-clamp-2 mt-1 leading-snug drop-shadow-sm max-w-md">Students adopt individual saplings, log growth telemetry via QR badges, and track carbon absorption milestones across seasons.</p>
+                  </div>
+
+                  <div class="absolute bottom-3 left-3 right-3 z-10 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-xl flex items-center justify-between shadow-xl border border-white/30">
+                    <div class="flex flex-col min-w-0 pr-2">
+                      <span class="font-label-sm text-[9px] uppercase tracking-wider text-outline">DEPLOYMENT NODE</span>
+                      <span class="font-headline-sm text-[13px] font-bold text-primary truncate">Sector 08 Public School District</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-bold flex-shrink-0">
+                      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      <span>Active Challenge</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2: Tree Mapping Workshop -->
+              <div class="activity-card flex-shrink-0 w-full sm:w-[94%] md:w-[96%] snap-center relative rounded-2xl overflow-hidden shadow-lg border border-outline-variant/60 group bg-surface-container">
+                <div class="relative h-[340px] sm:h-[380px] w-full overflow-hidden">
+                  <img src="./assets/images/activity-mapping-workshop.jpg" alt="Tree Mapping Workshop" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-teal-950/80 via-black/40 to-transparent pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none"></div>
+                  
+                  <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/85 backdrop-blur-md text-white font-label-sm text-[11px] uppercase tracking-wider border border-white/20 shadow-md">
+                      <span class="material-symbols-outlined text-[15px] text-secondary-fixed">pin_drop</span>
+                      <span>HANDS-ON WORKSHOP</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] uppercase tracking-wider border border-white/10">38 Sessions</span>
+                  </div>
+
+                  <div class="absolute bottom-24 left-4 right-4 z-10 pointer-events-none">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-secondary-fixed drop-shadow-sm font-semibold">Field Telemetry &amp; Caliper Training</span>
+                    <h4 class="font-headline-sm text-xl sm:text-2xl font-black text-white drop-shadow-md leading-tight mt-0.5">Tree Mapping Workshop</h4>
+                    <p class="text-white/90 text-xs sm:text-[13px] line-clamp-2 mt-1 leading-snug drop-shadow-sm max-w-md">Outdoor training sessions where youth and community volunteers learn tree coordinates logging, canopy crown diameter, and sub-meter GNSS capture.</p>
+                  </div>
+
+                  <div class="absolute bottom-3 left-3 right-3 z-10 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-xl flex items-center justify-between shadow-xl border border-white/30">
+                    <div class="flex flex-col min-w-0 pr-2">
+                      <span class="font-label-sm text-[9px] uppercase tracking-wider text-outline">DEPLOYMENT NODE</span>
+                      <span class="font-headline-sm text-[13px] font-bold text-primary truncate">Urban Botanical Field Lab</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-bold flex-shrink-0">
+                      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      <span>Live Training</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3: Organize Mapathon -->
+              <div class="activity-card flex-shrink-0 w-full sm:w-[94%] md:w-[96%] snap-center relative rounded-2xl overflow-hidden shadow-lg border border-outline-variant/60 group bg-surface-container">
+                <div class="relative h-[340px] sm:h-[380px] w-full overflow-hidden">
+                  <img src="./assets/images/activity-organize-mapathon.jpg" alt="Organize Mapathon" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-sky-950/80 via-black/40 to-transparent pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none"></div>
+                  
+                  <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/85 backdrop-blur-md text-white font-label-sm text-[11px] uppercase tracking-wider border border-white/20 shadow-md">
+                      <span class="material-symbols-outlined text-[15px] text-secondary-fixed">travel_explore</span>
+                      <span>CIVIC SPRINT EVENT</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] uppercase tracking-wider border border-white/10">12,800+ Points</span>
+                  </div>
+
+                  <div class="absolute bottom-24 left-4 right-4 z-10 pointer-events-none">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-secondary-fixed drop-shadow-sm font-semibold">Crowdsourced Urban Canopy Sprints</span>
+                    <h4 class="font-headline-sm text-xl sm:text-2xl font-black text-white drop-shadow-md leading-tight mt-0.5">Organize Mapathon</h4>
+                    <p class="text-white/90 text-xs sm:text-[13px] line-clamp-2 mt-1 leading-snug drop-shadow-sm max-w-md">Collaborative hackathons bringing students and tech volunteers together with satellite imagery to detect urban heat islands and register tree voids.</p>
+                  </div>
+
+                  <div class="absolute bottom-3 left-3 right-3 z-10 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-xl flex items-center justify-between shadow-xl border border-white/30">
+                    <div class="flex flex-col min-w-0 pr-2">
+                      <span class="font-label-sm text-[9px] uppercase tracking-wider text-outline">DEPLOYMENT NODE</span>
+                      <span class="font-headline-sm text-[13px] font-bold text-primary truncate">Metropolitan Civic Eco-Hub</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-bold flex-shrink-0">
+                      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      <span>Collaborative Sprint</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 4: Community Plantation + Stewardship Pledge -->
+              <div class="activity-card flex-shrink-0 w-full sm:w-[94%] md:w-[96%] snap-center relative rounded-2xl overflow-hidden shadow-lg border border-outline-variant/60 group bg-surface-container">
+                <div class="relative h-[340px] sm:h-[380px] w-full overflow-hidden">
+                  <img src="./assets/images/activity-community-pledge.jpg" alt="Community Plantation + Stewardship Pledge" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-green-950/80 via-black/40 to-transparent pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none"></div>
+                  
+                  <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/85 backdrop-blur-md text-white font-label-sm text-[11px] uppercase tracking-wider border border-white/20 shadow-md">
+                      <span class="material-symbols-outlined text-[15px] text-secondary-fixed">volunteer_activism</span>
+                      <span>STEWARDSHIP DRIVE</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] uppercase tracking-wider border border-white/10">95% Survival</span>
+                  </div>
+
+                  <div class="absolute bottom-24 left-4 right-4 z-10 pointer-events-none">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-secondary-fixed drop-shadow-sm font-semibold">Intergenerational Eco Covenant</span>
+                    <h4 class="font-headline-sm text-xl sm:text-2xl font-black text-white drop-shadow-md leading-tight mt-0.5">Community Plantation + Stewardship Pledge</h4>
+                    <p class="text-white/90 text-xs sm:text-[13px] line-clamp-2 mt-1 leading-snug drop-shadow-sm max-w-md">United planting drives pairing school children with senior citizens to plant native trees and sign multi-year caretaking covenants.</p>
+                  </div>
+
+                  <div class="absolute bottom-3 left-3 right-3 z-10 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-xl flex items-center justify-between shadow-xl border border-white/30">
+                    <div class="flex flex-col min-w-0 pr-2">
+                      <span class="font-label-sm text-[9px] uppercase tracking-wider text-outline">DEPLOYMENT NODE</span>
+                      <span class="font-headline-sm text-[13px] font-bold text-primary truncate">Heritage Community Sanctuary</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-bold flex-shrink-0">
+                      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      <span>Pledge Signed</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 5: Endangered Species Discovery -->
+              <div class="activity-card flex-shrink-0 w-full sm:w-[94%] md:w-[96%] snap-center relative rounded-2xl overflow-hidden shadow-lg border border-outline-variant/60 group bg-surface-container">
+                <div class="relative h-[340px] sm:h-[380px] w-full overflow-hidden">
+                  <img src="./assets/images/activity-endangered-species.jpg" alt="Endangered Species Discovery" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-black/40 to-transparent pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none"></div>
+                  
+                  <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/85 backdrop-blur-md text-white font-label-sm text-[11px] uppercase tracking-wider border border-white/20 shadow-md">
+                      <span class="material-symbols-outlined text-[15px] text-secondary-fixed">nature_people</span>
+                      <span>BIODIVERSITY RESCUE</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] uppercase tracking-wider border border-white/10">47 Rare Species</span>
+                  </div>
+
+                  <div class="absolute bottom-24 left-4 right-4 z-10 pointer-events-none">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-secondary-fixed drop-shadow-sm font-semibold">Rare Native Flora Expeditions</span>
+                    <h4 class="font-headline-sm text-xl sm:text-2xl font-black text-white drop-shadow-md leading-tight mt-0.5">Endangered Species Discovery</h4>
+                    <p class="text-white/90 text-xs sm:text-[13px] line-clamp-2 mt-1 leading-snug drop-shadow-sm max-w-md">Guided wilderness field expeditions identifying endangered indigenous tree varieties, cataloging micro-habitats, and establishing verified GPS zones.</p>
+                  </div>
+
+                  <div class="absolute bottom-3 left-3 right-3 z-10 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-xl flex items-center justify-between shadow-xl border border-white/30">
+                    <div class="flex flex-col min-w-0 pr-2">
+                      <span class="font-label-sm text-[9px] uppercase tracking-wider text-outline">DEPLOYMENT NODE</span>
+                      <span class="font-headline-sm text-[13px] font-bold text-primary truncate">Bio-Reserve Ridge Sector</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-bold flex-shrink-0">
+                      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      <span>Protected Flora</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Progress Dots Indicator -->
+            <div class="mt-3 flex items-center justify-center gap-2 pt-2 border-t border-outline-variant/30">
+              <div class="flex items-center gap-2" id="activityDots">
+                <button class="activity-dot h-1.5 rounded-full transition-all cursor-pointer w-8 bg-secondary" data-index="0" aria-label="Slide 1"></button>
+                <button class="activity-dot h-1.5 rounded-full transition-all cursor-pointer w-2 bg-outline/30" data-index="1" aria-label="Slide 2"></button>
+                <button class="activity-dot h-1.5 rounded-full transition-all cursor-pointer w-2 bg-outline/30" data-index="2" aria-label="Slide 3"></button>
+                <button class="activity-dot h-1.5 rounded-full transition-all cursor-pointer w-2 bg-outline/30" data-index="3" aria-label="Slide 4"></button>
+                <button class="activity-dot h-1.5 rounded-full transition-all cursor-pointer w-2 bg-outline/30" data-index="4" aria-label="Slide 5"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Narrative & Action Points -->
+        <div class="lg:col-span-6 flex flex-col items-start">
+          <div class="section-badge inline-flex items-center gap-2.5 mb-spacing-sm">
+            <span class="section-badge-bar w-1.5 h-4 bg-secondary rounded-full flex-shrink-0"></span>
+            <span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase font-semibold">SOCIETAL FOOTPRINT</span>
+          </div>
+          <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary tracking-tight font-bold leading-tight mb-spacing-md">
+            Grassroots engagement empowering schools, elder-care, and care sanctuaries.
+          </h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-spacing-xl">
+            Tree Tag aspires to create a nature-conscious community. The publicly sponsored trees in our system are planted in the premises of social service institutions, like schools, colleges, old-age homes, orphanages, and rehabilitation centres. Through our enterprise, we aspire to help businesses and individuals make nature-conscious decisions.
+          </p>
+
+          <!-- 2 Bottom Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-spacing-md w-full">
+            <div class="bg-surface-container-low p-spacing-md rounded-xl border border-outline-variant/40">
+              <div class="flex items-center gap-2 mb-2 text-primary">
+                <span class="material-symbols-outlined text-[20px] text-secondary">school</span>
+                <h4 class="font-label-md text-sm font-bold">Schools &amp; Colleges</h4>
+              </div>
+              <p class="font-body-sm text-[13px] text-on-surface-variant leading-snug">
+                Hands-on ecology education, student tree tracking stewardship, and micro-climate school greening.
+              </p>
+            </div>
+            <div class="bg-surface-container-low p-spacing-md rounded-xl border border-outline-variant/40">
+              <div class="flex items-center gap-2 mb-2 text-primary">
+                <span class="material-symbols-outlined text-[20px] text-secondary">healing</span>
+                <h4 class="font-label-md text-sm font-bold">Care &amp; Rehabilitation</h4>
+              </div>
+              <p class="font-body-sm text-[13px] text-on-surface-variant leading-snug">
+                Therapeutic botanical groves for wellness, shaded leisure paths, and restorative elder-care spaces.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. INSTITUTIONAL CONSULTATIONS CTA SECTION -->
+    <section class="w-full bg-[#0a261c] text-white pt-32 pb-24 px-grid-margin-mobile lg:px-grid-margin-desktop relative overflow-hidden">
+      <!-- Top Seamless Feathered Smudge Merge: Starts with 100% #f4fbf4 at the top edge so the division line is completely invisible -->
+      <div class="absolute top-0 inset-x-0 h-52 sm:h-64 pointer-events-none select-none z-0" style="background: linear-gradient(180deg, #f4fbf4 0%, rgba(244, 251, 244, 0.88) 18%, rgba(244, 251, 244, 0.5) 40%, rgba(10, 38, 28, 0.6) 72%, transparent 100%);"></div>
+
+      <!-- Ambient Soft White Misty Wash: Smudges the full top green area with white softly -->
+      <div class="absolute top-0 inset-x-0 h-80 sm:h-96 pointer-events-none select-none z-0 opacity-75" style="background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.1) 45%, transparent 75%);"></div>
+      <div class="absolute -top-28 left-1/2 -translate-x-1/2 w-[1300px] max-w-[130vw] h-64 bg-white/20 rounded-[100%] blur-3xl pointer-events-none select-none z-0"></div>
+
+      <div class="max-w-[1280px] mx-auto flex flex-col items-center text-center relative z-10">
+        <!-- Top Pill -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-bright/10 backdrop-blur-md text-secondary-fixed font-label-sm text-[11px] uppercase tracking-widest border border-secondary/30 mb-spacing-lg">
+          <span class="material-symbols-outlined text-[16px]">domain</span>
+          <span>INSTITUTIONAL CONSULTATIONS OPEN</span>
+        </div>
+
+        <h2 class="font-display-hero text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-spacing-md text-white">
+          Let us create value together
+        </h2>
+        <p class="font-headline-sm text-lg sm:text-xl text-surface-container-high max-w-2xl mb-spacing-2xl font-normal opacity-90 leading-relaxed">
+          Empower your organization with verifiable afforestation assets, carbon-offset integrity, and transformative civic impact.
+        </p>
+
+        <!-- CTA Button -->
+        <button class="bg-white hover:bg-surface-container-low text-primary font-label-md text-base px-8 py-3.5 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2 font-bold cursor-pointer" data-action="schedule-meeting">
+          <span>Schedule a Meeting</span>
+          <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        </button>
+
+        <!-- Guarantees Strip -->
+        <div class="mt-spacing-2xl flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs sm:text-sm text-surface-container-high font-body-sm opacity-85">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary-fixed text-[16px]">check_circle</span>
+            <span>Fast onboarding in under 7 days</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary-fixed text-[16px]">check_circle</span>
+            <span>Full regulatory &amp; ESG documentation</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary-fixed text-[16px]">check_circle</span>
+            <span>Dedicated telemetry engineer support</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 9. OFFICIAL IEEE FOOTER EXTRACTED FROM STITCH DESIGN -->
+  <footer class="site-footer w-full bg-[#0a2118] text-white border-t border-[#184a68]/40 font-sans" id="footer">
+    <div id="footer-inner">
+      <div id="footer-widgets">
+        <div class="footer-widgets-inner max-w-[1240px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop pt-12 pb-10">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">forest</span>
+                </div>
+                <span class="font-headline-sm text-xl font-bold text-white tracking-tight">Tree Tag</span>
+              </div>
+              <p class="text-xs text-white/70 max-w-lg leading-relaxed">
+                Industrial-grade afforestation telemetry &amp; GIS registry partnered with IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF).
+              </p>
+            </div>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-semibold text-white mb-3">Stay connected</h2>
+              <div class="flex items-center gap-3 text-white/80">
+                <a aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                </a>
+                <a aria-label="Twitter / X" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a aria-label="Facebook" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.facebook.com/IEEE.org/" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                </a>
+                <a aria-label="YouTube" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.youtube.com/user/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <section class="footer-section pt-8">
+            <ul class="footer-links flex flex-wrap list-none p-0 m-0 gap-x-6 gap-y-3 text-[14px]">
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html">Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="map.html">Telemetry Map</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html#mission">About Mission</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="profile.html">Student Profile</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="login.html">Sign In / Register</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/" target="_blank" rel="noopener">IEEE YP Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">Sitemap</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/contact-us/" target="_blank" rel="noopener">Contact &amp; Support</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/accessibility-statement.html" target="_blank" rel="noopener">Accessibility</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/corporate/governance/p9-26.html" target="_blank" rel="noopener">Nondiscrimination Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://secure.ethicspoint.com/domain/media/en/gui/20410/index.html" target="_blank" rel="noopener">IEEE Ethics Reporting</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/security-privacy.html" target="_blank" rel="noopener">IEEE Privacy Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/help/site-terms-conditions.html" target="_blank" rel="noopener">Terms</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/feedback-ieee-site.html" target="_blank" rel="noopener">Feedback</a></li>
+            </ul>
+            <p class="footer-copyright max-w-[1000px] mt-8 text-[13px] leading-relaxed text-[#cbd5e1]">
+              © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity. Developed in partnership with Tree Tag Precision Afforestation Telemetry Engine.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 10. INTERACTIVE SCHEDULE A MEETING MODAL -->
+  <div id="meetingModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 modal-backdrop hidden p-4">
+    <div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden relative animate-fade-in">
+      <!-- Modal Header -->
+      <div class="bg-primary px-6 py-5 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+          </div>
+          <div>
+            <h3 class="font-headline-sm text-lg font-bold">Schedule an Institutional Meeting</h3>
+            <p class="font-body-sm text-xs text-primary-fixed-dim">Verifiable Afforestation &amp; ESG Consultation</p>
+          </div>
+        </div>
+        <button id="closeMeetingModal" class="text-white/70 hover:text-white transition-colors" aria-label="Close dialog">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <div class="p-6">
+        <form id="meetingForm" class="space-y-4">
+          <div>
+            <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="orgName">Organization / Institution Name</label>
+            <input id="orgName" required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" placeholder="e.g. Mar Baselios Institute / Vertex Global" type="text"/>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="contactEmail">Work Email</label>
+              <input id="contactEmail" required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" placeholder="contact@organization.edu" type="email"/>
+            </div>
+            <div>
+              <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="phoneNum">Phone Number</label>
+              <input id="phoneNum" required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" placeholder="+91 98765 43210" type="tel"/>
+            </div>
+          </div>
+          <div>
+            <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="partnershipType">Program Focus</label>
+            <select id="partnershipType" class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary bg-white">
+              <option value="csr">Corporate Social Responsibility (CSR)</option>
+              <option value="carbon">Carbon Credit Offsets</option>
+              <option value="academic">University &amp; Student Plantation Drive</option>
+              <option value="oxypark">Natural Economic Zone / Oxy Park Development</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="preferredDate">Preferred Date</label>
+              <input id="preferredDate" required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" type="date"/>
+            </div>
+            <div>
+              <label class="block font-label-md text-xs font-semibold text-primary mb-1" for="preferredTime">Time Window</label>
+              <select id="preferredTime" class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary bg-white">
+                <option>Morning (10:00 AM - 1:00 PM IST)</option>
+                <option>Afternoon (2:00 PM - 5:00 PM IST)</option>
+                <option>Evening (5:00 PM - 7:00 PM IST)</option>
+              </select>
+            </div>
+          </div>
+          <div class="pt-2">
+            <button type="submit" class="w-full py-3 rounded-lg bg-secondary hover:bg-primary text-white font-label-md text-sm font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">check</span>
+              <span>Confirm Consultation Request</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Success Message -->
+        <div id="meetingSuccessMsg" class="hidden text-center py-6">
+          <div class="w-14 h-14 rounded-full bg-secondary-container text-secondary flex items-center justify-center mx-auto mb-3">
+            <span class="material-symbols-outlined text-[32px]">verified</span>
+          </div>
+          <h4 class="font-headline-sm text-xl font-bold text-primary mb-1">Meeting Request Received!</h4>
+          <p class="font-body-md text-sm text-on-surface-variant">Our telemetry engineering team will reach out within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

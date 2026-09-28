@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Sign Up — IEEE Tree Tag Registry</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#004d36",
+            "secondary": "#109367",
+            "secondary-container": "#a2f0cc",
+            "background": "#f4fbf4"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f4fbf4] font-sans text-gray-900 antialiased min-h-screen flex flex-col justify-between">
+  <!-- Top bar -->
+  <div class="w-full bg-[#1f5d82] text-white py-1.5 px-4 text-xs">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <a href="https://www.ieee.org" target="_blank" class="hover:underline">IEEE.org</a>
+        <span>|</span>
+        <a href="https://ieeexplore.ieee.org" target="_blank" class="hover:underline">IEEE Xplore</a>
+      </div>
+      <div>
+        Already registered? <a href="login.html" class="font-bold underline ml-1">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branding -->
+  <div class="bg-white py-3 border-b border-gray-200 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html">
+        <img src="./assets/images/ieee-yp-cstf.png" alt="IEEE YP" class="h-9 md:h-11 object-contain"/>
+      </a>
+      <img src="./assets/images/ieee-diamond.png" alt="IEEE Diamond" class="h-9 md:h-11 object-contain"/>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <main class="flex-1 flex items-center justify-center py-10 px-4">
+    <div class="w-full max-w-[620px] bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-[#004d36] to-[#0a2118] text-white p-6 sm:p-8 text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold">Create IEEE Tree Tag Account</h1>
+        <p class="text-xs sm:text-sm text-emerald-200 mt-1">Join the IEEE Young Professionals Environmental Telemetry Network</p>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <div id="errorAlert" class="hidden mb-4 p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs"></div>
+        <div id="successAlert" class="hidden mb-4 p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs"></div>
+
+        <form id="signupForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase" for="fullName">Full Name *</label>
+              <input id="fullName" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required placeholder="Jibin Wilson"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase" for="email">Email Address *</label>
+              <input id="email" type="email" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required placeholder="jibin.cse22@mbits.ac.in"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase" for="institution">Institution / University *</label>
+            <input id="institution" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required placeholder="Mar Baselios Institute of Technology and Science"/>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase" for="password">Password *</label>
+              <input id="password" type="password" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required placeholder="••••••••"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase" for="confirmPassword">Confirm Password *</label>
+              <input id="confirmPassword" type="password" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required placeholder="••••••••"/>
+            </div>
+          </div>
+
+          <!-- IEEE Member Section -->
+          <div class="pt-3 border-t border-gray-200">
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">Are you an IEEE Member?</span>
+                <div class="flex gap-2">
+                  <label class="inline-flex items-center text-xs font-bold cursor-pointer">
+                    <input type="radio" name="ieeeMemberRadio" value="yes" checked class="mr-1.5"/> Yes
+                  </label>
+                  <label class="inline-flex items-center text-xs font-bold cursor-pointer ml-3">
+                    <input type="radio" name="ieeeMemberRadio" value="no" class="mr-1.5"/> No
+                  </label>
+                </div>
+              </div>
+
+              <div id="ieeeFieldsBlock" class="space-y-3 pt-2 border-t border-emerald-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase" for="ieeeId">Enter IEEE ID *</label>
+                    <input id="ieeeId" class="w-full mt-1 px-3 py-2 bg-white rounded-lg border border-gray-300 text-sm" placeholder="e.g. 98452310"/>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase" for="membershipGrade">Membership Grade *</label>
+                    <select id="membershipGrade" class="w-full mt-1 px-3 py-2 bg-white rounded-lg border border-gray-300 text-sm">
+                      <option>Student Member</option>
+                      <option>Graduate Student Member</option>
+                      <option>Member</option>
+                      <option>Senior Member</option>
+                      <option>Fellow</option>
+                      <option>Honorary Member</option>
+                      <option>Life Member</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase" for="regionSelect">Region *</label>
+                    <select id="regionSelect" class="w-full mt-1 px-3 py-2 bg-white rounded-lg border border-gray-300 text-sm"></select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase" for="sectionSelect">Section *</label>
+                    <select id="sectionSelect" class="w-full mt-1 px-3 py-2 bg-white rounded-lg border border-gray-300 text-sm"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase" for="country">Country *</label>
+            <input id="country" value="India" class="w-full mt-1 px-3.5 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-sm outline-none" required/>
+          </div>
+
+          <button id="sendOtpBtn" type="submit" class="w-full py-3.5 rounded-xl bg-[#109367] hover:bg-[#004d36] text-white font-bold text-sm tracking-wider uppercase transition shadow-md cursor-pointer">
+            Send Verification Code (OTP)
+          </button>
+        </form>
+
+        <!-- OTP Screen -->
+        <div id="otpSection" class="hidden space-y-4">
+          <div class="text-center p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <p class="text-xs text-gray-500">Verification code dispatched via SMTP to:</p>
+            <p id="otpTargetEmail" class="text-base font-mono font-bold text-primary mt-1"></p>
+          </div>
+
+          <div class="text-center space-y-2">
+            <label class="block text-xs font-bold text-gray-700 uppercase">Enter 6-Digit OTP</label>
+            <input id="otpInput" maxlength="6" class="w-full max-w-[240px] text-center tracking-[10px] text-2xl font-mono font-bold py-2.5 px-4 border-2 border-secondary rounded-xl bg-white" placeholder="••••••"/>
+          </div>
+
+          <button id="verifyOtpBtn" type="button" class="w-full py-3.5 rounded-xl bg-[#109367] hover:bg-[#004d36] text-white font-bold text-sm tracking-wider uppercase transition shadow-md cursor-pointer">
+            Verify & Complete Registration
+          </button>
+
+          <div class="flex justify-between items-center text-xs">
+            <button id="backToFormBtn" type="button" class="text-gray-500 hover:text-gray-800">← Edit Info</button>
+            <button id="resendOtpBtn" type="button" class="text-secondary font-bold hover:underline">Resend Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const REGIONS_DATA = {
+      "Region 1 — Northeastern USA": ["Berkshire", "Binghamton", "Boston", "Buffalo", "Connecticut", "Green Mountain", "Ithaca", "Long Island", "Maine", "Mid-Hudson", "Mohawk Valley", "New Hampshire", "New Jersey Coast", "New York", "North Jersey", "Princeton/Central Jersey", "Providence", "Rochester", "Schenectady", "Springfield", "Syracuse", "Worcester County"],
+      "Region 2 — Eastern USA": ["Akron", "Baltimore", "Central Pennsylvania", "Cincinnati", "Cleveland", "Columbus", "Dayton", "Delaware Bay", "Erie", "Johnstown", "Lehigh Valley", "Lima", "Northern Virginia", "Philadelphia", "Pittsburgh", "Southern New Jersey", "Susquehanna", "Washington", "West Virginia", "Youngstown"],
+      "Region 3 — Southeastern USA": ["Alabama", "Atlanta", "Central Georgia", "Central North Carolina", "Central Savannah River", "Central Tennessee", "Central Virginia", "Chattanooga", "Charlotte", "Coastal South Carolina", "Columbia", "Daytona", "East Tennessee", "Eastern North Carolina", "Evansville-Owensboro", "Florida West Coast", "Hampton Roads", "Huntsville", "Jamaica", "Lexington", "Louisville", "Memphis", "Miami", "Mississippi", "Mobile", "Orlando", "Palm Beach", "Piedmont", "Richmond", "Savannah", "Tallahassee", "Tri Cities", "Virginia Mountain", "Western North Carolina", "Winston-Salem"],
+      "Region 4 — Central USA": ["Calumet", "Cedar Rapids", "Central Illinois", "Central Indiana", "Central Iowa", "Chicago", "Fort Wayne", "Iowa-Illinois", "Madison", "Milwaukee", "Nebraska", "Northeastern Michigan", "Northeastern Wisconsin", "Red River Valley", "Rock River Valley", "Siouxland", "Southeastern Michigan", "Southern Minnesota", "Toledo", "Twin Cities", "West Michigan"],
+      "Region 5 — Southwestern USA": ["Arkansas", "Arkansas River Valley", "Baton Rouge", "Beaumont", "Central Texas", "Corpus Christi", "Dallas", "Denver", "El Paso", "Fort Worth", "Galveston Bay", "High Plains", "Houston", "Kansas City", "Lafayette", "Lone Star", "New Orleans", "Oklahoma City", "Ozark", "Panhandle", "Pikes Peak", "Saint Louis", "Shreveport", "South Plains", "Southwest Missouri", "Tulsa", "Wichita"],
+      "Region 6 — Western USA": ["Alaska", "Alamagordo-Holloman", "Albuquerque", "Boise", "Buenaventura", "Central Coast", "Central Montana", "Central Washington", "China Lake-Bakersfield", "Coastal Los Angeles", "Eastern Idaho", "Eastern Montana", "Foothill", "Ft. Huachuca", "Hawaii", "LANNM", "Las Vegas", "Metropolitan Los Angeles", "Northern Nevada", "Oakland-East Bay", "Oregon", "Orange County", "Palouse", "Phoenix", "Richland", "Sacramento Valley", "San Diego", "San Fernando Valley", "San Francisco", "Santa Clara Valley", "Seattle", "Spokane", "Tucson", "Utah", "Western Montana"],
+      "Region 7 — Canada": ["Canadian Atlantic", "Hamilton", "Kingston", "Kitchener-Waterloo", "London", "Montreal", "New Brunswick", "Newfoundland & Labrador", "North Saskatchewan", "Northern Canada", "Ottawa", "Peterborough", "Quebec", "Saint Maurice", "South Saskatchewan", "Southern Alberta", "Toronto", "Vancouver", "Victoria", "Windsor", "Winnipeg"],
+      "Region 8 — Europe, Middle East & Africa": ["Algeria", "Austria", "Bahrain", "Belarus", "Benelux", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czechoslovakia", "Denmark", "Egypt", "Estonia", "Finland", "France", "Germany", "Ghana", "Greece", "Hungary", "Iceland", "Iran", "Iraq", "Israel", "Italy", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lithuania", "Malta", "Mauritius", "Morocco", "Nigeria", "North Macedonia", "Norway", "Oman", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Russia Northwest", "Russia Siberia", "Saudi Arabia East", "Serbia and Montenegro", "Slovenia", "South Africa", "Spain", "Sweden", "Switzerland", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Kingdom and Ireland", "Western Saudi Arabia", "Zambia"],
+      "Region 9 — Latin America & Caribbean": ["Aguascalientes", "Bolivia", "Central West", "Centro Norte Brazil", "Colombia", "Colombia Caribbean", "Costa Rica", "Ecuador", "El Salvador", "Guatemala", "Guanajuato", "Guadalajara", "Honduras", "Mexico", "Minas Gerais", "Monterrey", "Morelos", "Nicaragua", "Northeast Brazil (Bahia)", "Panamá", "Peru", "Puebla", "Querétaro", "Rio de Janeiro", "South Brazil", "Trinidad & Tobago", "Puerto Rico & Caribe", "Puerto Rico West", "Venezuela", "Veracruz"],
+      "Region 10 — Asia & Pacific": ["Australia Capital Territory", "New South Wales", "Northern Australia", "Queensland", "South Australia", "Victorian", "Western Australia", "Bangladesh", "Beijing", "Chengdu", "Guangzhou", "Harbin", "Nanjing", "Shanghai", "Wuhan", "Xian", "Bangalore", "Bhubaneswar", "Delhi", "Gujarat", "Hyderabad", "Kerala", "Kharagpur", "Kolkata", "Madras", "Madhya Pradesh", "Maharashtra", "Pune", "Uttar Pradesh", "Vizag Bay", "Fukuoka", "Hiroshima", "Kansai", "Nagoya", "Sapporo", "Sendai", "Shikoku", "Shin-etsu", "Tokyo", "Busan", "Daejeon", "Gwangju", "Seoul", "Taegu", "Hong Kong", "Indonesia", "Macau", "Malaysia", "Nepal", "New Zealand Central", "New Zealand North", "New Zealand South", "Pakistan — Islamabad", "Pakistan — Karachi", "Pakistan — Lahore", "Philippines", "Singapore", "Sri Lanka", "Taiwan — Tainan", "Taiwan — Taipei", "Thailand", "Vietnam"]
+    };
+
+    const regionSelect = document.getElementById('regionSelect');
+    const sectionSelect = document.getElementById('sectionSelect');
+
+    Object.keys(REGIONS_DATA).forEach(reg => {
+      const opt = document.createElement('option');
+      opt.value = reg;
+      opt.textContent = reg;
+      if (reg.includes('Region 10')) opt.selected = true;
+      regionSelect.appendChild(opt);
+    });
+
+    function updateSections() {
+      const reg = regionSelect.value;
+      const secs = REGIONS_DATA[reg] || [];
+      sectionSelect.innerHTML = '';
+      secs.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        if (s === 'Kerala') opt.selected = true;
+        sectionSelect.appendChild(opt);
+      });
+    }
+
+    regionSelect.addEventListener('change', updateSections);
+    updateSections();
+
+    // Toggle IEEE fields
+    document.querySelectorAll('input[name="ieeeMemberRadio"]').forEach(r => {
+      r.addEventListener('change', (e) => {
+        document.getElementById('ieeeFieldsBlock').style.display = e.target.value === 'yes' ? 'block' : 'none';
+      });
+    });
+
+    // Form submission
+    const signupForm = document.getElementById('signupForm');
+    const otpSection = document.getElementById('otpSection');
+    const errorAlert = document.getElementById('errorAlert');
+    const successAlert = document.getElementById('successAlert');
+
+    function showError(msg) {
+      errorAlert.textContent = msg;
+      errorAlert.classList.remove('hidden');
+      successAlert.classList.add('hidden');
+    }
+
+    function showSuccess(msg) {
+      successAlert.textContent = msg;
+      successAlert.classList.remove('hidden');
+      errorAlert.classList.add('hidden');
+    }
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('password').value;
+      const confirmPwd = document.getElementById('confirmPassword').value;
+      if (pwd !== confirmPwd) {
+        showError('Passwords do not match.');
+        return;
+      }
+      const email = document.getElementById('email').value;
+      const fullName = document.getElementById('fullName').value;
+
+      document.getElementById('sendOtpBtn').disabled = true;
+      document.getElementById('sendOtpBtn').textContent = 'Sending OTP via SMTP...';
+
+      try {
+        const res = await fetch('http://127.0.0.1:5001/api/send-otp', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ email, name: fullName })
+        });
+        const data = await res.json();
+        if (data.success) {
+          signupForm.classList.add('hidden');
+          otpSection.classList.remove('hidden');
+          document.getElementById('otpTargetEmail').textContent = email;
+          showSuccess(data.message || 'OTP sent successfully!');
+        } else {
+          showError(data.message || 'Failed to send OTP.');
+        }
+      } catch (err) {
+        showError('Could not connect to Python OTP server on port 5001.');
+      } finally {
+        document.getElementById('sendOtpBtn').disabled = false;
+        document.getElementById('sendOtpBtn').textContent = 'Send Verification Code (OTP)';
+      }
+    });
+
+    document.getElementById('backToFormBtn').addEventListener('click', () => {
+      otpSection.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+    });
+
+    document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value;
+      const otp = document.getElementById('otpInput').value;
+      if (!otp || otp.length !== 6) {
+        showError('Please enter the 6-digit code.');
+        return;
+      }
+      try {
+        const res = await fetch('http://127.0.0.1:5001/api/verify-otp', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ email, otp })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showSuccess('Verified! Redirecting to profile...');
+          localStorage.setItem('tree_tag_logged_in', 'true');
+          setTimeout(() => { window.location.href = 'profile.html'; }, 1500);
+        } else {
+          showError(data.message || 'Invalid OTP.');
+        }
+      } catch (err) {
+        showError('Could not verify OTP with server.');
+      }
+    });
+  </script>
+</body>
+</html>

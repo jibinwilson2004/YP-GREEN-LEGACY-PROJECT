@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:wght@400..700&amp;family=Outfit:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-fixed-dim":"#8ad6b4","tertiary-fixed":"#cee9da","on-secondary-container":"#1f6f53","inverse-primary":"#a6d0be","surface-container-low":"#eef5ef","on-background":"#161d19","tertiary-fixed-dim":"#b3ccbf","outline-variant":"#c1c8c3","on-surface":"#161d19","primary-fixed-dim":"#a6d0be","secondary":"#196b4f","surface-tint":"#3f6658","surface-container-high":"#e3eae3","on-secondary":"#ffffff","on-tertiary-fixed":"#092017","inverse-surface":"#2b322e","surface-container":"#e8f0e9","on-primary-fixed":"#002117","outline":"#717975","on-error":"#ffffff","on-tertiary":"#ffffff","primary-fixed":"#c1ecda","surface-bright":"#f4fbf4","on-primary":"#ffffff","on-secondary-fixed":"#002115","surface-dim":"#d4dcd5","surface-container-highest":"#dde4de","primary":"#002218","on-secondary-fixed-variant":"#00513a","on-tertiary-container":"#869f92","primary-container":"#0f382c","error":"#ba1a1a","on-primary-container":"#79a292","surface-container-lowest":"#ffffff","tertiary":"#0a2118","on-primary-fixed-variant":"#274e41","surface-variant":"#dde4de","secondary-fixed":"#a5f2cf","on-tertiary-fixed-variant":"#354c41","secondary-container":"#a2f0cc","inverse-on-surface":"#ebf3ec","error-container":"#ffdad6","tertiary-container":"#20362c","surface":"#f4fbf4","background":"#f4fbf4","on-error-container":"#93000a","on-surface-variant":"#414845"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"spacing-xs":"0.5rem","grid-gutter":"1.5rem","spacing-2xl":"3rem","spacing-4xl":"6rem","spacing-sm":"0.75rem","spacing-xl":"2rem","spacing-2xs":"0.25rem","spacing-3xl":"4.5rem","grid-margin-desktop":"3rem","grid-margin-mobile":"1.25rem","spacing-md":"1rem","spacing-lg":"1.5rem"},"fontFamily":{"label-md":["Hanken Grotesk"],"headline-lg":["Outfit"],"body-md":["Hanken Grotesk"],"headline-lg-mobile":["Outfit"],"mono-metric":["JetBrains Mono"],"headline-sm":["Outfit"],"display-hero":["Outfit"],"body-lg":["Hanken Grotesk"],"label-sm":["Hanken Grotesk"],"headline-md":["Outfit"],"body-sm":["Hanken Grotesk"],"display-hero-mobile":["Outfit"]},"fontSize":{"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"600"}],"mono-metric":["20px",{"lineHeight":"24px","letterSpacing":"-0.02em","fontWeight":"500"}],"headline-sm":["22px",{"lineHeight":"28px","letterSpacing":"-0.005em","fontWeight":"500"}],"display-hero":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-md":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"display-hero-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex items-center justify-center min-h-screen"><main class="w-full"><div class="flex flex-col w-full">
+<div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 py-8 flex flex-col gap-8 pb-32">
+<!-- Top Micro Breadcrumb & Global System Status -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+          NRPF Node Active
+        </span>
+<span class="text-outline text-label-sm">/</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm uppercase tracking-wider">APJAKTU NSSCELL • Cluster EKM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-lowest shadow-sm text-label-sm text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>Verified Student Member</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+<span>Pass ID</span>
+</button>
+</div>
+</div>
+<!-- Main Profile Identity Header Card -->
+<div class="relative bg-surface-container-lowest rounded-xl p-6 sm:p-8 shadow-sm overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-secondary-fixed/30 blur-3xl pointer-events-none"></div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<!-- Avatar Unit -->
+<div class="relative group">
+<div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-md overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Editorial close-up portrait of a young Indian university male student Jibin Wilson in a forest reserve setting wearing eco-friendly campus polo shirt against natural bokeh sunlight and lush foliage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNVfeleA-rmhz22vPbIgiFpZlSDFZ47NOlpgyYlSIIII06d3ZXT0AtfwAV_cHvwR3h0AWobU_MqT9uArU0oAyrhCx-S6jznXdKHmROKX4fAiuhy1cmxxJhuPsndt98xgLqfUs0BheQp90abmzm7hZoPWs3WPQcyU5wvnrQfUuudvCJk6hwOUP2Td74Z0ABTGSIv0sN-3H-dw0z4XMXtJffeBMXsjAiHm_-431Ad3w8-J7kON5kK3Dx"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent"></div>
+<span class="absolute bottom-1.5 left-2 text-primary-fixed text-label-sm font-label-sm tracking-wide">ID: 22-CSE</span>
+</div>
+<!-- Avatar Edit Trigger -->
+<button class="absolute -bottom-1.5 -right-1.5 w-8 h-8 rounded-full bg-secondary hover:bg-primary-container text-on-secondary flex items-center justify-center shadow-md transition-all transform hover:scale-105" title="Change Avatar">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</div>
+<!-- Name & Primary Credential Details -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-primary leading-tight">Jibin Wilson</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm font-label-sm font-bold uppercase">
+                Student
+              </span>
+</div>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 text-on-surface-variant font-body-md text-body-md">
+<a class="flex items-center gap-1.5 hover:text-secondary transition-colors" href="mailto:jibin.cse22@mbits.ac.in">
+<span class="material-symbols-outlined text-[18px] text-outline">mail</span>
+<span class="font-mono-metric text-body-sm">jibin.cse22@mbits.ac.in</span>
+</a>
+<span class="text-outline-variant hidden sm:inline">•</span>
+<a class="flex items-center gap-1.5 hover:text-secondary transition-colors" href="tel:+917907863486">
+<span class="material-symbols-outlined text-[18px] text-outline">call</span>
+<span class="font-mono-metric text-body-sm">+91 7907863486</span>
+</a>
+</div>
+<p class="text-on-surface-variant font-body-sm text-body-sm mt-0.5 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">school</span>
+<span>Mar Baselios Institute of Technology and Science (MBITS)</span>
+<span class="text-outline">•</span>
+<span>B.Tech CSE (2022–2026)</span>
+</p>
+</div>
+</div>
+<!-- Visibility Toggle Module & Share Action -->
+<div class="flex flex-col sm:flex-row md:flex-col lg:flex-row items-start md:items-end gap-3 w-full md:w-auto mt-2 md:mt-0 pt-4 md:pt-0">
+<div class="bg-surface-container-low px-4 py-3 rounded-xl flex items-center justify-between gap-4 w-full sm:w-auto shadow-sm">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold">Profile Visibility</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant" id="visibility-label">Public to Campus &amp; Registry</span>
+</div>
+<!-- Custom Toggle -->
+<button aria-checked="true" class="w-12 h-7 rounded-full bg-secondary p-1 flex items-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/40 shadow-inner" id="visibility-toggle" onclick="const btn=this; const active=btn.getAttribute('aria-checked')==='true'; btn.setAttribute('aria-checked', !active); btn.classList.toggle('bg-secondary'); btn.classList.toggle('bg-surface-dim'); document.getElementById('toggle-dot').classList.toggle('translate-x-5'); document.getElementById('visibility-label').innerText = active ? 'Private (Hidden)' : 'Public to Campus &amp; Registry';" role="switch">
+<div class="w-5 h-5 rounded-full bg-surface-container-lowest shadow-sm transform translate-x-5 transition-transform" id="toggle-dot"></div>
+</button>
+</div>
+<button class="px-4 py-3 rounded-xl bg-primary-container hover:bg-primary transition-colors text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Share Dossier</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Stats Grid (Telemetry Summary) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1: Trees Tagged -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Trees Tagged</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">park</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-primary leading-none">1</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Verified Sapling</span>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Hardware Beacon
+          </span>
+<span class="font-mono-metric text-label-sm text-primary">#KL-EKM-0891</span>
+</div>
+</div>
+<!-- Metric 2: Estimated Biomass Carbon -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Est. Sequestration</span>
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[20px]">co2</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-primary leading-none">28.4</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-medium">kg CO₂ / yr</span>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="text-secondary font-medium">+4.2 kg vs peer baseline</span>
+<span class="text-label-sm font-label-sm text-outline">Allometric model</span>
+</div>
+</div>
+<!-- Metric 3: Health Index -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Telemetry Health</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined text-[20px]">vital_signs</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-secondary leading-none">98.2%</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-medium">Nominal</span>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+            Soil Moisture: 64%
+          </span>
+<span class="text-label-sm font-label-sm text-outline">Ping 4m ago</span>
+</div>
+</div>
+<!-- Metric 4: Geolocation -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Geo Coordinates</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">pin_drop</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary">Kothamangalam</span>
+<span class="font-mono-metric text-label-sm text-on-surface-variant">10.0528° N, 76.6346° E</span>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Kerala • Ernakulam</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Zone 4B</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid: Detailed Registry Profile & Tagged Tree Showcase -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column: Formal Profile & Academic Institutional Record (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Affiliation & Administrative Record Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 sm:p-7 shadow-sm">
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[22px] text-primary">account_balance</span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Academic Affiliation</h2>
+</div>
+<button class="text-secondary hover:text-primary transition-colors flex items-center gap-1 text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+</div>
+<div class="flex flex-col gap-4 mt-2">
+<!-- Row: Institution -->
+<div class="p-3.5 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Institutional Apex Body</span>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-[16px] text-primary font-semibold">APJAKTU NSSCELL NRPF</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-label-sm">Official</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">APJ Abdul Kalam Technological University • National Resource Protection Force</p>
+</div>
+<!-- Row: Cluster & Unit -->
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3.5 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Affiliated Cluster</span>
+<span class="font-headline-sm text-[18px] text-primary font-bold">EKM</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Ernakulam Regional Node</span>
+</div>
+<div class="p-3.5 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">NSS Unit Code</span>
+<span class="font-headline-sm text-[18px] text-primary font-bold">UNIT #584</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">MBITS Chapter</span>
+</div>
+</div>
+<!-- Row: College Name -->
+<div class="p-3.5 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Host Institution / College</span>
+<span class="font-headline-sm text-[15px] text-primary font-semibold">MAR BASELIOS INSTITUTE OF TECHNOLOGY AND SCIENCE (MBITS)</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Nellimattom P.O, Kothamangalam, Kerala 686693</span>
+</div>
+<!-- Row: Social Media & Public Registry Handle -->
+<div class="p-3.5 rounded-lg bg-surface-container-low flex items-center justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Social Profile Connection</span>
+<span class="font-body-md text-body-md text-on-surface-variant">N.A (Unlinked)</span>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors text-primary text-label-sm font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">add_link</span>
+<span>Connect Profile</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Student Environmental Ledger Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 sm:p-7 shadow-sm">
+<div class="flex items-center justify-between pb-3">
+<h3 class="font-headline-sm text-headline-sm text-primary">NSS Volunteer Ledger</h3>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm font-semibold">Grade A Active</span>
+</div>
+<div class="flex flex-col gap-3.5 text-body-md font-body-md text-on-surface-variant mt-2">
+<div class="flex items-center justify-between py-2">
+<span>Program Enrolment</span>
+<span class="font-mono-metric text-on-surface text-label-md">2022-2026 Batch</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<span>Field Activity Credits</span>
+<span class="font-mono-metric text-secondary font-bold text-label-md">48 / 50 Hours</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<span>Last Verification Ping</span>
+<span class="font-mono-metric text-on-surface text-label-md">Today, 09:14 AM IST</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2 mt-1 overflow-hidden">
+<div class="bg-secondary h-2 rounded-full" style="width: 96%"></div>
+</div>
+<span class="text-label-sm font-label-sm text-outline text-right">96% Completed to Annual Environmental Award</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Tagged Tree Showcase & Live Telemetry Map (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Tree Showcase Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 sm:p-8 shadow-sm relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">forest</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-secondary font-semibold">Tagged Node • #01</span>
+<h3 class="font-headline-md text-headline-md text-primary">Swietenia macrophylla</h3>
+</div>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm font-label-sm font-bold self-start sm:self-auto">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Live IoT Synced
+            </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+<!-- Sapling Visual Placeholder with Real Prompt -->
+<div class="md:col-span-5 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+<img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Close-up high-resolution photograph of a thriving young Swietenia macrophylla Mahogany sapling planted in fertile red-brown soil with a digital IoT NFC tree tag band wrapped on its stem, clear morning sunlight, natural tropical leaves with dew drops" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmxM9ijXUM-2HbBa5AL3-EmpkiToHuZEuvoD2hzoHfXlYOPwUvonDKpYa0m8TAYNqYoDDH1gOfbJGXr3bzqfgB3u2FxHngKl3E3yMXMQmxy_uvkkhoXRGhPsdxuEEm6zueeKf-ReiCPV6M0B5-HU_jLn8w8rKuaYoXgbIRus8C7q1za9x40Dds2xB_PGMN-F5QuyB_7A-khYCSbH0eWT5HBH-JGG04e4COYN-0rPiu5-rQ0GuxXrJI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 text-on-primary">
+<div class="text-label-sm font-label-sm text-secondary-fixed uppercase tracking-wider">Common Name</div>
+<div class="font-headline-sm text-headline-sm text-on-primary font-bold">Big-leaf Mahogany</div>
+</div>
+</div>
+<!-- Telemetry Attributes List -->
+<div class="md:col-span-7 flex flex-col gap-3">
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase">Unique Tag ID</span>
+<span class="font-mono-metric text-primary font-semibold text-[15px]">#KL-EKM-2024-0891</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase">Plantation Date</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">October 14, 2023 (6 mos ago)</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase">Stem Diameter • Height</span>
+<span class="font-mono-metric text-on-surface text-[14px]">3.8 cm • 1.42 m</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase">Telemetry Beacon</span>
+<span class="text-label-sm font-label-sm text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sensors</span>
+                  LoRaWAN Gateway v2.4
+                </span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase">GPS Location</span>
+<span class="font-mono-metric text-[13px] text-on-surface-variant">MBITS Campus • North Quad</span>
+</div>
+</div>
+</div>
+<!-- Quick Actions under Tree Card -->
+<div class="mt-6 pt-5 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+<span>Audited by MBITS NSS Technical Cell</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface text-label-sm font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>Growth History</span>
+</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container hover:bg-primary transition-colors text-on-primary text-label-sm font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Recalibrate Beacon</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Geolocation & Campus Map Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 sm:p-7 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[22px] text-secondary">map</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Micro-Location Telemetry</h3>
+</div>
+<span class="font-mono-metric text-label-sm text-on-surface-variant">10.0528° N, 76.6346° E</span>
+</div>
+<!-- Static Map Target Div with data-location -->
+<div class="w-full h-56 rounded-xl bg-cover bg-center relative overflow-hidden shadow-inner flex items-end p-4" data-location="Mar Baselios Institute of Technology and Science, Kothamangalam, Kerala, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_8d9VIhiYmds3WVOKayiXGsr4Q3PQslx6joreg-2rKIRkuBLuX3zW_iQ1gaUF77I3fgSArbF1OuOUl5bvMNbYMQC7RjTAE4SlQr3-UrEPW38eeTeePv7gKPZUis3VTxAEPwLia5TBNyWC4HCmfGbzLwLCaPnNs0dTVgOYuO9Zx6Cc019kHMrwtTk1_AUc0LzjZaJOOHvdUSQ0uJ0ejAxctk8OYhOX0C8zYflcXe50Vscri8SAty4e');">
+<div class="absolute inset-0 bg-primary/20 backdrop-brightness-95"></div>
+<!-- Pin Simulation Overlay -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-xl animate-bounce">
+<span class="material-symbols-outlined text-[24px]">park</span>
+</div>
+<div class="px-2.5 py-1 rounded-md bg-primary-container text-on-primary text-label-sm font-mono-metric mt-1 shadow-md whitespace-nowrap">
+                #KL-EKM-2024-0891
+              </div>
+</div>
+<!-- Map Floating Card -->
+<div class="relative z-10 w-full flex items-center justify-between bg-surface-container-lowest/90 backdrop-blur-md p-3 rounded-lg shadow-sm">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-primary font-bold">MBITS Botanical Plot B</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Elevation 32m • Slope 2.1° • Optimal Drainage</span>
+</div>
+<a class="text-secondary hover:text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors" href="#full-map" onclick="document.getElementById('tab-map').click();">
+<span>Full Map</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Floating Bottom Navigation Bar (Matched to User Reference Image) -->
+<div class="fixed bottom-6 inset-x-0 mx-auto w-fit z-50 px-4">
+<nav class="bg-surface-container-lowest/95 backdrop-blur-md px-3 py-2 rounded-full shadow-xl flex items-center gap-2">
+<!-- Tab 1: Profile (Active Pill) -->
+<button class="nav-tab flex items-center gap-2 px-5 py-2.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md transition-all duration-200 shadow-sm" id="tab-profile" onclick="setActiveTab(this)">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-bold tracking-tight">Profile</span>
+</button>
+<!-- Tab 2: Map -->
+<button class="nav-tab flex items-center gap-2 px-5 py-2.5 rounded-full hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" id="tab-map" onclick="setActiveTab(this)">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="font-semibold tracking-tight">Map</span>
+</button>
+<!-- Tab 3: Trees -->
+<button class="nav-tab flex items-center gap-2 px-5 py-2.5 rounded-full hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" id="tab-trees" onclick="setActiveTab(this)">
+<span class="material-symbols-outlined text-[20px]">park</span>
+<span class="font-semibold tracking-tight">Trees</span>
+</button>
+</nav>
+</div>
+<!-- Interactive Script for Micro-tabs -->
+<script>
+    function setActiveTab(element) {
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'shadow-sm');
+        tab.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high');
+        const icon = tab.querySelector('.material-symbols-outlined');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+      });
+      element.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high');
+      element.classList.add('bg-secondary-container', 'text-on-secondary-container', 'shadow-sm');
+      const activeIcon = element.querySelector('.material-symbols-outlined');
+      if (activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+    }
+  </script>
+</div></main></body></html>

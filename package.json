@@ -1,0 +1,12 @@
+{
+  "name": "yp-legacy-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "YP Legacy Project — verifiable precision tree registry, GPS verification, and telemetry mapping.",
+  "scripts": {
+    "dev": "npm --prefix yp-legacy-web run dev",
+    "build": "npm --prefix yp-legacy-web run build",
+    "preview": "npm --prefix yp-legacy-web run preview",
+    "lint": "npm --prefix yp-legacy-web run lint"
+  }
+}

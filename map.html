@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Interactive Afforestation Telemetry Map &amp; Tree Registry — Tree Tag</title>
+  <meta name="description" content="Explore real-time geotagged sapling telemetry, cryptographic verification, species breakdown analytics, and GIS cluster registry."/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg"/>
+  
+  <!-- Preconnect & Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#002218",
+            "on-primary": "#ffffff",
+            "primary-container": "#0f382c",
+            "on-primary-container": "#79a292",
+            "inverse-primary": "#a6d0be",
+            "primary-fixed": "#c1ecda",
+            "primary-fixed-dim": "#a6d0be",
+            "on-primary-fixed": "#002117",
+            "secondary": "#196b4f",
+            "secondary-accent": "#2f7c5f",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#a2f0cc",
+            "on-secondary-container": "#1f6f53",
+            "secondary-fixed": "#a5f2cf",
+            "secondary-fixed-dim": "#8ad6b4",
+            "surface": "#f4fbf4",
+            "surface-dim": "#d4dcd5",
+            "surface-bright": "#f4fbf4",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#eef5ef",
+            "surface-container": "#e8f0e9",
+            "surface-container-high": "#e3eae3",
+            "surface-container-highest": "#dde4de",
+            "on-surface": "#161d19",
+            "on-surface-variant": "#414845",
+            "outline": "#717975",
+            "outline-variant": "#c1c8c3",
+            "background": "#f4fbf4"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            sm: "0.125rem",
+            md: "0.375rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "spacing-2xs": "0.25rem",
+            "spacing-xs": "0.5rem",
+            "spacing-sm": "0.75rem",
+            "spacing-md": "1rem",
+            "spacing-lg": "1.5rem",
+            "spacing-xl": "2rem",
+            "spacing-2xl": "3rem",
+            "spacing-3xl": "4.5rem",
+            "spacing-4xl": "6rem",
+            "grid-margin-mobile": "1.25rem",
+            "grid-margin-desktop": "3rem",
+            "grid-gutter": "1.5rem"
+          },
+          fontFamily: {
+            "display-hero": ["Outfit", "sans-serif"],
+            "headline-lg": ["Outfit", "sans-serif"],
+            "headline-md": ["Outfit", "sans-serif"],
+            "headline-sm": ["Outfit", "sans-serif"],
+            "body-lg": ["Hanken Grotesk", "sans-serif"],
+            "body-md": ["Hanken Grotesk", "sans-serif"],
+            "body-sm": ["Hanken Grotesk", "sans-serif"],
+            "label-md": ["Hanken Grotesk", "sans-serif"],
+            "label-sm": ["Hanken Grotesk", "sans-serif"],
+            "mono-metric": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  
+  <!-- Custom Design System Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between">
+  <!-- 1. IEEE MASTER UTILITY TOP BAR -->
+  <header class="w-full z-40 sticky top-0 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(15,56,44,0.04)] border-b border-outline-variant/60 font-sans">
+    <div class="w-full bg-[#0a2118] text-white border-b border-[#184a68]/40 text-[13px]">
+      <div class="max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop h-9 flex items-center justify-between">
+        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap opacity-90 text-[12px] font-normal">
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://www.ieee.org" target="_blank" rel="noopener">IEEE.org</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://ieeexplore.ieee.org" target="_blank" rel="noopener">IEEE Xplore</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://standards.ieee.org" target="_blank" rel="noopener">IEEE Standards</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://spectrum.ieee.org" target="_blank" rel="noopener">IEEE Spectrum</a>
+          <span class="opacity-40 select-none">|</span>
+          <a class="text-white hover:text-primary-fixed transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">More Sites</a>
+        </div>
+        <div class="flex items-center gap-4 flex-shrink-0 text-[12px]">
+          <div class="hidden sm:flex items-center gap-3 text-white/80">
+            <a aria-label="LinkedIn" class="hover:text-white transition-colors" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+            </a>
+            <a aria-label="Twitter" class="hover:text-white transition-colors" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            </a>
+          </div>
+          <span class="opacity-40 select-none hidden sm:inline">|</span>
+          <!-- Dynamic Auth Status (Signed in / Sign in) -->
+          <div class="top-bar-auth flex items-center">
+            <a class="font-medium text-white hover:text-primary-fixed transition-colors flex items-center gap-1" href="login.html">
+              <span class="material-symbols-outlined text-[16px]">account_circle</span>
+              <span>Sign In</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CO-BRANDING NAV -->
+    <div class="h-20 max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop flex items-center justify-between gap-spacing-md">
+      <!-- Left: Unified Brand & IEEE Lockup -->
+      <div class="flex items-center gap-3 md:gap-4 flex-shrink-0">
+        <a class="flex items-center gap-2.5 group" href="index.html">
+          <div class="w-10 h-10 rounded-xl bg-primary text-secondary-fixed flex items-center justify-center shadow-sm group-hover:bg-primary-container transition-colors">
+            <span class="material-symbols-outlined text-[24px]">forest</span>
+          </div>
+          <div class="flex flex-col leading-none">
+            <span class="font-headline-sm text-[20px] font-bold text-primary tracking-tight">Tree Tag</span>
+            <span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest font-semibold mt-0.5">Telemetry Engine</span>
+          </div>
+        </a>
+        <span class="h-7 w-px bg-outline-variant/60 hidden sm:inline-block"></span>
+        <div class="hidden md:flex items-center gap-2.5">
+          <img alt="IEEE Young Professionals CSTF" class="h-7 w-auto object-contain" src="./assets/images/ieee-yp-cstf.png"/>
+          <span class="h-5 w-px bg-outline-variant/50 hidden lg:inline-block"></span>
+          <img alt="IEEE Logo" class="h-6 w-auto object-contain hidden lg:inline-block" src="./assets/images/ieee-diamond.png"/>
+        </div>
+      </div>
+
+      <!-- Center: Clean Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-spacing-lg">
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="index.html#mission">Mission</a>
+        <a class="font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-1 transition-colors flex items-center gap-1.5" href="map.html">
+          <span>Live Map</span>
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+          </span>
+        </a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="map.html" onclick="if(window.showUserPlantedTrees) { window.showUserPlantedTrees(); return false; }">Registered Trees</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="index.html#services">Services</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="index.html#footprint">Footprint</a>
+      </nav>
+
+      <!-- Right: Action Controls (Schedule Meeting + Profile Login/Logout) -->
+      <div class="flex items-center gap-2 sm:gap-spacing-md">
+        <button class="hidden sm:inline-flex bg-primary hover:bg-secondary text-on-primary font-label-md text-xs sm:text-label-md px-3.5 sm:px-spacing-lg py-2.5 rounded-lg shadow-sm transition-all duration-200 items-center justify-center hover:shadow hover:-translate-y-0.5 cursor-pointer" data-action="schedule-meeting">
+          Schedule Meeting
+        </button>
+
+        <!-- Dynamic Profile & Login/Logout Controls -->
+        <div class="header-auth-controls flex items-center gap-2">
+          <!-- Populated by TreeTagAuth.syncUI() in main.js -->
+          <a class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant/60 flex items-center justify-center hover:bg-secondary-container transition-colors cursor-pointer text-primary" href="profile.html" title="User Profile: Jibin Wilson">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+          </a>
+          <button onclick="TreeTagAuth.logout()" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            <span class="hidden sm:inline">Logout</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="lg:hidden w-9 h-9 flex items-center justify-center rounded text-primary hover:bg-surface-container-high cursor-pointer" aria-label="Toggle Mobile Menu">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-surface border-b border-outline-variant/60 px-4 py-3 space-y-2">
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="index.html#mission">Mission</a>
+      <a class="block py-1.5 font-label-md text-primary font-bold" href="map.html">Live Map (55,918 Trees)</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="map.html" onclick="if(window.showUserPlantedTrees) { window.showUserPlantedTrees(); return false; }">Registered Trees</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="index.html#services">Services</a>
+      <a class="block py-1.5 font-label-md text-on-surface-variant hover:text-primary" href="index.html#footprint">Footprint</a>
+      <button class="w-full text-left py-1.5 font-label-md text-secondary font-semibold" data-action="schedule-meeting">Schedule a Meeting</button>
+      <div class="mobile-auth-controls pt-2"></div>
+    </div>
+  </header>
+
+  <!-- MAIN MAP INSPECTION CONSOLE -->
+  <main class="w-full pt-6 bg-background flex-1 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop mb-spacing-4xl">
+    <div class="flex flex-col w-full">
+      <!-- 2. GIS HEADER & TELEMETRY CONTROLS STRIP -->
+      <div class="w-full bg-surface-container-lowest shadow-sm rounded-xl p-spacing-md md:p-spacing-lg mb-spacing-md border border-outline-variant/40">
+        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-spacing-md pb-spacing-md border-b border-surface-variant">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-spacing-sm sm:gap-spacing-md">
+            <div>
+              <div class="flex items-center gap-spacing-xs">
+                <h1 class="font-headline-md text-xl sm:text-2xl font-bold text-primary tracking-tight">Interactive Afforestation Map</h1>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold">
+                  <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                  <span>Live Telemetry Active</span>
+                </span>
+              </div>
+              <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant mt-0.5">
+                Institutional verification feed across Southern Peninsular India and Sri Lankan Coastal Corridors.
+              </p>
+            </div>
+          </div>
+          <!-- Right Stats & View Mode -->
+          <div class="flex items-center flex-wrap gap-spacing-sm">
+            <div class="flex items-baseline bg-surface-container px-3 py-1.5 rounded-lg gap-2">
+              <span class="font-label-sm text-xs text-on-surface-variant uppercase tracking-wider font-semibold">Total Tagged:</span>
+              <span class="font-mono-metric text-lg text-primary font-bold">55,918</span>
+              <span class="font-label-sm text-xs text-secondary font-semibold">Audited</span>
+            </div>
+            <!-- View Switcher -->
+            <div class="inline-flex rounded-lg bg-surface-container-high p-1 select-none">
+              <button class="px-3 py-1 text-label-sm font-label-md rounded bg-surface-container-lowest text-primary shadow-sm font-semibold transition-all cursor-pointer" id="view-cluster-btn">
+                Clusters
+              </button>
+              <button class="px-3 py-1 text-label-sm font-label-md rounded text-on-surface-variant hover:text-on-surface transition-all cursor-pointer" id="view-heatmap-btn">
+                Heatmap
+              </button>
+              <button class="px-3 py-1 text-label-sm font-label-md rounded text-on-surface-variant hover:text-on-surface transition-all cursor-pointer" id="view-satellite-btn">
+                Satellite
+              </button>
+            </div>
+            <!-- Field GPS Capture Station Button -->
+            <button id="openGpsCaptureBtn" class="inline-flex items-center gap-1.5 bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-label-md text-xs sm:text-sm px-3.5 py-2 rounded-lg transition-colors cursor-pointer shadow-xs font-semibold">
+              <span class="material-symbols-outlined text-[16px]">my_location</span>
+              <span>Field GPS Capture</span>
+            </button>
+            <!-- Export Button -->
+            <button id="exportAuditBtn" class="inline-flex items-center gap-1.5 bg-primary hover:bg-secondary text-on-primary font-label-md text-xs sm:text-sm px-3.5 py-2 rounded-lg transition-colors cursor-pointer shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">download</span>
+              <span>Export Audit Data</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Secondary Filter Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-spacing-sm mt-spacing-md items-center">
+          <div class="md:col-span-4 relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+            <input class="w-full pl-9 pr-3 py-2 bg-surface-container-low text-on-surface font-body-sm text-sm rounded-lg outline-none focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline border border-outline-variant/40" id="tree-search-input" placeholder="Search by region, species, institution, or tag ID (e.g. TT-9482)..." type="text"/>
+          </div>
+          <div class="md:col-span-8 flex flex-wrap items-center gap-spacing-xs md:justify-end">
+            <!-- Partner Filter -->
+            <div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5 border border-outline-variant/30">
+              <span class="material-symbols-outlined text-[16px] text-on-surface-variant">group</span>
+              <span class="font-label-sm text-xs text-on-surface-variant">Partner:</span>
+              <select class="bg-transparent font-label-md text-xs text-primary font-medium focus:outline-none cursor-pointer">
+                <option value="all">All Partners</option>
+                <option value="thanal">Thanal Bio-Reserve</option>
+                <option value="sustera">Sustera Foundation</option>
+                <option value="ecocare">EcoCare Western Ghats</option>
+              </select>
+            </div>
+            <!-- Biome Filter -->
+            <div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5 border border-outline-variant/30">
+              <span class="material-symbols-outlined text-[16px] text-on-surface-variant">forest</span>
+              <span class="font-label-sm text-xs text-on-surface-variant">Biome:</span>
+              <select class="bg-transparent font-label-md text-xs text-primary font-medium focus:outline-none cursor-pointer">
+                <option value="all">All Biomes</option>
+                <option value="schools">Schools &amp; Orphanages</option>
+                <option value="agroforest">Agroforestry &amp; Riparian</option>
+                <option value="urban">Urban Micro-Sanctuary</option>
+              </select>
+            </div>
+            <!-- Status Filter -->
+            <div class="flex items-center bg-surface-container-low rounded-lg px-2.5 py-1.5 gap-1.5 border border-outline-variant/30">
+              <span class="material-symbols-outlined text-[16px] text-on-surface-variant">verified</span>
+              <span class="font-label-sm text-xs text-on-surface-variant">Status:</span>
+              <select class="bg-transparent font-label-md text-xs text-primary font-medium focus:outline-none cursor-pointer">
+                <option value="all">All Status</option>
+                <option selected value="verified">Verified Active (100%)</option>
+                <option value="sapling">Sapling Stage (&lt;12m)</option>
+                <option value="maturing">Maturing Canopy</option>
+              </select>
+            </div>
+            <button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer border border-outline-variant/30" title="Reset Filters" onclick="document.getElementById('tree-search-input').value='';">
+              <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. MAIN GEOSPATIAL MAP WORKSPACE & INTEGRATED REGISTRY DRAWER -->
+      <div class="relative w-full h-[760px] rounded-xl overflow-hidden shadow-xl bg-[#7ec4cb] select-none border border-outline-variant/50">
+        <!-- Base GIS Imagery Canvas -->
+        <div class="absolute inset-0 w-full h-full overflow-hidden" id="map-canvas">
+          <img alt="South India and Sri Lanka Regional GIS Map" class="w-full h-full object-cover object-center select-none" src="./assets/images/map-satellite.png"/>
+          <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-surface-tint/10 pointer-events-none"></div>
+
+          <!-- TOP ACTIVE FILTER BANNER (When Showing Trees Planted by User) -->
+          <div id="userPlantedBanner" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-[#002218]/95 backdrop-blur-md text-white border border-secondary px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 text-xs max-w-[95%] sm:max-w-max animate-fade-in">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping flex-shrink-0"></span>
+            <span class="font-medium text-white/95">
+              Showing tree planted by <strong>Jibin Wilson</strong> (Mar Baselios Institute of Technology and Science • #TT-8841)
+            </span>
+            <button onclick="window.showAllRegionalTrees()" class="ml-2 px-2.5 py-1 rounded bg-white/20 hover:bg-white/30 text-white font-semibold transition-colors cursor-pointer text-[11px]">
+              Show All 55,918 Trees
+            </button>
+          </div>
+
+          <!-- REGIONAL CLUSTER HOTSPOT DOTS (Interactive) -->
+          <!-- 0. JIBIN WILSON'S REGISTERED TREE (Mar Baselios Institute Campus, Kothamangalam) -->
+          <div id="jibinTreeDot" class="absolute top-[48%] left-[50.5%] transform -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer cluster-node-dot group" data-cluster-key="jibin_tree">
+            <div class="relative flex items-center justify-center">
+              <div class="animate-ping absolute h-14 w-14 rounded-full bg-emerald-400/50"></div>
+              <div class="h-11 w-11 rounded-full bg-emerald-600 text-white shadow-xl flex items-center justify-center font-label-md text-xs font-bold ring-2 ring-white group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">forest</span>
+              </div>
+              <span class="absolute -bottom-5 bg-[#002218] text-white px-2 py-0.5 rounded text-[10px] font-label-sm tracking-tight whitespace-nowrap shadow-md border border-emerald-400/40">
+                🌱 Jibin's Teak (#TT-8841)
+              </span>
+            </div>
+          </div>
+
+          <!-- 1. Wayanad Shola -->
+          <div class="absolute top-[28%] left-[45%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="wayanad">
+            <div class="relative flex items-center justify-center">
+              <div class="animate-ping absolute h-12 w-12 rounded-full bg-secondary/40"></div>
+              <div class="h-11 w-11 rounded-full bg-secondary text-white shadow-lg flex items-center justify-center font-label-md text-xs font-bold group-hover:scale-110 transition-transform">
+                3347
+              </div>
+              <span class="absolute -bottom-5 bg-surface-container-lowest/90 backdrop-blur px-2 py-0.5 rounded text-[10px] font-label-sm text-primary tracking-tight whitespace-nowrap shadow-sm">Wayanad Shola</span>
+            </div>
+          </div>
+
+          <!-- 2. Kozhikode Forest Node -->
+          <div class="absolute top-[35%] left-[44%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="wayanad">
+            <div class="h-9 w-9 rounded-full bg-secondary text-white shadow-md flex items-center justify-center font-label-sm text-[11px] font-semibold group-hover:scale-110 transition-transform">
+              365
+            </div>
+          </div>
+
+          <!-- 3. Palakkad Gap Corridor -->
+          <div class="absolute top-[42%] left-[47%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="palakkad">
+            <div class="h-14 w-14 rounded-full bg-primary-container text-white shadow-xl flex flex-col items-center justify-center font-label-md text-xs font-bold ring-2 ring-secondary-container group-hover:scale-110 transition-transform">
+              <span>10,189</span>
+              <span class="text-[8px] uppercase tracking-tighter text-secondary-container">Central</span>
+            </div>
+          </div>
+
+          <!-- 4. Bengaluru Regional Hub -->
+          <div class="absolute top-[18%] left-[58%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="bengaluru">
+            <div class="h-10 w-10 rounded-full bg-secondary text-white shadow-md flex items-center justify-center font-label-sm text-xs font-semibold group-hover:scale-110 transition-transform">
+              2093
+            </div>
+            <span class="absolute -bottom-5 bg-surface-container-lowest/90 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-label-sm text-primary shadow-sm">Bengaluru</span>
+          </div>
+
+          <!-- 5. Chennai Metro Canopy -->
+          <div class="absolute top-[16%] left-[72%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="bengaluru">
+            <div class="h-8 w-8 rounded-full bg-surface-tint text-white shadow-md flex items-center justify-center font-label-sm text-[11px] font-medium group-hover:scale-110 transition-transform">
+              151
+            </div>
+          </div>
+
+          <!-- 6. Coimbatore Foothills -->
+          <div class="absolute top-[38%] left-[52%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="palakkad">
+            <div class="h-8 w-8 rounded-full bg-secondary text-white shadow-sm flex items-center justify-center font-label-sm text-[11px] font-medium group-hover:scale-110 transition-transform">
+              109
+            </div>
+          </div>
+
+          <!-- 7. Kochi Bio-Corridor (ACTIVE INSPECTION NODE) -->
+          <div class="absolute top-[52%] left-[48%] transform -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer cluster-node-dot group" data-cluster-key="kochi">
+            <div class="relative flex items-center justify-center">
+              <div class="absolute h-16 w-16 rounded-full bg-secondary/40 animate-pulse"></div>
+              <div class="h-12 w-12 rounded-full bg-primary text-white shadow-2xl flex flex-col items-center justify-center font-label-md text-xs font-bold ring-4 ring-secondary-container">
+                2154
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Alappuzha Marine Wetlands -->
+          <div class="absolute top-[62%] left-[49%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="alappuzha">
+            <div class="h-12 w-12 rounded-full bg-secondary text-white shadow-lg flex items-center justify-center font-label-md text-xs font-semibold group-hover:scale-110 transition-transform">
+              4620
+            </div>
+          </div>
+
+          <!-- 9. Agasthyamalai Biosphere -->
+          <div class="absolute top-[71%] left-[51%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="alappuzha">
+            <div class="h-9 w-9 rounded-full bg-secondary text-white shadow-md flex items-center justify-center font-label-sm text-[11px] font-medium group-hover:scale-110 transition-transform">
+              502
+            </div>
+          </div>
+
+          <!-- 10. Sri Lanka Coastal Hub -->
+          <div class="absolute top-[82%] left-[75%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer cluster-node-dot group" data-cluster-key="srilanka">
+            <div class="relative flex items-center justify-center">
+              <div class="h-9 w-9 rounded-full bg-secondary text-white shadow-md flex items-center justify-center font-label-sm text-xs font-semibold group-hover:scale-110 transition-transform">
+                5
+              </div>
+              <span class="absolute -bottom-4 bg-surface-container-lowest/90 backdrop-blur px-1.5 py-0.5 rounded text-[9px] font-label-sm text-primary shadow-sm">Sri Lanka</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEFT SLIDING / FLOATING REGISTRY DRAWER -->
+        <div class="absolute top-4 left-4 z-20 w-80 max-w-[90%] bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-2xl border border-outline-variant/60 flex flex-col max-h-[720px] overflow-hidden">
+          <!-- Drawer Header -->
+          <div class="p-spacing-md border-b border-surface-variant bg-surface-container-low/60">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[20px]">eco</span>
+                <div>
+                  <h3 class="font-headline-sm text-sm font-bold text-primary">Verified Plantings</h3>
+                  <p class="text-[11px] text-on-surface-variant font-body-sm">Real-time IoT &amp; Field Auditor logs</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Filter Switcher: All Trees vs Trees Planted by Jibin -->
+            <div class="flex items-center gap-1 p-1 bg-surface-container rounded-lg mt-3 text-xs">
+              <button id="filterAllTreesBtn" class="flex-1 py-1 text-center font-semibold rounded bg-primary text-white shadow-xs transition-all cursor-pointer">
+                All Trees (42)
+              </button>
+              <button id="filterUserTreesBtn" class="flex-1 py-1 text-center font-medium rounded text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+                🌱 Jibin's Trees (1)
+              </button>
+            </div>
+
+            <!-- Mini stats row -->
+            <div class="grid grid-cols-3 gap-2 mt-2 text-center">
+              <div class="bg-white p-1.5 rounded border border-surface-variant">
+                <div class="text-[10px] uppercase text-outline font-label-sm">Active</div>
+                <div class="font-bold text-xs text-primary">42</div>
+              </div>
+              <div class="bg-white p-1.5 rounded border border-surface-variant">
+                <div class="text-[10px] uppercase text-outline font-label-sm">Survival</div>
+                <div class="font-bold text-xs text-secondary">99.8%</div>
+              </div>
+              <div class="bg-white p-1.5 rounded border border-surface-variant">
+                <div class="text-[10px] uppercase text-outline font-label-sm">CO₂ Offset</div>
+                <div class="font-bold text-xs text-primary">1,420t</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Planting Cards Scroll List -->
+          <div class="p-3 space-y-2.5 overflow-y-auto flex-1">
+            <!-- Card 0: Jibin Wilson's Planted Tree (Registered Tree) -->
+            <div class="planting-item-card bg-emerald-50/70 p-3 rounded-lg border-2 border-emerald-500 shadow-xs hover:border-emerald-600 transition-all cursor-pointer" data-planter="jibin-wilson" onclick="window.showUserPlantedTrees('Jibin Wilson')">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[12px]">verified</span>
+                  <span>Planted by Jibin Wilson</span>
+                </span>
+                <span class="font-mono text-xs font-bold text-emerald-800">#TT-8841</span>
+              </div>
+              <div class="font-bold text-sm text-primary mt-1">Teak (Tectona grandis)</div>
+              <div class="text-xs text-on-surface-variant">Mar Baselios Institute (MBITS) Campus • EKM</div>
+              <div class="flex items-center justify-between text-[11px] text-emerald-800 font-medium mt-2 pt-1 border-t border-emerald-200">
+                <span>📍 Kothamangalam</span>
+                <span class="text-secondary font-bold">100% Verified Telemetry</span>
+              </div>
+            </div>
+
+            <!-- Card 1 -->
+            <div class="planting-item-card bg-white p-3 rounded-lg border border-outline-variant/50 hover:border-secondary transition-colors shadow-2xs cursor-pointer" onclick="document.querySelectorAll('[data-cluster-key=wayanad]')[0].click()">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Verified Active</span>
+                <span class="font-mono text-xs text-outline">#TT-8841</span>
+              </div>
+              <div class="font-bold text-sm text-primary mt-1">Teak (Tectona grandis)</div>
+              <div class="text-xs text-on-surface-variant">Govt Model HS Campus, Kozhikode</div>
+              <div class="flex items-center justify-between text-[11px] text-outline mt-2 pt-1 border-t border-surface-variant">
+                <span>📍 Kerala Belt</span>
+                <span>Planted 2 hrs ago</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="planting-item-card bg-white p-3 rounded-lg border border-outline-variant/50 hover:border-secondary transition-colors shadow-2xs cursor-pointer" onclick="document.querySelectorAll('[data-cluster-key=wayanad]')[0].click()">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-secondary-container/80 text-on-secondary-container font-semibold">Healthy Growth</span>
+                <span class="font-mono text-xs text-outline">#TT-8840</span>
+              </div>
+              <div class="font-bold text-sm text-primary mt-1">Indian Rosewood (Dalbergia)</div>
+              <div class="text-xs text-on-surface-variant">Sustera Community Cluster, Wayanad</div>
+              <div class="flex items-center justify-between text-[11px] text-outline mt-2 pt-1 border-t border-surface-variant">
+                <span>📍 Wayanad</span>
+                <span>Audited Yesterday</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="planting-item-card bg-white p-3 rounded-lg border border-outline-variant/50 hover:border-secondary transition-colors shadow-2xs cursor-pointer" onclick="document.querySelectorAll('[data-cluster-key=bengaluru]')[0].click()">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-semibold">Newly Planted</span>
+                <span class="font-mono text-xs text-outline">#TT-8839</span>
+              </div>
+              <div class="font-bold text-sm text-primary mt-1">Neem (Azadirachta indica)</div>
+              <div class="text-xs text-on-surface-variant">Old Age Home Sanatorium, Madurai</div>
+              <div class="flex items-center justify-between text-[11px] text-outline mt-2 pt-1 border-t border-surface-variant">
+                <span>📍 Tamil Nadu</span>
+                <span>Planted Oct 28</span>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="planting-item-card bg-white p-3 rounded-lg border border-outline-variant/50 hover:border-secondary transition-colors shadow-2xs cursor-pointer" onclick="document.querySelectorAll('[data-cluster-key=palakkad]')[0].click()">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Verified Active</span>
+                <span class="font-mono text-xs text-outline">#TT-8838</span>
+              </div>
+              <div class="font-bold text-sm text-primary mt-1">Jackfruit (Artocarpus)</div>
+              <div class="text-xs text-on-surface-variant">EcoCare Riparian Buffer, Palakkad</div>
+              <div class="flex items-center justify-between text-[11px] text-outline mt-2 pt-1 border-t border-surface-variant">
+                <span>📍 Central Ghats</span>
+                <span>Planted Oct 25</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drawer Footer CTA -->
+          <div class="p-3 bg-surface-container-low border-t border-surface-variant">
+            <button class="w-full py-2.5 rounded-lg bg-secondary hover:bg-primary text-white font-label-md text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-sm cursor-pointer" data-action="schedule-meeting">
+              <span class="material-symbols-outlined text-[16px]">add_circle</span>
+              <span>Sponsor a Sapling in this Zone</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- POPUP TREE DETAILS CARD (Centered/Hover on Cluster) -->
+        <div id="nodePopover" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 w-84 sm:w-96 bg-surface-container-lowest/98 backdrop-blur-xl rounded-xl shadow-2xl border border-outline-variant/70 overflow-hidden">
+          <div class="p-4 border-b border-surface-variant flex items-center justify-between bg-surface-container-low/60">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+              <h4 id="popoverTitle" class="font-headline-sm text-sm font-bold text-primary flex items-center gap-1.5">
+                <span>Neem</span>
+                <span class="inline-flex items-center text-secondary" title="Tree Record Verified">
+                  <span class="material-symbols-outlined text-[16px]">verified</span>
+                </span>
+              </h4>
+            </div>
+            <button id="closePopoverBtn" class="text-outline hover:text-primary transition-colors cursor-pointer" aria-label="Close Popover">
+              <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+          </div>
+          <div class="p-4 space-y-2 text-xs">
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">Tree Name</span>
+              <span class="font-bold text-primary">Neem</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">Botanical Species</span>
+              <span id="popoverSpecies" class="font-semibold italic text-primary">Azadirachta indica</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">Student</span>
+              <span class="font-medium text-primary text-right max-w-[200px]">SORNA SAKTHI GANESH V</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">College</span>
+              <span class="font-medium text-primary text-right max-w-[200px] leading-tight">GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">Coordinates</span>
+              <span id="popoverLatLon" class="font-mono font-bold text-primary">10.05280°, 76.63460°</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">GPS Accuracy &amp; Status</span>
+              <span class="font-mono text-secondary font-semibold">±4.2 m • ✓ Verified</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-surface-variant/40">
+              <span class="text-outline">Audit Stage</span>
+              <span id="popoverPartner" class="text-secondary font-medium flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">verified</span>
+                Verified by IEEE YP / Thanal
+              </span>
+            </div>
+            <div id="popoverPlanted" class="text-[11px] text-outline pt-1 text-center">
+              Date of Planting: 31-08-2026 • Confidence: 96%
+            </div>
+          </div>
+          <div class="p-3 bg-surface-container-low flex items-center gap-2">
+            <button class="w-full py-2 bg-primary hover:bg-secondary text-white font-label-md text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1.5" onclick="alert('Viewing verified tree record: Neem (Azadirachta indica) planted by SORNA SAKTHI GANESH V.');">
+              <span>View Full Tree Details</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- MAP FLOATING TOOLS (Bottom Right) -->
+        <div class="absolute bottom-4 right-4 z-20 flex flex-col items-end gap-2">
+          <!-- System Status Badge -->
+          <div class="bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full shadow-md flex items-center gap-2 text-[11px] font-label-sm text-primary">
+            <span class="w-2 h-2 rounded-full bg-secondary"></span>
+            <span>TreeTag GIS Engine v4.2 • Sentinel-2 Earth Observation &amp; GPS Audit</span>
+          </div>
+          <!-- Zoom Controls -->
+          <div class="flex flex-col bg-surface-container-lowest rounded-lg shadow-md border border-surface-variant overflow-hidden">
+            <button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container text-primary transition-colors cursor-pointer border-b border-surface-variant" title="Zoom In" onclick="const c=document.getElementById('map-canvas'); c.style.transform='scale(1.15)'; c.style.transition='transform 0.3s';">
+              <span class="material-symbols-outlined text-[18px]">add</span>
+            </button>
+            <button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container text-primary transition-colors cursor-pointer" title="Zoom Out" onclick="const c=document.getElementById('map-canvas'); c.style.transform='scale(1)'; c.style.transition='transform 0.3s';">
+              <span class="material-symbols-outlined text-[18px]">remove</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 6. OFFICIAL IEEE FOOTER EXTRACTED FROM STITCH DESIGN -->
+  <footer class="site-footer w-full bg-[#0a2118] text-white border-t border-[#184a68]/40 font-sans" id="footer">
+    <div id="footer-inner">
+      <div id="footer-widgets">
+        <div class="footer-widgets-inner max-w-[1240px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop pt-12 pb-10">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">forest</span>
+                </div>
+                <span class="font-headline-sm text-xl font-bold text-white tracking-tight">Tree Tag</span>
+              </div>
+              <p class="text-xs text-white/70 max-w-lg leading-relaxed">
+                Industrial-grade afforestation telemetry &amp; GIS registry partnered with IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF).
+              </p>
+            </div>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-semibold text-white mb-3">Stay connected</h2>
+              <div class="flex items-center gap-3 text-white/80">
+                <a aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.linkedin.com/company/ieee" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                </a>
+                <a aria-label="Twitter / X" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://twitter.com/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a aria-label="Facebook" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.facebook.com/IEEE.org/" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                </a>
+                <a aria-label="YouTube" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 hover:text-white flex items-center justify-center transition-colors" href="https://www.youtube.com/user/IEEEorg" target="_blank" rel="noopener">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <section class="footer-section pt-8">
+            <ul class="footer-links flex flex-wrap list-none p-0 m-0 gap-x-6 gap-y-3 text-[14px]">
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html">Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="map.html">Telemetry Map</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="index.html#mission">About Mission</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="profile.html">Student Profile</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="login.html">Sign In / Register</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/" target="_blank" rel="noopener">IEEE YP Home</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/sitemap.html" target="_blank" rel="noopener">Sitemap</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://yp.ieee.org/contact-us/" target="_blank" rel="noopener">Contact &amp; Support</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/accessibility-statement.html" target="_blank" rel="noopener">Accessibility</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/corporate/governance/p9-26.html" target="_blank" rel="noopener">Nondiscrimination Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://secure.ethicspoint.com/domain/media/en/gui/20410/index.html" target="_blank" rel="noopener">IEEE Ethics Reporting</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/security-privacy.html" target="_blank" rel="noopener">IEEE Privacy Policy</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/help/site-terms-conditions.html" target="_blank" rel="noopener">Terms</a></li>
+              <li><a class="text-white/90 hover:text-secondary-fixed transition-colors" href="https://www.ieee.org/about/feedback-ieee-site.html" target="_blank" rel="noopener">Feedback</a></li>
+            </ul>
+            <p class="footer-copyright max-w-[1000px] mt-8 text-[13px] leading-relaxed text-[#cbd5e1]">
+              © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity. Developed in partnership with Tree Tag Precision Afforestation Telemetry Engine.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 7. INTERACTIVE FIELD GPS CAPTURE MODAL (WITH 40% ACCURACY CUTOFF & LAT/LON DETAILS) -->
+  <div id="gpsCaptureModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/65 backdrop-blur-sm hidden p-4">
+    <div class="bg-surface-container-lowest w-full max-w-xl rounded-2xl shadow-2xl border border-outline-variant/70 overflow-hidden relative animate-fade-in">
+      <div class="bg-[#002218] px-6 py-4 text-white flex items-center justify-between border-b border-secondary/40">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-[20px]">my_location</span>
+          </div>
+          <div>
+            <h3 class="font-headline-sm text-base sm:text-lg font-bold">Field GPS Capture &amp; Tagging Engine</h3>
+            <p class="text-xs text-primary-fixed-dim">Institutional Multi-Reading Geolocation Telemetry</p>
+          </div>
+        </div>
+        <button id="closeGpsModalBtn" class="text-white/70 hover:text-white cursor-pointer" aria-label="Close dialog">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <!-- Accuracy Gauge & 40% Cutoff Indicator -->
+        <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-xs uppercase tracking-wider text-outline font-semibold">GPS Accuracy Score</span>
+            <div id="gpsStatusBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">verified</span>
+              <span>PASSED (&gt;40% Cutoff)</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-baseline justify-between mb-1.5">
+              <span class="text-xs font-medium text-on-surface-variant">Signal Confidence Level</span>
+              <span id="gpsAccuracyPct" class="font-mono text-2xl font-bold text-primary">92%</span>
+            </div>
+            <!-- Progress bar with 40% cutoff mark -->
+            <div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden relative">
+              <div id="gpsAccuracyBar" class="h-3 rounded-full bg-secondary transition-all duration-300" style="width: 92%;"></div>
+              <!-- 40% Cutoff Line -->
+              <div class="absolute top-0 bottom-0 left-[40%] w-0.5 bg-red-600 z-10" title="40% Minimum Mandatory Cutoff"></div>
+            </div>
+            <div class="flex justify-between items-center text-[10px] text-outline font-mono mt-1">
+              <span>0% (Unusable)</span>
+              <span class="text-red-600 font-bold">▲ 40% Cutoff Threshold</span>
+              <span>100% (High Precision)</span>
+            </div>
+          </div>
+
+          <div id="gpsCutoffAlert" class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+            <div>
+              <strong>GPS Accuracy Verified (92%):</strong> Passes the institutional 40% accuracy cutoff threshold. Coordinates ready for cryptographic registry tagging.
+            </div>
+          </div>
+        </div>
+
+        <!-- Exact Latitude, Longitude, and Spatial Details Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3.5 rounded-xl bg-white border border-outline-variant/50 shadow-2xs">
+            <span class="text-[11px] font-label-sm uppercase tracking-wider text-outline">Latitude</span>
+            <div id="gpsLatitude" class="font-mono text-base sm:text-lg font-bold text-primary mt-0.5">10.052814° N</div>
+            <span class="text-[10px] text-on-surface-variant font-mono">Dec: 10.052814</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-white border border-outline-variant/50 shadow-2xs">
+            <span class="text-[11px] font-label-sm uppercase tracking-wider text-outline">Longitude</span>
+            <div id="gpsLongitude" class="font-mono text-base sm:text-lg font-bold text-primary mt-0.5">76.634629° E</div>
+            <span class="text-[10px] text-on-surface-variant font-mono">Dec: 76.634629</span>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-outline-variant/40 shadow-2xs">
+            <span class="text-[10px] uppercase text-outline">Altitude (MSL)</span>
+            <div id="gpsAltitude" class="font-mono text-sm font-semibold text-primary mt-0.5">48.2 m</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-outline-variant/40 shadow-2xs">
+            <span class="text-[10px] uppercase text-outline">Accuracy Radius</span>
+            <div id="gpsAccuracyRadius" class="font-mono text-sm font-semibold text-secondary mt-0.5">±3.2 m</div>
+          </div>
+        </div>
+
+        <!-- Simulator Test Buttons for Accuracy Cutoff demonstration -->
+        <div class="p-3 rounded-lg bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <span class="text-on-surface-variant font-medium text-center sm:text-left">Test 40% Cutoff Logic:</span>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button id="simulateGoodGpsBtn" class="flex-1 sm:flex-none px-2.5 py-1 rounded bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-semibold text-[11px] cursor-pointer transition-colors">
+              ✓ Good GPS (94%)
+            </button>
+            <button id="simulatePoorGpsBtn" class="flex-1 sm:flex-none px-2.5 py-1 rounded bg-red-100 hover:bg-red-200 text-red-800 font-semibold text-[11px] cursor-pointer transition-colors">
+              ⚠ Low Accuracy (28% &lt; 40%)
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-2 flex items-center gap-3">
+          <button id="confirmGpsRegisterBtn" class="w-full py-3 rounded-lg bg-secondary hover:bg-primary text-white font-label-md text-sm font-bold shadow-md transition-colors cursor-pointer flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">verified</span>
+            <span>Confirm GPS Coordinates &amp; View on Map</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Meeting Modal Component -->
+  <div id="meetingModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 modal-backdrop hidden p-4">
+    <div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden relative">
+      <div class="bg-primary px-6 py-5 text-white flex items-center justify-between">
+        <h3 class="font-headline-sm text-lg font-bold">Schedule an Institutional Meeting</h3>
+        <button id="closeMeetingModal" class="text-white/70 hover:text-white" aria-label="Close dialog">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+      </div>
+      <div class="p-6">
+        <form id="meetingForm" class="space-y-4">
+          <div>
+            <label class="block font-label-md text-xs font-semibold text-primary mb-1">Organization Name</label>
+            <input required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-sm text-on-surface" placeholder="e.g. MBITS NSS Cell" type="text"/>
+          </div>
+          <div>
+            <label class="block font-label-md text-xs font-semibold text-primary mb-1">Work Email</label>
+            <input required class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant text-sm text-on-surface" placeholder="contact@mbits.ac.in" type="email"/>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-lg bg-secondary hover:bg-primary text-white font-label-md text-sm font-bold shadow-md transition-colors">
+            Confirm Consultation Request
+          </button>
+        </form>
+        <div id="meetingSuccessMsg" class="hidden text-center py-6">
+          <div class="w-14 h-14 rounded-full bg-secondary-container text-secondary flex items-center justify-center mx-auto mb-3">
+            <span class="material-symbols-outlined text-[32px]">verified</span>
+          </div>
+          <h4 class="font-headline-sm text-xl font-bold text-primary">Meeting Request Received!</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/map.js"></script>
+</body>
+</html>

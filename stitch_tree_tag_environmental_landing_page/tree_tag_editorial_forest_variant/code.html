@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en" style="width: 1280px; height: 3550px; overflow: hidden; position: relative;"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary-container": "#79a292", "primary-container": "#0f382c", "on-secondary-fixed": "#002115", "surface-tint": "#3f6658", "on-surface-variant": "#414845", "secondary-container": "#a2f0cc", "on-tertiary-fixed": "#092017", "tertiary-container": "#20362c", "on-error-container": "#93000a", "primary-fixed-dim": "#a6d0be", "inverse-surface": "#2b322e", "surface-container-low": "#eef5ef", "inverse-on-surface": "#ebf3ec", "secondary": "#196b4f", "surface-container-lowest": "#ffffff", "surface": "#f4fbf4", "on-secondary": "#ffffff", "on-background": "#161d19", "error-container": "#ffdad6", "primary": "#002218", "on-primary-fixed": "#002117", "secondary-fixed": "#a5f2cf", "on-secondary-fixed-variant": "#00513a", "inverse-primary": "#a6d0be", "on-primary-fixed-variant": "#274e41", "on-secondary-container": "#1f6f53", "on-tertiary-fixed-variant": "#354c41", "surface-dim": "#d4dcd5", "on-primary": "#ffffff", "surface-variant": "#dde4de", "surface-bright": "#f4fbf4", "tertiary-fixed": "#cee9da", "outline": "#717975", "surface-container-high": "#e3eae3", "tertiary-fixed-dim": "#b3ccbf", "on-error": "#ffffff", "outline-variant": "#c1c8c3", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#8ad6b4", "tertiary": "#0a2118", "on-surface": "#161d19", "surface-container": "#e8f0e9", "background": "#f4fbf4", "surface-container-highest": "#dde4de", "error": "#ba1a1a", "on-tertiary-container": "#869f92", "primary-fixed": "#c1ecda" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "grid-margin-mobile": "1.25rem", "spacing-lg": "1.5rem", "spacing-4xl": "6rem", "spacing-xl": "2rem", "grid-margin-desktop": "3rem", "grid-gutter": "1.5rem", "spacing-2xs": "0.25rem", "spacing-2xl": "3rem", "spacing-xs": "0.5rem", "spacing-3xl": "4.5rem", "spacing-sm": "0.75rem", "spacing-md": "1rem" }, "fontFamily": { "body-sm": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "label-sm": ["Hanken Grotesk"], "headline-lg": ["Outfit"], "headline-md": ["Outfit"], "headline-lg-mobile": ["Outfit"], "mono-metric": ["JetBrains Mono"], "display-hero": ["Outfit"], "label-md": ["Hanken Grotesk"], "display-hero-mobile": ["Outfit"], "body-lg": ["Hanken Grotesk"], "headline-sm": ["Outfit"] }, "fontSize": { "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }], "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "mono-metric": ["20px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "500" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between">
+<!-- 1. NAVIGATION BAR -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-surface-variant/40 shadow-[0_1px_12px_rgba(15,56,44,0.05)]">
+<div class="h-20 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop flex items-center justify-between">
+<!-- Left: Logo & Wordmark -->
+<a class="flex items-center gap-spacing-sm group" href="#">
+<img alt="Tree Tag Logo" class="h-9 w-9 object-contain group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida/AEtjO1X48k6r4QeB1qtgZ-IfzU_GGbbC1m19aJgi6TCZAcX8T9YS4MLG8jRwuJ1Zva5Hhwi8NyjYY_yutd_jeU-2I0er5vLiasJmLCSBa55pu3u0s5fcCO8cVQNw3byclOmsSA4X3ApOlW7b6Y71raEIjSaxy95SZLk5dmfPc7wqw6ATh-Rlj4CuEQwQ2260Ni91gH4J0VKURyDPKCMpXkda4OOUBxwxLJCyx-WFuZyEyGPaQOimEQ7HbCMY3UM">
+<span class="font-headline-md text-headline-sm text-primary tracking-tight font-semibold">Tree Tag</span>
+</a>
+<!-- Right: Links & Primary Action -->
+<div class="flex items-center gap-spacing-xl">
+<nav class="hidden md:flex items-center gap-spacing-xl" data-active-classes="text-secondary font-semibold">
+<a aria-current="page" class="font-label-md text-label-md text-secondary font-semibold hover:text-primary transition-colors" data-path="mission" href="#mission">Mission</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" data-path="services" href="#services">Services</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" data-path="footprint" href="#footprint">Footprint</a>
+</nav>
+
+</div>
+</div>
+</header>
+<main class="w-full pt-20 bg-background flex-1 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop">
+<div class="flex flex-col w-full">
+<!-- 2. HERO SECTION -->
+<section class="relative w-full -mt-20 pt-32 pb-spacing-3xl md:pb-spacing-4xl rounded-2xl overflow-hidden shadow-2xl mb-spacing-3xl md:mb-spacing-4xl">
+<!-- Immersive Full-Bleed Background with Dark Cinematic Gradient Overlay -->
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/aida/AEtjO1WyvtcSqTx2ruZzpYvqn7FvYCw6UFoTe_P1RlQ3_Y8U9rYpTDVGLdde-JreLoqbbdiH1hEmLxhhy1fF45T_l-36F2bHMLW40EqoIzIFX41yX6pa99YD_VkPvfWxUpegegvpOjrkXllEWIzCWKrl0CRJtj-WJ1WqEZCMR2d_3KTM5VdVpkdlohrCXWH_QS6RB406WGViFfqlJzs2bHA0UW0OSdfPfvYBiNuuAIgC65DvquL0rVjjPlrFSzY');"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary-container/80 to-[#071813]/95 backdrop-blur-[1px]"></div>
+<div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_40%,theme(colors.secondary-container)_0,transparent_65%)]"></div>
+<!-- Hero Editorial Glassmorphic Container -->
+<div class="relative z-10 max-w-4xl mx-auto text-center px-grid-margin-mobile md:px-spacing-xl flex flex-col items-center">
+<!-- Tag / Overline Badge -->
+<div class="inline-flex items-center gap-spacing-xs px-spacing-md py-spacing-2xs rounded-full bg-surface-container-lowest/15 backdrop-blur-md border border-white/20 mb-spacing-lg shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider font-semibold">Verifiable Precision Forestry</span>
+</div>
+<!-- Centered Bold Typography -->
+<h1 class="font-display-hero text-headline-lg md:text-display-hero text-on-primary tracking-tight uppercase max-w-3xl drop-shadow-md leading-tight font-semibold">
+      SEEDING THE FUTURE, ONE TREE AT A TIME.
+    </h1>
+<!-- Sub-headline -->
+<p class="mt-spacing-md font-headline-md text-headline-sm md:text-headline-md text-primary-fixed font-normal tracking-wide max-w-xl opacity-95 drop-shadow-sm">
+      Nature's digital-based solution.
+    </p>
+<!-- Interactive Counter Widget Pill -->
+<div class="mt-spacing-2xl flex flex-wrap items-center justify-center gap-spacing-sm p-spacing-xs bg-surface-container-lowest/15 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl">
+<div class="flex items-center gap-spacing-sm px-spacing-lg py-spacing-xs bg-primary/60 backdrop-blur-sm rounded-xl border border-white/10">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+</span>
+<span class="font-body-md text-body-md text-white/90">Trees tagged:</span>
+<span class="font-mono-metric text-mono-metric text-secondary-fixed font-semibold tracking-tight" id="taggedCounter">15,436</span>
+</div>
+<a class="inline-flex items-center gap-spacing-xs px-spacing-lg py-spacing-xs bg-secondary-container hover:bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 font-medium" href="#services">
+<span class="material-symbols-outlined text-[18px]">nature</span>
+<span class="">View Trees</span>
+</a>
+</div>
+<!-- Quick Glassmorphic Metrics Strip -->
+<div class="mt-spacing-2xl grid grid-cols-2 sm:grid-cols-3 gap-spacing-lg pt-spacing-lg w-full max-w-2xl border-t border-white/15 text-left">
+<div class="bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-spacing-sm border border-white/10">
+<div class="font-mono-metric text-mono-metric text-secondary-fixed font-semibold">99.8%</div>
+<div class="font-body-sm text-body-sm text-primary-fixed-dim mt-spacing-2xs">Survival Telemetry</div>
+</div>
+<div class="bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-spacing-sm border border-white/10">
+<div class="font-mono-metric text-mono-metric text-secondary-fixed font-semibold">42+</div>
+<div class="font-body-sm text-body-sm text-primary-fixed-dim mt-spacing-2xs">Regional Clusters</div>
+</div>
+<div class="col-span-2 sm:col-span-1 bg-surface-container-lowest/10 backdrop-blur-md rounded-xl p-spacing-sm border border-white/10">
+<div class="font-mono-metric text-mono-metric text-secondary-fixed font-semibold">ISO 14064</div>
+<div class="font-body-sm text-body-sm text-primary-fixed-dim mt-spacing-2xs">Audit Standards</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. OUR MISSION SECTION -->
+<section class="w-full mb-spacing-4xl" id="mission">
+<div class="max-w-4xl mx-auto flex flex-col items-center text-center">
+<!-- Section Title with Subtle Badge -->
+<div class="inline-flex items-center gap-spacing-xs px-spacing-md py-spacing-2xs rounded-full bg-secondary-container/40 text-on-secondary-container mb-spacing-md border border-secondary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest font-semibold">OUR MISSION</span>
+</div>
+<!-- Main Mission Verbatim Copy -->
+<p class="font-body-lg text-body-lg md:text-[20px] md:leading-[32px] text-on-surface leading-relaxed text-center font-normal mb-spacing-2xl">
+      Tree Tag is a mission-driven start-up working for an entrepreneurial social goal. Striving to reduce carbon emissions through tech-integrated afforestation projects, championing the qualities of transparency and quantitative accountability is what we assure. After all, sustainability can be both altruistic and lucrative, that is the Tree Tag way.
+    </p>
+<!-- Highlighted Metric Box Below Text with Carbon Visual / Border -->
+
+</div>
+</section>
+<!-- 4. OUR SERVICES SECTION -->
+<section class="w-full mb-spacing-4xl" id="services">
+<div class="flex flex-col items-center text-center mb-spacing-2xl">
+<div class="inline-flex items-center gap-spacing-xs px-spacing-md py-spacing-2xs rounded-full bg-secondary-container/40 text-on-secondary-container mb-spacing-xs border border-secondary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest font-semibold">OUR SERVICES</span>
+</div>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-primary tracking-tight">
+      Scalable tech-integrated ecological solutions.
+    </h2>
+</div>
+<!-- Responsive Grid of 5 Cards with subtle hover lift & distinct SVG eco-tech icons -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-spacing-lg">
+<!-- Card 1: CSR -->
+<div class="group bg-surface-container-lowest border border-outline-variant/30 hover:border-secondary/50 p-spacing-xl rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/20 flex items-center justify-center text-secondary mb-spacing-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9 9 9 0 0 0-9 9 9 9 0 0 0 9 9z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-spacing-sm font-semibold">
+          Corporate Social Responsibility
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Tech-integrated, transparent CSR projects with trans-national NGO networks like Thanal and Sustera.
+        </p>
+</div>
+<div class="pt-spacing-lg mt-spacing-lg border-t border-surface-variant/50 flex items-center text-secondary font-label-md text-label-md font-medium gap-spacing-xs group-hover:gap-spacing-sm transition-all">
+<span class="">Explore Network</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 2: Carbon Credit -->
+<div class="group bg-surface-container-lowest border border-outline-variant/30 hover:border-secondary/50 p-spacing-xl rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/20 flex items-center justify-center text-secondary mb-spacing-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 10v2m0-12a9 9 0 1 1 0 18 9 9 0 0 1 0-18z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-spacing-sm font-semibold">
+          Carbon Credit
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Lucrative investments in reducing carbon footprints to increase company valuation.
+        </p>
+</div>
+<div class="pt-spacing-lg mt-spacing-lg border-t border-surface-variant/50 flex items-center text-secondary font-label-md text-label-md font-medium gap-spacing-xs group-hover:gap-spacing-sm transition-all">
+<span class="">Valuation Matrix</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 3: Custom Models -->
+<div class="group bg-surface-container-lowest border border-outline-variant/30 hover:border-secondary/50 p-spacing-xl rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/20 flex items-center justify-center text-secondary mb-spacing-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm10 0a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V6zM4 16a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2zm10 0a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-spacing-sm font-semibold">
+          Custom Models
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Creative freedom to build custom environmental projects that align with your long-term organizational goals.
+        </p>
+</div>
+<div class="pt-spacing-lg mt-spacing-lg border-t border-surface-variant/50 flex items-center text-secondary font-label-md text-label-md font-medium gap-spacing-xs group-hover:gap-spacing-sm transition-all">
+<span class="">Bespoke Design</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 4: Natural Economic Zones -->
+<div class="group bg-surface-container-lowest border border-outline-variant/30 hover:border-secondary/50 p-spacing-xl rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/20 flex items-center justify-center text-secondary mb-spacing-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L4 9l3 1 1 3 4-3 4 3 1-3 3-1-8-7z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 13v9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 22h6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-spacing-sm font-semibold">
+          Natural Economic Zones
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Designing, curating, and building exclusive green spaces like Oxy parks and workcation areas.
+        </p>
+</div>
+<div class="pt-spacing-lg mt-spacing-lg border-t border-surface-variant/50 flex items-center text-secondary font-label-md text-label-md font-medium gap-spacing-xs group-hover:gap-spacing-sm transition-all">
+<span class="">Oxy Concepts</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 5: Student Engagement -->
+<div class="group bg-surface-container-lowest border border-outline-variant/30 hover:border-secondary/50 p-spacing-xl rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between md:col-span-2 lg:col-span-2">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-spacing-lg">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 border border-secondary/20 flex items-center justify-center text-secondary mb-spacing-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-spacing-sm font-semibold">
+            Student Engagement
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-xl">
+            A platform for students to participate in plantation drives, complete with evaluation tools for educators.
+          </p>
+</div>
+<div class="bg-surface-container-low p-spacing-md rounded-xl flex flex-col gap-spacing-xs min-w-[220px] shrink-0 border border-surface-variant">
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase">Academic Modules</span>
+<div class="flex items-center gap-spacing-xs font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span> Field Verification
+          </div>
+<div class="flex items-center gap-spacing-xs font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span> Impact Scoring
+          </div>
+</div>
+</div>
+<div class="pt-spacing-lg mt-spacing-lg border-t border-surface-variant/50 flex items-center text-secondary font-label-md text-label-md font-medium gap-spacing-xs group-hover:gap-spacing-sm transition-all">
+<span class="">Curricular Programs</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. CLIENTS & PARTNERS SECTION -->
+<section class="w-full mb-spacing-4xl bg-surface-container-low/70 border border-surface-variant/50 rounded-2xl p-spacing-xl md:p-spacing-2xl">
+<div class="flex flex-col gap-spacing-2xl">
+<!-- Row 1: Our Clients -->
+<div>
+<div class="flex items-center justify-between mb-spacing-md">
+<h3 class="font-headline-sm text-[20px] text-primary font-semibold tracking-tight">Our Clients</h3>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline px-spacing-xs py-0.5 rounded bg-surface-container-high font-medium">Enterprise ESG</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-spacing-md">
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">water_drop</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">EcoStream</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">change_history</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">Vertex Global</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">science</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">Verdant Labs</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">public</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">TerraCorp</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors col-span-2 sm:col-span-1">
+<span class="material-symbols-outlined text-[20px] text-secondary">grain</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">Horizon Bio</span>
+</div>
+</div>
+</div>
+<!-- Row 2: Our Partners -->
+<div>
+<div class="flex items-center justify-between mb-spacing-md">
+<h3 class="font-headline-sm text-[20px] text-primary font-semibold tracking-tight">Our Partners</h3>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline px-spacing-xs py-0.5 rounded bg-surface-container-high font-medium">NGO &amp; Academic Coalitions</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-spacing-md">
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">spa</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">Thanal</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">energy_savings_leaf</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">Sustera</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">nature_people</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">GreenEarth</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 p-spacing-md rounded-xl flex items-center justify-center gap-spacing-xs text-on-surface shadow-xs hover:border-secondary/40 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-secondary">psychology_alt</span>
+<span class="font-headline-sm text-[15px] font-medium tracking-tight">EcoForest</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. SOCIETAL FOOTPRINT SECTION -->
+<section class="w-full mb-spacing-4xl" id="footprint">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-spacing-2xl items-center">
+<!-- Side-by-Side: Genuine Photo (Left on desktop) -->
+<div class="lg:col-span-6 order-2 lg:order-1">
+<div class="relative rounded-2xl overflow-hidden shadow-xl border border-outline-variant/30 bg-surface-container">
+<img alt="Students and community planting trees" class="w-full h-[380px] md:h-[440px] object-cover transition-transform duration-500 hover:scale-105" src="https://lh3.googleusercontent.com/aida/AEtjO1UQl0hbUfxoe1ZtRitpTHyKH1M-D9iLZy9ehkQqhiLJvu2gCoYBdkZVjFkTzKdJg3C8QjD8ybCg6XXLL3K1o6MePsnt2IwSpaUUalJzaqpxFCgYAb7IpVxEESqhkbEM_8mREIzFSVWgaRzCRKMvrO5VsfoB8N0MU-IW1Nt4OiW5viyKm_DSNUVFHHiwZS1-MvsxHlPc7kWw2znbxLEz1SeQG-zyytPwEg_uRZ5LdKGYgF5yqk84vp8cSxE">
+<!-- Floating Glassmorphic Pill -->
+<div class="absolute bottom-4 left-4 right-4 p-spacing-md bg-surface/90 backdrop-blur-md rounded-xl border border-white/40 shadow-lg flex items-center justify-between">
+<div class="flex items-center gap-spacing-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">diversity_3</span>
+<span class="font-label-md text-label-md text-primary font-semibold">Civic Green Sanctuaries</span>
+</div>
+<span class="font-mono-metric text-[12px] text-secondary font-medium uppercase tracking-wider">Verified On-Site</span>
+</div>
+</div>
+</div>
+<!-- Side-by-Side: Text (Right on desktop) -->
+<div class="lg:col-span-6 order-1 lg:order-2 flex flex-col items-start">
+<div class="inline-flex items-center gap-spacing-xs px-spacing-md py-spacing-2xs rounded-full bg-secondary-container/40 text-on-secondary-container mb-spacing-md border border-secondary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest font-semibold">SOCIETAL FOOTPRINT</span>
+</div>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-primary tracking-tight leading-snug mb-spacing-md">
+        Cultivating micro-sanctuaries within the heart of local communities.
+      </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+        Tree Tag aspires to create a nature-conscious community. The publicly sponsored trees in our system are planted in the premises of social service institutions, like schools, colleges, old-age homes, orphanages, and rehabilitation centres. Through our enterprise, we aspire to help businesses and individuals make nature-conscious decisions.
+      </p>
+</div>
+</div>
+</section>
+<!-- 7. CALL TO ACTION (CTA) BANNER -->
+<section class="w-full relative rounded-2xl overflow-hidden bg-[#0f382c] text-on-primary p-spacing-2xl md:p-spacing-3xl shadow-2xl mb-spacing-2xl" id="cta">
+<!-- Subtle Atmospheric Gradient Depth -->
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-secondary opacity-20 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-12 -bottom-12 w-64 h-64 rounded-full bg-secondary-container opacity-15 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-spacing-md border border-white/20">
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">handshake</span>
+</div>
+<h2 class="font-headline-lg text-headline-md md:text-headline-lg text-white font-semibold tracking-tight leading-tight mb-spacing-lg">
+      Let us create value together
+    </h2>
+<div class="flex items-center justify-center">
+<a class="px-spacing-xl py-spacing-md rounded-xl bg-[#fef3c7] hover:bg-[#fde68a] text-[#0f382c] font-headline-sm text-[16px] font-bold tracking-tight transition-all transform hover:scale-105 shadow-lg inline-flex items-center gap-spacing-xs" data-path="schedule-a-meeting" href="#">
+<span class="">Schedule a Meeting</span>
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Dynamic Counter Script -->
+<script>
+  (function() {
+    const counterEl = document.getElementById('taggedCounter');
+    if (counterEl) {
+      let base = 15432;
+      setInterval(() => {
+        if (Math.random() > 0.65) {
+          base += Math.floor(Math.random() * 2) + 1;
+          counterEl.textContent = base.toLocaleString();
+        }
+      }, 3500);
+    }
+  })();
+</script>
+</div>
+</main>
+<!-- 8. FOOTER -->
+<footer class="w-full bg-surface-container-low border-t border-surface-variant/40 py-spacing-xl mt-spacing-4xl">
+<div class="max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop flex flex-col md:flex-row items-center justify-between gap-spacing-md">
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+      © 2024 Tree Tag Inc. All rights reserved. Precision Environmental Intelligence.
+    </div>
+<nav class="flex flex-wrap items-center justify-center gap-spacing-xs font-body-sm text-body-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" data-path="faq" href="#">FAQ</a>
+<span class="text-outline-variant">•</span>
+<a class="hover:text-primary transition-colors" data-path="about" href="#">About</a>
+<span class="text-outline-variant">•</span>
+<a class="hover:text-primary transition-colors" data-path="contact" href="#">Contact</a>
+<span class="text-outline-variant">•</span>
+<a class="hover:text-primary transition-colors" data-path="terms" href="#">Terms</a>
+<span class="text-outline-variant">•</span>
+<a class="hover:text-primary transition-colors" data-path="privacy" href="#">Privacy</a>
+</nav>
+</div>
+</footer>
+
+
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

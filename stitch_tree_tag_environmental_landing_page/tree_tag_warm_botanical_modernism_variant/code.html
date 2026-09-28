@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Tree Tag — Warm Earth &amp; Botanical Modernism</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Outfit:wght@500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            earth: {
+              canvas: "#FAF8F5",
+              card: "#F4EFEA",
+              border: "#E7DFD5",
+              terracotta: "#C87D55",
+              "terracotta-dark": "#B0653E",
+              amber: "#E09F3E",
+              "amber-light": "#FDF6EC",
+              forest: "#0F382C",
+              "forest-deep": "#0A251D",
+              "forest-light": "#1B4332",
+              text: "#1F2923",
+              muted: "#5E6861"
+            }
+          },
+          fontFamily: {
+            outfit: ["Outfit", "sans-serif"],
+            hanken: ["Hanken Grotesk", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background-color: #FAF8F5;
+        color: #1F2923;
+        font-family: "Hanken Grotesk", sans-serif;
+      }
+    }
+  </style>
+</head>
+<body class="bg-earth-canvas text-earth-text antialiased selection:bg-earth-terracotta/20 selection:text-earth-forest">
+<!-- 1. Navigation Bar -->
+<header class="sticky top-0 z-50 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-earth-border transition-all">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3 group" href="#">
+<img alt="Tree Tag Logo" class="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-300" src="https://lh3.googleusercontent.com/aida/AEtjO1X48k6r4QeB1qtgZ-IfzU_GGbbC1m19aJgi6TCZAcX8T9YS4MLG8jRwuJ1Zva5Hhwi8NyjYY_yutd_jeU-2I0er5vLiasJmLCSBa55pu3u0s5fcCO8cVQNw3byclOmsSA4X3ApOlW7b6Y71raEIjSaxy95SZLk5dmfPc7wqw6ATh-Rlj4CuEQwQ2260Ni91gH4J0VKURyDPKCMpXkda4OOUBxwxLJCyx-WFuZyEyGPaQOimEQ7HbCMY3UM">
+<div class="flex flex-col">
+<span class="font-outfit text-xl font-bold tracking-tight text-earth-forest">Tree Tag</span>
+<span class="text-[10px] uppercase font-mono tracking-widest text-earth-terracotta -mt-1 font-semibold">Botanical Modernism</span>
+</div>
+</a>
+<!-- Nav Links -->
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-earth-muted">
+<a class="hover:text-earth-forest transition-colors" href="#mission">Mission</a>
+<a class="hover:text-earth-forest transition-colors" href="#services">Services</a>
+<a class="hover:text-earth-forest transition-colors" href="#clients-partners">Clients &amp; Partners</a>
+<a class="hover:text-earth-forest transition-colors" href="#footprint">Footprint</a>
+</nav>
+<!-- Action Button -->
+<div class="flex items-center gap-4">
+<a class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-earth-terracotta text-white hover:bg-earth-terracotta-dark shadow-sm transition-all transform hover:-translate-y-0.5" href="#cta">
+          Schedule a Meeting
+        </a>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. Hero Section -->
+<section class="relative min-h-[85vh] lg:min-h-[88vh] flex items-center justify-center overflow-hidden">
+<!-- Background Image with Warm Sunlight Film Glow -->
+<div class="absolute inset-0 z-0">
+<img alt="Lush Forest Aerial" class="w-full h-full object-cover object-center transform scale-105 filter brightness-[0.88] contrast-[1.05]" src="https://lh3.googleusercontent.com/aida/AEtjO1WyvtcSqTx2ruZzpYvqn7FvYCw6UFoTe_P1RlQ3_Y8U9rYpTDVGLdde-JreLoqbbdiH1hEmLxhhy1fF45T_l-36F2bHMLW40EqoIzIFX41yX6pa99YD_VkPvfWxUpegegvpOjrkXllEWIzCWKrl0CRJtj-WJ1WqEZCMR2d_3KTM5VdVpkdlohrCXWH_QS6RB406WGViFfqlJzs2bHA0UW0OSdfPfvYBiNuuAIgC65DvquL0rVjjPlrFSzY">
+<div class="absolute inset-0 bg-gradient-to-t from-earth-forest/90 via-earth-forest/50 to-transparent"></div>
+<div class="absolute inset-0 bg-[#C87D55]/15 mix-blend-color-burn pointer-events-none"></div>
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-earth-amber/20 rounded-full blur-3xl pointer-events-none"></div>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center text-white flex flex-col items-center">
+<!-- Sub-headline Tag -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-mono tracking-widest uppercase mb-6 text-earth-amber">
+<span class="w-2 h-2 rounded-full bg-earth-amber animate-pulse"></span>
+          Nature's digital-based solution.
+        </div>
+<!-- Bold Centered Headline -->
+<h1 class="font-outfit text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] mb-6 drop-shadow-sm">
+          SEEDING THE FUTURE, ONE TREE AT A TIME.
+        </h1>
+<!-- Dynamic Counter Badge & Action -->
+<div class="mt-4 flex flex-wrap items-center justify-center gap-4">
+<div class="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-[#FAF8F5]/95 backdrop-blur-md border border-earth-border shadow-xl">
+<span class="material-symbols-outlined text-earth-forest text-xl">sensors</span>
+<span class="text-sm font-medium text-earth-muted">Trees tagged:</span>
+<span class="font-mono text-base font-bold text-earth-forest">15,432</span>
+</div>
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-earth-amber hover:bg-[#d09133] text-earth-forest-deep font-semibold text-sm shadow-xl transition-all transform hover:-translate-y-0.5" href="#services">
+<span>View Trees</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 3. Our Mission Section -->
+<section class="py-24 max-w-5xl mx-auto px-6 lg:px-12" id="mission">
+<div class="flex flex-col items-center text-center">
+<!-- Section Header with Terracotta Accent Bar -->
+<div class="flex items-center gap-3 mb-4">
+<span class="w-8 h-[2px] bg-earth-terracotta rounded-full"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-earth-terracotta font-semibold">OUR MISSION</span>
+<span class="w-8 h-[2px] bg-earth-terracotta rounded-full"></span>
+</div>
+<h2 class="font-outfit text-3xl sm:text-4xl font-semibold text-earth-forest tracking-tight max-w-2xl mb-8">
+          Quantitative Accountability Meets Ecological Regeneration
+        </h2>
+<!-- Verbatim Mission Text -->
+<p class="font-hanken text-lg sm:text-xl text-earth-text leading-relaxed font-normal max-w-3xl text-center mb-12">
+          "Tree Tag is a mission-driven start-up working for an entrepreneurial social goal. Striving to reduce carbon emissions through tech-integrated afforestation projects, championing the qualities of transparency and quantitative accountability is what we assure. After all, sustainability can be both altruistic and lucrative, that is the Tree Tag way."
+        </p>
+<!-- Highlighted Metric Box -->
+<div class="w-full max-w-2xl p-6 sm:p-8 rounded-2xl bg-earth-card border-2 border-earth-amber/40 shadow-sm relative overflow-hidden text-left">
+<div class="absolute top-0 right-0 w-32 h-32 bg-earth-amber/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-start gap-4">
+<div class="p-3 rounded-xl bg-earth-terracotta/10 text-earth-terracotta shrink-0">
+<span class="material-symbols-outlined text-2xl">co2</span>
+</div>
+<div>
+<span class="text-xs uppercase font-mono tracking-wider font-semibold text-earth-terracotta block mb-1">Decade Horizon Impact</span>
+<p class="font-outfit text-xl sm:text-2xl font-bold text-earth-forest leading-snug">
+                Our clients are capturing 50,000+ tons CO2 in the next 10 years.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Our Services Section -->
+<section class="py-24 bg-[#F5EFE8] border-y border-earth-border" id="services">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<div class="flex items-center justify-center gap-3 mb-3">
+<span class="w-8 h-[2px] bg-earth-terracotta rounded-full"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-earth-terracotta font-semibold">OUR SERVICES</span>
+<span class="w-8 h-[2px] bg-earth-terracotta rounded-full"></span>
+</div>
+<h2 class="font-outfit text-3xl sm:text-4xl font-semibold text-earth-forest tracking-tight">
+            Tailored Arboricultural Solutions
+          </h2>
+</div>
+<!-- 5 Responsive Grid Cards with Warm Natural Container Styling -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="group bg-earth-canvas p-8 rounded-2xl border border-earth-border hover:border-earth-terracotta shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-earth-terracotta/10 text-earth-terracotta flex items-center justify-center mb-6 group-hover:bg-earth-terracotta group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">handshake</span>
+</div>
+<h3 class="font-outfit text-xl font-semibold text-earth-forest mb-3">
+                Corporate Social Responsibility
+              </h3>
+<p class="text-sm text-earth-muted leading-relaxed">
+                Tech-integrated, transparent CSR projects with trans-national NGO networks like Thanal and Sustera.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-earth-border/60 flex items-center text-xs font-semibold text-earth-terracotta gap-1">
+<span>Auditable Proof</span>
+<span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-earth-canvas p-8 rounded-2xl border border-earth-border hover:border-earth-terracotta shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-earth-forest/10 text-earth-forest flex items-center justify-center mb-6 group-hover:bg-earth-forest group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">energy_savings_leaf</span>
+</div>
+<h3 class="font-outfit text-xl font-semibold text-earth-forest mb-3">
+                Carbon Credit
+              </h3>
+<p class="text-sm text-earth-muted leading-relaxed">
+                Lucrative investments in reducing carbon footprints to increase company valuation.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-earth-border/60 flex items-center text-xs font-semibold text-earth-forest gap-1">
+<span>Verified Offsets</span>
+<span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-earth-canvas p-8 rounded-2xl border border-earth-border hover:border-earth-terracotta shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-earth-amber/20 text-earth-forest flex items-center justify-center mb-6 group-hover:bg-earth-amber group-hover:text-earth-forest transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">design_services</span>
+</div>
+<h3 class="font-outfit text-xl font-semibold text-earth-forest mb-3">
+                Custom Models
+              </h3>
+<p class="text-sm text-earth-muted leading-relaxed">
+                Creative freedom to build custom environmental projects that align with your long-term organizational goals.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-earth-border/60 flex items-center text-xs font-semibold text-earth-terracotta gap-1">
+<span>Bespoke Architecture</span>
+<span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Card 4 (Spans 2 cols on lg) -->
+<div class="group lg:col-span-2 bg-earth-canvas p-8 rounded-2xl border border-earth-border hover:border-earth-terracotta shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+<div class="max-w-md">
+<div class="w-12 h-12 rounded-xl bg-earth-terracotta/10 text-earth-terracotta flex items-center justify-center mb-4 group-hover:bg-earth-terracotta group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">park</span>
+</div>
+<h3 class="font-outfit text-xl font-semibold text-earth-forest mb-2">
+                Natural Economic Zones
+              </h3>
+<p class="text-sm text-earth-muted leading-relaxed">
+                Designing, curating, and building exclusive green spaces like Oxy parks and workcation areas.
+              </p>
+</div>
+<div class="bg-earth-card p-4 rounded-xl border border-earth-border shrink-0 text-center sm:text-right w-full sm:w-auto">
+<span class="font-mono text-xs uppercase text-earth-terracotta font-semibold block">Regenerative Design</span>
+<span class="font-outfit text-base font-semibold text-earth-forest">Oxy Parks &amp; Biophilic Hubs</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group bg-earth-canvas p-8 rounded-2xl border border-earth-border hover:border-earth-terracotta shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-xl bg-earth-forest/10 text-earth-forest flex items-center justify-center mb-6 group-hover:bg-earth-forest group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h3 class="font-outfit text-xl font-semibold text-earth-forest mb-3">
+                Student Engagement
+              </h3>
+<p class="text-sm text-earth-muted leading-relaxed">
+                A platform for students to participate in plantation drives, complete with evaluation tools for educators.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-earth-border/60 flex items-center text-xs font-semibold text-earth-forest gap-1">
+<span>Youth Empowerment</span>
+<span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Clients & Partners Section -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-12" id="clients-partners">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Card 1: Our Clients -->
+<div class="p-8 sm:p-10 rounded-3xl bg-earth-card border border-earth-border shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="w-6 h-[2px] bg-earth-terracotta rounded-full"></span>
+<h3 class="font-outfit text-2xl font-bold text-earth-forest tracking-tight">Our Clients</h3>
+</div>
+<p class="text-sm text-earth-muted mb-8 leading-relaxed">
+              Progressive enterprises and sustainability-focused organizations pioneering verifiable ESG afforestation.
+            </p>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-forest tracking-wider">Apex Logistics</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-forest tracking-wider">Verdant Systems</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-forest tracking-wider">Terra Mobility</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-forest tracking-wider">Horizon CleanTech</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-earth-border/60 text-xs font-mono text-earth-muted">
+            52+ Enterprise Audits Completed
+          </div>
+</div>
+<!-- Card 2: Our Partners -->
+<div class="p-8 sm:p-10 rounded-3xl bg-earth-card border border-earth-border shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="w-6 h-[2px] bg-earth-terracotta rounded-full"></span>
+<h3 class="font-outfit text-2xl font-bold text-earth-forest tracking-tight">Our Partners</h3>
+</div>
+<p class="text-sm text-earth-muted mb-8 leading-relaxed">
+              Respected grassroots non-profits, scientific research institutes, and regional afforestation councils.
+            </p>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-terracotta tracking-wider">Thanal Agro</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-terracotta tracking-wider">Sustera Foundation</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-terracotta tracking-wider">Western Ghats NGO</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-canvas border border-earth-border text-center">
+<span class="font-mono text-xs uppercase font-bold text-earth-terracotta tracking-wider">GreenEarth S.I.</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-earth-border/60 text-xs font-mono text-earth-muted">
+            14 Districts Across South India
+          </div>
+</div>
+</div>
+</section>
+<!-- 6. Societal Footprint Section -->
+<section class="py-24 bg-[#FAF8F5] border-t border-earth-border" id="footprint">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex items-center gap-3 mb-4">
+<span class="w-8 h-[2px] bg-earth-terracotta rounded-full"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-earth-terracotta font-semibold">SOCIETAL FOOTPRINT</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Text column -->
+<div class="lg:col-span-6 flex flex-col">
+<h2 class="font-outfit text-3xl sm:text-4xl font-semibold text-earth-forest tracking-tight leading-tight mb-6">
+              Planting Where Community &amp; Care Flourish Together.
+            </h2>
+<!-- Verbatim Footprint Copy -->
+<p class="text-base sm:text-lg text-earth-text leading-relaxed font-normal mb-8">
+              Tree Tag aspires to create a nature-conscious community. The publicly sponsored trees in our system are planted in the premises of social service institutions, like schools, colleges, old-age homes, orphanages, and rehabilitation centres. Through our enterprise, we aspire to help businesses and individuals make nature-conscious decisions.
+            </p>
+<!-- Warm Stats Grid -->
+<div class="grid grid-cols-2 gap-4 pt-6 border-t border-earth-border">
+<div class="p-4 rounded-xl bg-earth-card border border-earth-border">
+<span class="font-mono text-2xl font-bold text-earth-forest">64+</span>
+<span class="block text-xs text-earth-muted mt-1 font-medium">Educational Campuses</span>
+</div>
+<div class="p-4 rounded-xl bg-earth-card border border-earth-border">
+<span class="font-mono text-2xl font-bold text-earth-terracotta">38+</span>
+<span class="block text-xs text-earth-muted mt-1 font-medium">Rehab &amp; Care Centers</span>
+</div>
+</div>
+</div>
+<!-- Image Column with Warm Rounded Frame -->
+<div class="lg:col-span-6 relative">
+<div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-earth-card bg-earth-card">
+<img alt="Community volunteers planting tree saplings" class="w-full h-[440px] object-cover object-center" src="https://lh3.googleusercontent.com/aida/AEtjO1UQl0hbUfxoe1ZtRitpTHyKH1M-D9iLZy9ehkQqhiLJvu2gCoYBdkZVjFkTzKdJg3C8QjD8ybCg6XXLL3K1o6MePsnt2IwSpaUUalJzaqpxFCgYAb7IpVxEESqhkbEM_8mREIzFSVWgaRzCRKMvrO5VsfoB8N0MU-IW1Nt4OiW5viyKm_DSNUVFHHiwZS1-MvsxHlPc7kWw2znbxLEz1SeQG-zyytPwEg_uRZ5LdKGYgF5yqk84vp8cSxE">
+<!-- Warm atmospheric inner overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-earth-forest/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-[#FAF8F5]/95 backdrop-blur-md border border-earth-border flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-earth-terracotta text-2xl">volunteer_activism</span>
+<div>
+<span class="font-outfit font-bold text-sm text-earth-forest block">Community Field Day</span>
+<span class="text-xs text-earth-muted">Wayanad Educational Grove Project</span>
+</div>
+</div>
+<span class="font-mono text-xs px-2.5 py-1 rounded-md bg-earth-amber/20 text-earth-forest font-semibold">Verified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Call to Action (CTA) Banner -->
+<section class="py-24 bg-[#0f382c] text-white relative overflow-hidden" id="cta">
+<!-- Warm ambient glow -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-earth-terracotta/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-earth-amber/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+<span class="inline-block font-mono text-xs uppercase tracking-widest text-earth-amber mb-4 font-semibold">
+          Decarbonization Partner
+        </span>
+<h2 class="font-outfit text-3xl sm:text-5xl font-bold tracking-tight mb-8">
+          Let us create value together
+        </h2>
+<p class="text-base sm:text-lg text-white/80 max-w-xl mx-auto mb-10 leading-relaxed">
+          Align institutional ESG mandates with living, verifiable ground impact. Every sapling tagged, protected, and monitored.
+        </p>
+<div class="flex justify-center">
+<a class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-base bg-[#FDF6EC] text-earth-forest hover:bg-earth-amber transition-all shadow-xl transform hover:scale-105 duration-300" href="#">
+<span>Schedule a Meeting</span>
+<span class="material-symbols-outlined text-xl text-earth-forest">calendar_today</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- 8. Footer -->
+<footer class="bg-earth-canvas border-t border-earth-border py-12">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-2">
+<span class="font-outfit font-bold text-base text-earth-forest">Tree Tag</span>
+<span class="text-xs text-earth-muted">© 2025 Tree Tag Technologies Pvt Ltd. All rights reserved.</span>
+</div>
+<!-- Minimalist Horizontal Links -->
+<div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-earth-muted font-medium">
+<a class="hover:text-earth-forest transition-colors" href="#">FAQ</a>
+<span>•</span>
+<a class="hover:text-earth-forest transition-colors" href="#">About</a>
+<span>•</span>
+<a class="hover:text-earth-forest transition-colors" href="#">Contact</a>
+<span>•</span>
+<a class="hover:text-earth-forest transition-colors" href="#">Terms</a>
+<span>•</span>
+<a class="hover:text-earth-forest transition-colors" href="#">Privacy</a>
+</div>
+</div>
+</footer>
+</body></html>

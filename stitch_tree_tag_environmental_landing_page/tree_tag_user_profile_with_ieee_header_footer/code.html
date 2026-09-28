@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Tree Tag - User Profile</title>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- FontAwesome for standard brand and UI icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style data-purpose="custom-theme-variables">
+    :root {
+      --ieee-blue-top: #1f5d82;
+      --ieee-orange-nav: #f47716;
+      --profile-teal-box: #134658;
+      --mint-active-tab: #a7f3d0;
+    }
+  </style>
+<style data-purpose="custom-toggles-and-scroll">
+    /* Custom toggle switch styling */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #22c55e;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #22c55e;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-800 flex flex-col min-h-screen font-sans antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="w-full shadow-sm z-30">
+<!-- Top Bar: IEEE Global Bar (#1f5d82) -->
+<div class="bg-[#1f5d82] text-white text-xs px-4 sm:px-8 py-2">
+<div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+<!-- Left Global Links -->
+<nav aria-label="IEEE Network" class="flex flex-wrap items-center space-x-2 text-[11px] sm:text-xs text-slate-200">
+<a class="hover:text-white transition-colors" href="#">IEEE.org</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Xplore Digital Library</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Standards</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">IEEE Spectrum</a>
+<span class="text-slate-400">|</span>
+<a class="hover:text-white transition-colors" href="#">More Sites</a>
+</nav>
+<!-- Right Social Icons and Sign In -->
+<div class="flex items-center space-x-4 text-slate-200">
+<div class="flex items-center space-x-3 text-xs">
+<a aria-label="Facebook" class="hover:text-white" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+<a aria-label="X Twitter" class="hover:text-white" href="#"><i class="fa-brands fa-x-twitter"></i></a>
+<a aria-label="LinkedIn" class="hover:text-white" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+<a aria-label="Instagram" class="hover:text-white" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a aria-label="YouTube" class="hover:text-white" href="#"><i class="fa-brands fa-youtube"></i></a>
+</div>
+<span class="text-slate-400">|</span>
+<a class="flex items-center space-x-1.5 hover:text-white text-xs font-semibold" href="#">
+<i class="fa-regular fa-circle-user text-sm"></i>
+<span class="">Sign In</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Branding Bar (White Background) -->
+<div class="bg-white border-b border-gray-200 py-3.5 px-4 sm:px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<!-- Left: Young Professionals Taskforce lockup -->
+<div class="flex items-center">
+<img alt="IEEE Young Professionals | Climate &amp; Sustainability Taskforce (CSTF)" class="h-9 sm:h-11 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrhvU_Cp1fbKH3GOyZE-ycbd8BILa82yfDi8nBi0Advyf7JLr0ey1i-s57oxImCLJXuNVHy6PuXdMSoXL1LXaEmuybBvyFaWSRfTS5Pa_EIlj_OvZUgXvXAb_s--MNrqNbYvgwUCODBTg32UZc9YwvRGb5wNKJoyaUAO5H4O79VtetF3gy9tO2R5z8Ndr2oEwOSCpAlaCBpkkb1UoN82Qrb-9-r2OALPp5bB7PNolzrnk79DkKQk_CWUKl-05IDd3N8w">
+</div>
+<!-- Center: IEEE Group Insurance Program Badge -->
+
+<!-- Right: Official IEEE Diamond Logo -->
+<div class="flex items-center">
+<img alt="IEEE Logo" class="h-8 sm:h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQxiPAkc1L6GXvVqGEJgQ2VWHNspip1tEDUMdcuAi5JF43_cbPeY-h888BdfJhsNKZ2VaNH3a4CDINda8npJ-l0f6bBqePa06KdGGgfeV1ok6h9ypH92CnF7eglcEFYsT-u6OOF_ECCJ_2G1M03YbucLN3qUXNurjNJmtbbAFKJLheIFVvcHrw484Fhd0oUvjC3NQLh_wcs8wNiOmOPtm31k0d7Woc7X84Ocuv3ukzdwHsoXSd5B16ZJqpM9e_7kZzZw">
+</div>
+</div>
+</div>
+<!-- Orange Navigation Bar (#f47716) -->
+<div class="bg-[#f47716] shadow-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-8">
+
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow w-full max-w-5xl mx-auto px-6 sm:px-12 py-10">
+<div class="bg-white rounded-lg p-6 sm:p-10 shadow-sm border border-gray-100 min-h-[540px] flex flex-col justify-between">
+<!-- Upper Section: User Avatar & Details -->
+<div data-purpose="user-profile-details">
+<!-- Top Profile Avatar & Name Card -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7 pb-5">
+<!-- Teal avatar box with edit action button -->
+<div class="relative flex-shrink-0">
+<div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#104252] rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
+<!-- Illustrated User Avatar SVG -->
+<svg class="w-20 h-20 text-slate-200 mt-2" fill="none" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<!-- Hair -->
+<path d="M35 55C35 30 45 20 60 20C75 20 85 30 85 55V65H35V55Z" fill="#1f2937"></path>
+<!-- Face -->
+<ellipse cx="60" cy="58" fill="#fed7aa" rx="20" ry="22"></ellipse>
+<!-- Cheeks/Blush -->
+<circle cx="50" cy="62" fill="#fca5a5" opacity="0.6" r="3"></circle>
+<circle cx="70" cy="62" fill="#fca5a5" opacity="0.6" r="3"></circle>
+<!-- Collar -->
+<path d="M52 78L60 88L68 78H52Z" fill="#ffffff"></path>
+<!-- Shirt -->
+<path d="M30 110C30 90 44 80 60 80C76 80 90 90 90 110V120H30V110Z" fill="#ef4444"></path>
+</svg>
+</div>
+<!-- Bottom-right edit pencil overlay badge -->
+<button aria-label="Edit Profile Picture" class="absolute -bottom-1 -right-1 bg-transparent hover:bg-slate-800 text-white rounded p-1 transition">
+<svg class="w-5 h-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+<!-- User Name and Academic Info -->
+<div class="flex-1 w-full">
+<h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Jibin Wilson</h1>
+<p class="text-sm text-gray-700 font-medium mt-1 tracking-normal">
+<span class="">STUDENT</span>
+<span class="mx-1 text-gray-400">|</span>
+<a class="hover:underline" href="mailto:jibin.cse22@mbits.ac.in">jibin.cse22@mbits.ac.in</a>
+<span class="mx-1 text-gray-400">|</span>
+<span class="">7907863486</span>
+</p>
+</div>
+</div>
+<!-- Horizontal Divider line matching screenshot -->
+<hr class="border-t border-gray-200 mt-2 mb-8">
+<!-- Profile Section -->
+<section aria-labelledby="profile-heading" class="space-y-4">
+<h2 class="text-base font-bold text-gray-900 underline decoration-2 underline-offset-4 tracking-tight" id="profile-heading">Profile</h2>
+<!-- Social Media Profile row -->
+<div class="flex items-center space-x-2 text-sm text-gray-800">
+<span class="">Social Media Profile:</span>
+<span class="font-normal text-gray-700">N.A</span>
+<button aria-label="Edit Social Media Link" class="text-gray-600 hover:text-gray-900 transition-colors">
+<svg class="w-4 h-4 ml-0.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Profile Visibility Switch -->
+<div class="flex items-center space-x-3 pt-1">
+<span class="text-sm text-gray-800">Profile visible to public</span>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-12 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+</label>
+</div>
+<!-- Institutional Metadata -->
+<div class="space-y-3 pt-1 text-sm text-gray-800 leading-relaxed">
+<p class=""><span class="text-gray-700">Institution:</span> <span class="font-bold text-gray-950">APJAKTU NSSCELL NRPF</span></p>
+<p class=""><span class="text-gray-700">Cluster:</span> <span class="font-bold text-gray-950">EKM</span></p>
+<p class=""><span class="text-gray-700">College:</span> <span class="font-bold text-gray-950">MAR BASELIOS INSTITUTE OF TECHNOLOGY AND SCIENCE-MBI</span></p>
+</div>
+</section>
+<!-- Summary Section -->
+<section aria-labelledby="summary-heading" class="mt-8 space-y-3">
+<h2 class="text-base font-bold text-gray-900 underline decoration-2 underline-offset-4 tracking-tight" id="summary-heading">Summary</h2>
+<p class="text-sm text-gray-800"><span class="text-gray-700">Trees:</span> <span class="font-bold text-gray-950 text-base">1</span></p>
+</section>
+</div>
+<!-- Bottom Floating Dock / Segmented Navigation Navigation (Exact to IMAGE_5) -->
+<div class="w-full pt-10 pb-2 flex flex-col items-center justify-center">
+<div class="w-full border-t border-gray-100 mb-6"></div>
+<nav aria-label="Mobile Dock Bar" class="inline-flex items-center justify-center space-x-6 px-4 py-1">
+<!-- Active "Profile" Tab with Mint Rounded Background -->
+<a class="flex flex-col items-center justify-center px-4 py-2 bg-[#a7f3d0] rounded-xl text-gray-800 transition shadow-sm" href="#">
+<div class="w-7 h-7 rounded-full bg-[#835338] border-2 border-white flex items-center justify-center overflow-hidden">
+<i class="fa-solid fa-user text-amber-100 text-xs mt-1"></i>
+</div>
+<span class="text-xs font-semibold mt-1 text-teal-900">Profile</span>
+</a>
+<!-- "Map" Tab -->
+<a class="flex flex-col items-center justify-center px-3 py-1.5 text-gray-500 hover:text-gray-900 transition" href="#">
+<div class="w-7 h-7 flex items-center justify-center">
+<svg class="w-6 h-6 text-red-500 fill-current" viewBox="0 0 24 24">
+<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+</svg>
+</div>
+<span class="text-xs font-medium text-gray-600 mt-1">Map</span>
+</a>
+<!-- "Trees" Tab -->
+<a class="flex flex-col items-center justify-center px-3 py-1.5 text-gray-500 hover:text-gray-900 transition" href="#">
+<div class="w-7 h-7 flex items-center justify-center text-teal-600">
+<i class="fa-solid fa-tree text-xl text-[#0d9488]"></i>
+</div>
+<span class="text-xs font-medium text-gray-600 mt-1">Trees</span>
+</a>
+</nav>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full bg-black text-white mt-auto pt-12 pb-10 px-6 sm:px-12 border-t border-gray-900">
+<div class="max-w-7xl mx-auto space-y-7">
+<!-- Footer Title -->
+<h3 class="text-2xl sm:text-[28px] font-semibold tracking-tight text-white">Stay connected</h3>
+<!-- Secondary Links -->
+<nav aria-label="Footer Quick Links" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-200">
+<a class="hover:underline" href="#">Home</a>
+<a class="hover:underline" href="#">Sitemap</a>
+<a class="hover:underline" href="#">Contact &amp; Support</a>
+<a class="hover:underline" href="#">Accessibility</a>
+<a class="hover:underline" href="#">Nondiscrimination Policy</a>
+<a class="hover:underline" href="#">IEEE Ethics Reporting</a>
+<a class="hover:underline" href="#">IEEE Privacy Policy</a>
+<a class="hover:underline" href="#">Terms</a>
+<a class="hover:underline" href="#">Feedback</a>
+</nav>
+<!-- Copyright & Disclaimer -->
+<p class="text-xs sm:text-sm text-gray-400 max-w-4xl leading-relaxed pt-2">
+        © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
+      </p>
+</div>
+</footer>
+<!-- END: MainFooter -->
+
+
+</body></html>

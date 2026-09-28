@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:wght@400..700&amp;family=Outfit:wght@400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-background": "#161d19",
+            "surface-tint": "#3f6658",
+            "on-primary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container": "#e8f0e9",
+            "on-primary-fixed": "#002117",
+            "secondary-container": "#a2f0cc",
+            "secondary-fixed": "#a5f2cf",
+            "on-secondary-container": "#1f6f53",
+            "surface-dim": "#d4dcd5",
+            "on-secondary-fixed-variant": "#00513a",
+            "secondary": "#196b4f",
+            "on-tertiary-container": "#869f92",
+            "surface-container-high": "#e3eae3",
+            "primary-fixed-dim": "#a6d0be",
+            "on-tertiary-fixed-variant": "#354c41",
+            "outline-variant": "#c1c8c3",
+            "on-primary-fixed-variant": "#274e41",
+            "on-secondary": "#ffffff",
+            "inverse-on-surface": "#ebf3ec",
+            "inverse-surface": "#2b322e",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#20362c",
+            "on-secondary-fixed": "#002115",
+            "tertiary-fixed": "#cee9da",
+            "secondary-fixed-dim": "#8ad6b4",
+            "primary-container": "#0f382c",
+            "on-tertiary-fixed": "#092017",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#c1ecda",
+            "inverse-primary": "#a6d0be",
+            "error-container": "#ffdad6",
+            "on-surface": "#161d19",
+            "surface-container-low": "#eef5ef",
+            "surface-variant": "#dde4de",
+            "on-primary-container": "#79a292",
+            "outline": "#717975",
+            "primary": "#002218",
+            "tertiary-fixed-dim": "#b3ccbf",
+            "surface": "#f4fbf4",
+            "error": "#ba1a1a",
+            "on-surface-variant": "#414845",
+            "on-error": "#ffffff",
+            "background": "#f4fbf4",
+            "surface-container-highest": "#dde4de",
+            "tertiary": "#0a2118",
+            "surface-bright": "#f4fbf4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "spacing-lg": "1.5rem",
+            "grid-margin-desktop": "3rem",
+            "spacing-2xl": "3rem",
+            "spacing-xl": "2rem",
+            "spacing-4xl": "6rem",
+            "spacing-sm": "0.75rem",
+            "spacing-2xs": "0.25rem",
+            "spacing-xs": "0.5rem",
+            "spacing-3xl": "4.5rem",
+            "grid-gutter": "1.5rem",
+            "spacing-md": "1rem",
+            "grid-margin-mobile": "1.25rem"
+          },
+          "fontFamily": {
+            "mono-metric": ["JetBrains Mono"],
+            "display-hero": ["Outfit"],
+            "headline-lg-mobile": ["Outfit"],
+            "body-md": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-lg": ["Outfit"],
+            "body-sm": ["Hanken Grotesk"],
+            "display-hero-mobile": ["Outfit"],
+            "label-md": ["Hanken Grotesk"],
+            "label-sm": ["Hanken Grotesk"],
+            "headline-md": ["Outfit"],
+            "headline-sm": ["Outfit"]
+          },
+          "fontSize": {
+            "mono-metric": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+            "display-hero": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "display-hero-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "headline-sm": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "500"}]
+          }
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen">
+<main class="w-full flex flex-col flex-1">
+<!-- 1. IEEE MULTI-TIER HEADER (.ieee-header) -->
+<header class="ieee-header w-full border-b border-surface-container-high">
+<!-- TOP BAR (.top-bar) -->
+<div class="top-bar w-full bg-[#1f5d82] text-white" style="min-height: 58px;">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-wrap items-center justify-between py-2 sm:py-0" style="min-height: 58px;">
+<div class="top-links flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 text-[13px] font-medium tracking-normal text-white/90">
+<a class="hover:underline hover:text-white transition-colors" href="https://www.ieee.org">IEEE.org</a>
+<span class="text-white/40">|</span>
+<a class="hover:underline hover:text-white transition-colors" href="https://ieeexplore.ieee.org">IEEE <em>Xplore</em> Digital Library</a>
+<span class="text-white/40">|</span>
+<a class="hover:underline hover:text-white transition-colors" href="https://standards.ieee.org">IEEE Standards</a>
+<span class="text-white/40">|</span>
+<a class="hover:underline hover:text-white transition-colors" href="https://spectrum.ieee.org">IEEE Spectrum</a>
+<span class="text-white/40">|</span>
+<a class="hover:underline hover:text-white transition-colors" href="https://www.ieee.org/sitemap.html">More Sites</a>
+</div>
+<div class="top-right flex items-center space-x-3 sm:space-x-4 mt-1 sm:mt-0">
+<div class="flex items-center space-x-2 text-white/80">
+<!-- Facebook -->
+<a class="hover:text-white transition-colors p-1" href="https://www.facebook.com/IEEE.org/" title="Facebook">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+</a>
+<!-- X / Twitter -->
+<a class="hover:text-white transition-colors p-1" href="https://twitter.com/IEEEorg" title="X / Twitter">
+<svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+</a>
+<!-- LinkedIn -->
+<a class="hover:text-white transition-colors p-1" href="https://www.linkedin.com/company/ieee" title="LinkedIn">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<!-- Instagram -->
+<a class="hover:text-white transition-colors p-1" href="https://www.instagram.com/ieeeorg/" title="Instagram">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+<!-- YouTube -->
+<a class="hover:text-white transition-colors p-1" href="https://www.youtube.com/user/IEEEorg" title="YouTube">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+</a>
+</div>
+<span class="text-white/40">|</span>
+<a class="signin text-[13px] font-semibold tracking-wide text-white hover:underline flex items-center space-x-1" href="#">
+<span class="material-symbols-outlined text-[16px]">account_circle</span>
+<span class="">Sign In</span>
+</a>
+</div>
+</div>
+</div>
+<!-- BRANDING BAR (.branding-bar) -->
+<div class="branding-bar w-full bg-white py-3 border-b border-surface-container">
+<div class="branding-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+<!-- Left: Taskforce logo lockup -->
+<div class="flex items-center justify-center md:justify-start">
+<img alt="IEEE Young Professionals Climate &amp; Sustainability Taskforce (CSTF)" class="h-9 md:h-11 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd0tEF7mL8tmDYZyNrdoDLBrWvVIW6vDFo_VMpGJejI-AtjhBntLKbc1yqzf_zNd_G71GPGMCCrqbiP8rvBY4neFmow2lwpyFhqj8CtuLRZtt9p4stswpbmYBugq-3Mi4jnHeefk1vU45vDq8sHqVnSkQKL3Wency2uQaow430hW7gyJpL8OkdFxQNTUwh0qTzWnYDvBStEQ7Ob4Iyrwfxx_KNijUY-xn80w-u9AMcJzmNLZGaZ6XhUeU8HXsELaSysA">
+</div>
+<!-- Center: IEEE Group Insurance Program badge / Tree Tag Registry lockup -->
+<div class="flex items-center justify-center">
+<div class="flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-surface-container-high shadow-xs">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col text-left">
+<span class="font-headline-sm text-[13px] font-bold text-primary leading-tight">IEEE Group Insurance Program</span>
+<span class="font-label-sm text-[10px] text-secondary uppercase tracking-wider">Endorsed Benefits &amp; Services</span>
+</div>
+</div>
+</div>
+<!-- Right: Official IEEE diamond logo -->
+<div class="flex items-center justify-center md:justify-end">
+<img alt="IEEE Logo" class="h-9 md:h-11 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACmgmiSsE6oD-vLYc8T-hwIJ9CIeKjXzfzmquYQ6IwCcnyXhd7lise-nDM5uRs2a2sVupGApx_wnAMXmQxwOoCKi-anLNSTzeWmkYB0iti9lFCja1LnA_7knYP3CFY1CT73MZTVlvIppfRkK59Ah3pzlJL859pB44k3aP6kjUgCWzPuLohyQliDWsk317qm-5V48NkXzy7-xoY0XQdzdyXlEgnyRJUgBa16Lp4HWT9a2zFGQRKOA54_2tSrSK3YqgV5g">
+</div>
+</div>
+</div>
+<!-- NAVIGATION BAR (.main-navbar) -->
+<nav class="main-navbar w-full bg-[#f47716] text-white shadow-sm" style="min-height: 62px;">
+
+</nav>
+</header>
+<!-- 2. CORE LOGIN CONTENT (PRESERVED) -->
+<div class="relative w-full flex-1 flex flex-col justify-between overflow-hidden bg-surface-container-lowest">
+<div class="w-full flex-1 flex items-center justify-center px-4 sm:px-6 py-12 md:py-20 z-10">
+<div class="w-full max-w-[420px] mx-auto flex flex-col">
+<div class="text-center pb-3">
+<h1 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-wider uppercase">
+            LOGIN
+          </h1>
+<div class="w-full h-px bg-surface-container-highest mt-3 mx-auto max-w-[360px]"></div>
+</div>
+<form class="mt-6 space-y-5" id="loginForm" onsubmit="event.preventDefault();">
+<div class="space-y-1.5">
+<label class="block font-body-md text-body-md font-medium text-on-surface" for="emailInput">
+              Email:
+            </label>
+<div class="relative rounded-lg shadow-sm">
+<input class="w-full px-4 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none transition-all duration-200 focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 placeholder:text-outline" id="emailInput" placeholder="name@organization.edu" required="" type="email" value="jibin.cse22@mbits.ac.in">
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="block font-body-md text-body-md font-medium text-on-surface" for="passwordInput">
+              Password:
+            </label>
+<div class="relative rounded-lg shadow-sm">
+<input class="w-full pl-4 pr-11 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none transition-all duration-200 focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30" id="passwordInput" required="" type="password" value="•••••••••">
+<button aria-label="Toggle password visibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none flex items-center" id="togglePassword" type="button">
+<span class="material-symbols-outlined text-[20px]" id="eyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-3 px-6 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md tracking-wider uppercase font-bold shadow-md hover:bg-primary transition-all duration-200 active:scale-[0.99] flex items-center justify-center space-x-2" id="loginSubmitBtn" type="submit">
+<span class="">LOGIN</span>
+</button>
+</div>
+<div class="pt-3 flex flex-col items-center space-y-1.5 text-center">
+<p class="font-body-md text-body-md text-on-surface">
+              Don't have an account?
+              <a class="font-label-md text-label-md text-secondary hover:text-primary font-semibold transition-colors underline-offset-2 hover:underline ml-1" href="#">
+                Signup
+              </a>
+</p>
+<p class="font-body-md text-body-md text-on-surface">
+              Forgot password?
+              <a class="font-label-md text-label-md text-secondary hover:text-primary font-semibold transition-colors underline-offset-2 hover:underline ml-1" href="#">
+                Reset Password
+              </a>
+</p>
+</div>
+</form>
+<div class="mt-8 flex items-center justify-center space-x-3 text-outline">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-label-sm text-label-sm">Audited Cryptographic Tree Identity Authentication</span>
+</div>
+</div>
+</div>
+<!-- Vector illustration: Park bench, lamppost, trees -->
+<div class="w-full relative mt-auto pt-6 select-none pointer-events-none">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="relative w-full h-44 sm:h-52 flex items-end">
+<div class="w-80 sm:w-96 h-full relative z-10">
+<svg class="w-full h-full" fill="none" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 172H320" stroke="#E2EAE3" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M10 172H160" opacity="0.4" stroke="#196B4F" stroke-linecap="round" stroke-width="2"></path>
+<rect fill="#717975" height="46" rx="2" width="6" x="52" y="126"></rect>
+<rect fill="#BAC5BF" height="19" rx="2" width="12" x="49" y="152"></rect>
+<path d="M50 155H60" stroke="#717975" stroke-width="1.5"></path>
+<path d="M50 160H60" stroke="#717975" stroke-width="1.5"></path>
+<path d="M50 165H60" stroke="#717975" stroke-width="1.5"></path>
+<path d="M48 108C48 55 85 24 85 24C85 24 122 55 122 108C122 145 106 172 85 172C64 172 48 145 48 108Z" fill="#196B4F"></path>
+<path d="M85 30V170" stroke="#0F382C" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M85 70L65 55" stroke="#0F382C" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M85 95L105 78" stroke="#0F382C" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M85 120L68 105" stroke="#0F382C" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M125 125C125 80 152 52 152 52C152 52 178 80 178 125C178 155 166 172 152 172C137 172 125 155 125 125Z" fill="#0F382C"></path>
+<path d="M152 58V170" stroke="#002218" stroke-linecap="round" stroke-width="2"></path>
+<path d="M152 90L138 78" stroke="#002218" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M152 112L166 100" stroke="#002218" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M50 120C80 132 120 128 175 120" stroke="#002218" stroke-dasharray="2 4" stroke-width="1.5"></path>
+<rect fill="#9C6B40" height="6" rx="2" width="56" x="58" y="145"></rect>
+<rect fill="#A87445" height="6" rx="2" width="52" x="60" y="137"></rect>
+<rect fill="#B78250" height="6" rx="2" width="48" x="62" y="129"></rect>
+<rect fill="#414845" height="21" width="4" x="65" y="151"></rect>
+<rect fill="#414845" height="21" width="4" x="103" y="151"></rect>
+<rect fill="#414845" height="18" width="3" x="63" y="135"></rect>
+<rect fill="#414845" height="18" width="3" x="106" y="135"></rect>
+<rect fill="#414845" height="48" width="3" x="135" y="124"></rect>
+<polygon fill="#414845" points="136.5,108 141,114 132,114"></polygon>
+<polygon fill="#A6D0BE" opacity="0.7" points="133,114 140,114 138,124 135,124"></polygon>
+<circle cx="136.5" cy="118" fill="#F4FBF4" r="3.5"></circle>
+<circle cx="136.5" cy="118" fill="#F59E0B" r="1.5"></circle>
+<rect fill="#414845" height="2.5" width="7" x="133" y="170"></rect>
+<path d="M142 162C142 153 150 148 158 148C165 148 171 154 171 162C175 162 182 165 182 172H136C136 167 139 162 142 162Z" fill="#196B4F"></path>
+<path d="M165 166C165 160 171 156 177 156C183 156 188 161 188 166C192 166 198 168 198 172H160C160 169 162 166 165 166Z" fill="#0F382C"></path>
+<path d="M102 70C104 67 108 67 109 69C109 71 106 73 103 73C101 73 100 72 102 70Z" fill="#8AD6B4"></path>
+<path d="M112 82C114 79 118 80 118 82C118 84 115 86 112 85C110 85 110 84 112 82Z" fill="#196B4F"></path>
+<path d="M116 100C118 97 122 98 122 100C121 102 118 104 115 103C114 103 114 102 116 100Z" fill="#8AD6B4"></path>
+<path d="M126 90C128 87 132 87 133 89C133 91 130 93 127 93C125 93 124 92 126 90Z" fill="#196B4F"></path>
+<path d="M110 114C112 111 116 112 116 114C115 116 112 118 109 117C108 117 108 116 110 114Z" fill="#8AD6B4"></path>
+</svg>
+</div>
+<div class="flex-1 h-0.5 bg-surface-container-highest mb-2"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. IEEE FOOTER (#footer.site-footer) -->
+<footer class="site-footer" id="footer" style="width: 100%; background: #000; color: #fff;">
+<div id="footer-inner" style="width: 100%;">
+<div id="footer-widgets" style="width: 100%;">
+<div class="footer-widgets-inner" style="max-width: 1200px; margin: 0 auto; padding: 60px 30px 40px;">
+<section class="footer-section" style="text-align: left;">
+<h2 style="margin: 0 0 25px; font-size: 28px; font-weight: 600; color: #fff;" class="">Stay connected</h2>
+<ul class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0; list-style: none; margin: 0; padding: 0;">
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://yp.ieee.org/" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Home</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/sitemap.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Sitemap</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://yp.ieee.org/contact-us/" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Contact &amp; Support</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/accessibility-statement.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Accessibility</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/about/corporate/governance/p9-26.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Nondiscrimination Policy</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://secure.ethicspoint.com/domain/media/en/gui/20410/index.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">IEEE Ethics Reporting</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/security-privacy.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">IEEE Privacy Policy</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/about/help/site-terms-conditions.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Terms</a></li>
+<li style="margin-right: 25px; margin-bottom: 12px;" class=""><a href="https://www.ieee.org/about/feedback-ieee-site.html" style="color: #fff; text-decoration: none; font-size: 15px;" class="">Feedback</a></li>
+</ul>
+<p class="footer-copyright" style="max-width: 1000px; margin: 30px 0 0; color: #ccc; font-size: 14px; line-height: 1.6;">
+              © Copyright 2026 IEEE – All rights reserved.
+              A public charity, IEEE is the world’s largest technical
+              professional organization dedicated to advancing technology
+              for the benefit of humanity.
+            </p>
+</section>
+</div>
+</div>
+</div>
+</footer>
+</main>
+<script>
+  (function() {
+    const toggleBtn = document.getElementById('togglePassword');
+    const pwdInput = document.getElementById('passwordInput');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('loginSubmitBtn');
+
+    if (toggleBtn && pwdInput && eyeIcon) {
+      toggleBtn.addEventListener('click', function() {
+        const isPassword = pwdInput.getAttribute('type') === 'password';
+        pwdInput.setAttribute('type', isPassword ? 'text' : 'password');
+        eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    }
+
+    if (loginForm && submitBtn) {
+      loginForm.addEventListener('submit', function() {
+        const originalContent = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+          <span>AUTHENTICATING...</span>
+        `;
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+            <span>VERIFIED</span>
+          `;
+          setTimeout(() => {
+            submitBtn.innerHTML = originalContent;
+          }, 2000);
+        }, 1200);
+      });
+    }
+  })();
+</script>
+
+
+</body></html>
