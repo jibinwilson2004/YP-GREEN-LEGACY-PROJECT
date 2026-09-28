@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
@@ -10,6 +10,12 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState<string | null>(null)
+
+  // Ensure fields start completely empty on mount
+  useEffect(() => {
+    setEmail('')
+    setPassword('')
+  }, [])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -36,7 +42,7 @@ export function LoginPage() {
             <div className="w-full h-px bg-gray-200 mt-3 mx-auto max-w-[340px]" />
           </div>
 
-          <form className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="on">
+          <form className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
             {loginError && (
               <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
                 <span className="material-symbols-outlined text-[16px]">error</span>
@@ -52,7 +58,8 @@ export function LoginPage() {
                 className="w-full px-4 py-2.5 rounded-lg bg-[#eef3fa] text-gray-900 font-body-md text-sm outline-none border border-transparent focus:border-secondary focus:bg-white transition-all shadow-xs"
                 required
                 type="email"
-                autoComplete="on"
+                autoComplete="off"
+                placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -68,7 +75,8 @@ export function LoginPage() {
                   className="w-full pl-4 pr-11 py-2.5 rounded-lg bg-[#eef3fa] text-gray-900 font-body-md text-sm outline-none border border-transparent focus:border-secondary focus:bg-white transition-all shadow-xs"
                   required
                   type={showPassword ? 'text' : 'password'}
-                  autoComplete="on"
+                  autoComplete="new-password"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
