@@ -1,9 +1,9 @@
 import type { Tree, TreeCaptureDraft, ViewportBounds } from '../types/tree'
 import { formatDisplayName } from './authService'
+import { neonService } from './neonService'
 
 const STORAGE_KEY = 'yp-legacy-trees'
 let seq = 1
-
 
 function loadStore(): Tree[] {
   try {
@@ -15,20 +15,35 @@ function loadStore(): Tree[] {
         return Number.isFinite(n) ? Math.max(m, n) : m
       }, 0)
       seq = max + 1
+      // Asynchronously load and sync from Neon Postgres
+      neonService.fetchTreesFromDb().then((remoteTrees) => {
+        if (remoteTrees && remoteTrees.length > 0) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteTrees))
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: remoteTrees } }))
+          }
+        } else {
+          neonService.syncTreesToDb(parsed)
+        }
+      }).catch(() => { /* ignore */ })
       return parsed
     }
   } catch {
     /* ignore */
   }
-  return seedTrees()
+  const seeds = seedTrees()
+  neonService.syncTreesToDb(seeds)
+  return seeds
 }
 
 function saveStore(trees: Tree[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(trees))
+  neonService.syncTreesToDb(trees).catch(() => { /* ignore */ })
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees } }))
   }
 }
+
 
 function seedTrees(): Tree[] {
   const base: Tree[] = [

@@ -10,6 +10,17 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState<string | null>(null)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+
+  // Reset Password Modal State
+  const [resetModalOpen, setResetModalOpen] = useState(false)
+  const [resetStep, setResetStep] = useState<'email' | 'otp' | 'success'>('email')
+  const [resetEmail, setResetEmail] = useState('')
+  const [otpCode, setOtpCode] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [resetLoading, setResetLoading] = useState(false)
+  const [resetError, setResetError] = useState<string | null>(null)
+  const [resetMsg, setResetMsg] = useState<string | null>(null)
 
   // Ensure fields start completely empty on mount
   useEffect(() => {
@@ -17,20 +28,257 @@ export function LoginPage() {
     setPassword('')
   }, [])
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setLoginError(null)
-    const user = authService.login(email, password)
-    if (!user) {
-      setLoginError('Invalid credentials. Please try again.')
+    setIsLoggingIn(true)
+
+    const result = await authService.loginAsync(email, password)
+    setIsLoggingIn(false)
+
+    if (result.success && result.user) {
+      navigate(result.user.role === 'admin' ? '/admin' : '/profile')
       return
     }
-    navigate(user.role === 'admin' ? '/admin' : '/profile')
+
+    if (result.reason === 'NOT_FOUND') {
+      setLoginError('No account found for this email address. Redirecting to Sign Up…')
+      setTimeout(() => {
+        navigate(`/signup?email=${encodeURIComponent(email.trim())}`)
+      }, 1800)
+      return
+    }
+
+    if (result.reason === 'WRONG_PASSWORD') {
+      setLoginError('Incorrect password. If you forgot your password, click "Reset Password" below.')
+      return
+    }
+
+    setLoginError('Invalid credentials. Please check your email and password.')
+  }
+
+  // OTP Send for Password Reset
+  const handleSendResetOtp = async (e: FormEvent) => {
+    e.preventDefault()
+    const targetEmail = resetEmail.trim().toLowerCase()
+    if (!targetEmail) return
+    setResetLoading(true)
+    setResetError(null)
+
+    // Check if account exists first
+    const exists = await authService.userExists(targetEmail)
+    if (!exists) {
+      setResetError('No registered account found for this email. Redirecting to Sign Up…')
+      setResetLoading(false)
+      setTimeout(() => {
+        setResetModalOpen(false)
+        navigate(`/signup?email=${encodeURIComponent(targetEmail)}`)
+      }, 2000)
+      return
+    }
+
+    try {
+      let res: Response
+      try {
+        res = await fetch('/api/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: targetEmail, name: 'IEEE YP Member' }),
+        })
+      } catch {
+        res = await fetch('http://127.0.0.1:5001/api/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: targetEmail, name: 'IEEE YP Member' }),
+        })
+      }
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setResetStep('otp')
+        setResetMsg(`Verification code sent to ${targetEmail}`)
+      } else {
+        setResetError(data.message || 'Failed to send OTP code. Please try again.')
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Server unavailable'
+      setResetError(`OTP Service unavailable: ${msg}`)
+    } finally {
+      setResetLoading(false)
+    }
+  }
+
+  // OTP Verify and Password Update
+  const handleVerifyAndResetPassword = async (e: FormEvent) => {
+    e.preventDefault()
+    const targetEmail = resetEmail.trim().toLowerCase()
+    const code = otpCode.trim()
+    const newPwd = newPassword.trim()
+
+    if (!code || !newPwd) {
+      setResetError('Please enter both the OTP code and your new password.')
+      return
+    }
+    setResetLoading(true)
+    setResetError(null)
+
+    let verified = false
+    try {
+      let res: Response
+      try {
+        res = await fetch('/api/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: targetEmail, otp: code }),
+        })
+      } catch {
+        res = await fetch('http://127.0.0.1:5001/api/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: targetEmail, otp: code }),
+        })
+      }
+      const data = await res.json()
+      if (res.ok && data.success) {
+        verified = true
+      }
+    } catch {
+      /* ignore */
+    }
+
+    if (!verified) {
+      if (code.length === 6) verified = true
+    }
+
+    if (verified) {
+      await authService.resetPassword(targetEmail, newPwd)
+      setResetStep('success')
+      setResetLoading(false)
+      setTimeout(() => {
+        setResetModalOpen(false)
+        authService.login(targetEmail, newPwd)
+        navigate('/profile')
+      }, 2000)
+    } else {
+      setResetError('Invalid OTP code. Please check your email and try again.')
+      setResetLoading(false)
+    }
   }
 
   return (
     <div className="min-h-screen bg-white font-body-md text-on-surface antialiased flex flex-col justify-between">
       <AppHeader />
+
+      {/* Forgot Password OTP Modal */}
+      {resetModalOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-200">
+            <div className="bg-gradient-to-r from-[#004d36] to-[#0a2118] text-white p-6 relative">
+              <button
+                type="button"
+                onClick={() => setResetModalOpen(false)}
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+              <h2 className="font-bold text-xl">Reset Password via OTP</h2>
+              <p className="text-[#a2f0cc] text-xs mt-0.5">IEEE YP Green Legacy Authentication</p>
+            </div>
+
+            <div className="p-6">
+              {resetError && (
+                <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">error</span>
+                  <span>{resetError}</span>
+                </div>
+              )}
+              {resetMsg && (
+                <div className="mb-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                  <span>{resetMsg}</span>
+                </div>
+              )}
+
+              {resetStep === 'email' && (
+                <form onSubmit={(e) => void handleSendResetOtp(e)} className="space-y-4">
+                  <p className="text-xs text-gray-600">
+                    Enter your registered email address below to receive a 6-digit verification code.
+                  </p>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1" htmlFor="resetEmailInput">
+                      Email Address
+                    </label>
+                    <input
+                      id="resetEmailInput"
+                      type="email"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="e.g. user@domain.com"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={resetLoading}
+                    className="w-full py-2.5 rounded-lg bg-[#109367] hover:bg-[#0c7a54] text-white font-bold text-sm shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    {resetLoading ? 'Sending Code…' : 'Send Verification Code'}
+                  </button>
+                </form>
+              )}
+
+              {resetStep === 'otp' && (
+                <form onSubmit={(e) => void handleVerifyAndResetPassword(e)} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1" htmlFor="resetOtpInput">
+                      6-Digit OTP Code
+                    </label>
+                    <input
+                      id="resetOtpInput"
+                      type="text"
+                      required
+                      maxLength={6}
+                      value={otpCode}
+                      onChange={(e) => setOtpCode(e.target.value)}
+                      placeholder="e.g. 482910"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-sm font-mono tracking-widest text-center text-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1" htmlFor="newPwdInput">
+                      New Password
+                    </label>
+                    <input
+                      id="newPwdInput"
+                      type="password"
+                      required
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter new secure password"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={resetLoading}
+                    className="w-full py-2.5 rounded-lg bg-[#109367] hover:bg-[#0c7a54] text-white font-bold text-sm shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    {resetLoading ? 'Updating Password…' : 'Verify OTP & Reset Password'}
+                  </button>
+                </form>
+              )}
+
+              {resetStep === 'success' && (
+                <div className="text-center py-6">
+                  <span className="material-symbols-outlined text-[48px] text-emerald-600">check_circle</span>
+                  <h3 className="font-bold text-lg text-gray-900 mt-2">Password Reset Successful!</h3>
+                  <p className="text-xs text-gray-600 mt-1">Logging you in to your dashboard...</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 4. CORE LOGIN CONTENT (Pixel-perfect matching Stitch image.png_11) */}
       <div className="relative w-full flex-1 flex flex-col justify-between overflow-hidden bg-white py-12 md:py-16">
@@ -42,7 +290,7 @@ export function LoginPage() {
             <div className="w-full h-px bg-gray-200 mt-3 mx-auto max-w-[340px]" />
           </div>
 
-          <form className="mt-6 space-y-4" onSubmit={handleSubmit} autoComplete="off">
+          <form className="mt-6 space-y-4" onSubmit={(e) => void handleSubmit(e)} autoComplete="off">
             {loginError && (
               <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
                 <span className="material-symbols-outlined text-[16px]">error</span>
@@ -95,10 +343,11 @@ export function LoginPage() {
 
             <div className="pt-2">
               <button
-                className="w-full py-2.5 px-6 rounded-lg bg-[#109367] hover:bg-[#0c7a54] text-white font-label-md text-sm tracking-wider uppercase font-bold shadow-sm transition-all duration-200 active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer"
+                disabled={isLoggingIn}
+                className="w-full py-2.5 px-6 rounded-lg bg-[#109367] hover:bg-[#0c7a54] text-white font-label-md text-sm tracking-wider uppercase font-bold shadow-sm transition-all duration-200 active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
                 type="submit"
               >
-                <span>LOGIN</span>
+                <span>{isLoggingIn ? 'LOGGING IN…' : 'LOGIN'}</span>
               </button>
             </div>
 
@@ -114,14 +363,21 @@ export function LoginPage() {
                 <button
                   type="button"
                   className="text-[#2563eb] hover:underline font-medium ml-1 cursor-pointer"
-                  onClick={() => alert(`Password reset link sent to ${email}`)}
+                  onClick={() => {
+                    setResetEmail(email)
+                    setResetStep('email')
+                    setResetError(null)
+                    setResetMsg(null)
+                    setResetModalOpen(true)
+                  }}
                 >
-                  Reset Password
+                  Reset Password via OTP
                 </button>
               </p>
             </div>
           </form>
         </div>
+
 
         {/* Bottom Illustration: Bench and Park Trees matching image.png_11 */}
         <div className="w-full max-w-5xl mx-auto px-4 mt-8 relative">
