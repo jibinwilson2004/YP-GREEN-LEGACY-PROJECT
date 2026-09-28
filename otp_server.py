@@ -9,6 +9,7 @@ import os
 import random
 import smtplib
 import socketserver
+import threading
 import time
 from email.message import EmailMessage
 
@@ -20,6 +21,16 @@ PORT = int(os.environ.get("PORT", 5001))
 
 # In-memory store for OTPs: { email.lower(): { "otp": "123456", "expires_at": float, "name": str } }
 otp_storage = {}
+
+
+def _async_send_email(to_email: str, recipient_name: str, otp_code: str):
+    try:
+        print(f"[OTP Server] Dispatching background SMTP email for {to_email}...")
+        send_otp_email(to_email, recipient_name, otp_code)
+        print(f"[OTP Server] Background SMTP email sent successfully to {to_email}!")
+    except Exception as e:
+        print(f"[OTP Server Background Error] Failed to send email to {to_email}: {e}")
+
 
 
 def send_otp_email(to_email: str, recipient_name: str, otp_code: str) -> None:
@@ -150,22 +161,15 @@ class OTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 "name": name
             }
 
-            try:
-                print(f"[OTP Server] Sending OTP {otp_code} to {email}...")
-                send_otp_email(email, name, otp_code)
-                print(f"[OTP Server] Email sent successfully to {email}!")
-                self._respond_json(200, {
-                    "success": True,
-                    "message": f"Verification code successfully sent to {email}",
-                    "expires_in": 600
-                })
-            except Exception as e:
-                print(f"[OTP Server Error] Failed to send email: {e}")
-                # In case SMTP throws error, still return descriptive error message
-                self._respond_json(500, {
-                    "success": False,
-                    "message": f"Failed to send email via SMTP: {str(e)}"
-                })
+            print(f"[OTP Server] Instant OTP generated ({otp_code}) for {email}. Dispatching email in background thread...")
+            threading.Thread(target=_async_send_email, args=(email, name, otp_code), daemon=True).start()
+
+            self._respond_json(200, {
+                "success": True,
+                "message": f"Verification code successfully sent to {email}",
+                "expires_in": 600
+            })
+
 
         elif self.path == "/api/verify-otp":
             try:

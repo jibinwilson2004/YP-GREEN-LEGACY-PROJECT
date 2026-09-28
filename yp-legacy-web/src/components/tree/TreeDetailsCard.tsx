@@ -38,9 +38,8 @@ export function TreeDetailsCard({
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
   const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
   const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
-  const cluster = tree.cluster || 'TRV'
+  const institution = tree.institution || tree.college || 'APJAKTU NSSCELL NRPF'
   const sourceLabel = formatGpsSource(tree.gpsSource)
-
 
   // Minimized floating pill mode for maximum map visibility
   if (isMinimized) {
@@ -162,10 +161,10 @@ export function TreeDetailsCard({
           <div className="p-2 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col justify-between">
             <span className="text-[10px] uppercase font-semibold text-outline tracking-wider flex items-center gap-1">
               <span className="material-symbols-outlined text-[13px] text-secondary">school</span>
-              <span>Cluster</span>
+              <span>Institution</span>
             </span>
-            <span className="font-bold text-primary truncate mt-0.5 font-mono">
-              {cluster}
+            <span className="font-bold text-primary truncate mt-0.5" title={institution}>
+              {institution}
             </span>
           </div>
         </div>
