@@ -18,6 +18,7 @@ function loadStore(): Tree[] {
       // Asynchronously load and sync from Neon Postgres
       neonService.fetchTreesFromDb().then((remoteTrees) => {
         if (remoteTrees && remoteTrees.length > 0) {
+          cache = remoteTrees
           localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteTrees))
           if (typeof window !== 'undefined') {
             window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: remoteTrees } }))
@@ -37,6 +38,7 @@ function loadStore(): Tree[] {
 }
 
 function saveStore(trees: Tree[]) {
+  cache = trees
   localStorage.setItem(STORAGE_KEY, JSON.stringify(trees))
   neonService.syncTreesToDb(trees).catch(() => { /* ignore */ })
   if (typeof window !== 'undefined') {
@@ -232,7 +234,10 @@ export const treeService = {
       const dbTrees = await neonService.fetchTreesFromDb()
       if (dbTrees && dbTrees.length > 0) {
         cache = dbTrees
-        saveStore(dbTrees)
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dbTrees))
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: dbTrees } }))
+        }
         return dbTrees
       }
     } catch { /* ignore */ }

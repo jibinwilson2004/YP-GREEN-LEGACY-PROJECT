@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
@@ -9,9 +9,25 @@ export function TreesPage() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [speciesFilter, setSpeciesFilter] = useState('ALL')
+  const [scopeFilter, setScopeFilter] = useState<'my' | 'all'>('all')
+  const [treesVer, setTreesVer] = useState(0)
 
   const currentUserId = localStorage.getItem('tree_tag_user_id') ?? ''
-  const trees = currentUserId ? treeService.getByUser(currentUserId) : treeService.getAll()
+
+  useEffect(() => {
+    treeService.fetchLatestFromDb().then(() => setTreesVer((v) => v + 1)).catch(() => {})
+    const handleUpdate = () => setTreesVer((v) => v + 1)
+    window.addEventListener('trees-updated', handleUpdate)
+    return () => window.removeEventListener('trees-updated', handleUpdate)
+  }, [])
+
+  const trees = useMemo(() => {
+    if (scopeFilter === 'my' && currentUserId) {
+      return treeService.getByUser(currentUserId)
+    }
+    return treeService.getAll()
+  }, [scopeFilter, currentUserId, treesVer])
+
   const total = trees.length
 
   const filteredTrees = useMemo(() => {
@@ -102,6 +118,33 @@ export function TreesPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+            {currentUserId && (
+              <div className="flex rounded-lg border border-outline-variant/40 bg-surface-container-low p-0.5 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setScopeFilter('all')}
+                  className={`px-3 py-1.5 rounded-md transition-colors ${
+                    scopeFilter === 'all'
+                      ? 'bg-primary text-white shadow-xs'
+                      : 'text-on-surface-variant hover:text-primary'
+                  }`}
+                >
+                  All Trees
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setScopeFilter('my')}
+                  className={`px-3 py-1.5 rounded-md transition-colors ${
+                    scopeFilter === 'my'
+                      ? 'bg-primary text-white shadow-xs'
+                      : 'text-on-surface-variant hover:text-primary'
+                  }`}
+                >
+                  My Tagged Trees
+                </button>
+              </div>
+            )}
+
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}

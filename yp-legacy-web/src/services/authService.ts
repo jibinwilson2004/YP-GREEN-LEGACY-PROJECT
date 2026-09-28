@@ -15,14 +15,15 @@ export interface AuthUser {
 export function formatDisplayName(email: string, storedName?: string): string {
   const e = email.trim().toLowerCase()
   if (storedName && storedName.trim()) {
-    if (e.includes('jibin') && storedName.toLowerCase().includes('skaria')) {
-      return 'Jibin Wilson'
-    }
     return storedName.trim()
   }
-  if (e.includes('jibin')) return 'Jibin Wilson'
   const prefix = e.split('@')[0]
-  return prefix.split(/[\._-]/).map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')
+  return prefix
+    .replace(/[._-]+/g, ' ')
+    .split(' ')
+    .filter(Boolean)
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(' ')
 }
 
 export const authService = {

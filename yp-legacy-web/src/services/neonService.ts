@@ -92,10 +92,33 @@ export const neonService = {
           )
           ON CONFLICT (id) DO UPDATE SET
             species = EXCLUDED.species,
+            common_name = EXCLUDED.common_name,
+            botanical_name = EXCLUDED.botanical_name,
+            image_url = EXCLUDED.image_url,
+            images = EXCLUDED.images,
+            latitude = EXCLUDED.latitude,
+            longitude = EXCLUDED.longitude,
+            accuracy = EXCLUDED.accuracy,
+            altitude = EXCLUDED.altitude,
+            gps_source = EXCLUDED.gps_source,
+            location_confidence = EXCLUDED.location_confidence,
+            location_status = EXCLUDED.location_status,
+            reading_count = EXCLUDED.reading_count,
+            stability_score = EXCLUDED.stability_score,
+            gps_stability = EXCLUDED.gps_stability,
+            captured_at = EXCLUDED.captured_at,
+            date_of_planting = EXCLUDED.date_of_planting,
+            updated_at = EXCLUDED.updated_at,
+            student = EXCLUDED.student,
+            college = EXCLUDED.college,
+            cluster = EXCLUDED.cluster,
+            institution = EXCLUDED.institution,
+            user_id = EXCLUDED.user_id,
             verification_status = EXCLUDED.verification_status,
-            admin_note = EXCLUDED.admin_note,
             verified_by = EXCLUDED.verified_by,
-            verification_date = EXCLUDED.verification_date;
+            verification_date = EXCLUDED.verification_date,
+            identification_confidence = EXCLUDED.identification_confidence,
+            admin_note = EXCLUDED.admin_note;
         `
       }
     } catch (err) {
