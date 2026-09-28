@@ -1,7 +1,9 @@
 import type { Tree, TreeCaptureDraft, ViewportBounds } from '../types/tree'
+import { formatDisplayName } from './authService'
 
 const STORAGE_KEY = 'yp-legacy-trees'
 let seq = 1
+
 
 function loadStore(): Tree[] {
   try {
@@ -224,9 +226,27 @@ export const treeService = {
   ): Tree | null {
     if (!draft.location || !draft.species) return null
     const id = draft.treeIdPreview ?? this.nextTreeId()
+
+    let studentName: string | undefined
+    let institutionName: string | undefined
+    if (userId) {
+      try {
+        const raw = localStorage.getItem(`tree_tag_user_${userId}`) || localStorage.getItem('tree_tag_user')
+        if (raw) {
+          const p = JSON.parse(raw) as { fullName?: string; institution?: string }
+          if (p.fullName) studentName = p.fullName
+          if (p.institution) institutionName = p.institution
+        }
+      } catch { /* ignore */ }
+      if (!studentName) studentName = formatDisplayName(userId)
+    }
+
+    const todayStr = new Date().toLocaleDateString('en-IN')
+
     return {
       id,
       species: draft.species,
+      commonName: draft.commonName || draft.species,
       imageUrl: draft.photoPreviewUrl,
       latitude: draft.location.latitude,
       longitude: draft.location.longitude,
@@ -237,9 +257,16 @@ export const treeService = {
       readingCount: draft.location.readingCount,
       stabilityScore: draft.location.stabilityScore,
       capturedAt: new Date().toISOString(),
+      dateOfPlanting: todayStr,
+      updatedAt: todayStr,
       userId,
+      student: studentName || 'IEEE YP CSTF Planter',
+      college: institutionName || 'IEEE YP Green Legacy Campus Unit',
+      cluster: 'IEEE-YP',
+      institution: institutionName || 'APJAKTU NSSCELL NRPF',
       verificationStatus: 'PENDING',
       identificationConfidence: draft.identificationConfidence,
     }
   },
 }
+

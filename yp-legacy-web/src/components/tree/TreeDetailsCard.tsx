@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { TreeImageGallery } from './TreeImageGallery'
 import { VerificationStatus } from './VerificationStatus'
 import { formatGpsSource } from '../../types/gps'
+import { formatDisplayName } from '../../services/authService'
 import type { Tree } from '../../types/tree'
 
 interface TreeDetailsCardProps {
@@ -35,10 +36,11 @@ export function TreeDetailsCard({
     (tree.species === 'Azardica indica' ? 'Azadirachta indica' : tree.species) ||
     'Azadirachta indica'
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
-  const student = tree.student || 'SORNA SAKTHI GANESH V'
+  const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
   const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
   const cluster = tree.cluster || 'TRV'
   const sourceLabel = formatGpsSource(tree.gpsSource)
+
 
   // Minimized floating pill mode for maximum map visibility
   if (isMinimized) {

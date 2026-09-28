@@ -46,17 +46,16 @@ export function MapPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const treeParam = searchParams.get('tree')
   const userParam = searchParams.get('user')
-  const isUserFilter =
-    userParam === 'sorna-sakthi-ganesh' ||
-    userParam === 'jibin-wilson' ||
-    treeParam === 'YP-000001' ||
-    treeParam === 'TT-8841'
+
+  const initialTree = treeParam ? treeService.getById(treeParam) : (userParam ? treeService.getAll()[0] : null)
+  const isUserFilter = !!treeParam || !!userParam
 
   const [search] = useState('')
   const [viewMode] = useState<'clusters' | 'heatmap' | 'satellite'>('clusters')
-  const [selectedTree, setSelectedTree] = useState<Tree | null>(isUserFilter ? FEATURED_NEEM_TREE : null)
+  const [selectedTree, setSelectedTree] = useState<Tree | null>(initialTree || (isUserFilter ? FEATURED_NEEM_TREE : null))
   const [popoverOpen, setPopoverOpen] = useState(isUserFilter)
   const [userTab, setUserTab] = useState<'all' | 'user'>(isUserFilter ? 'user' : 'all')
+
 
   const [treesVer, setTreesVer] = useState(0)
 

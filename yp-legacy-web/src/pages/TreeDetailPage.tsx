@@ -6,7 +6,10 @@ import { TreeImageGallery } from '../components/tree/TreeImageGallery'
 import { VerificationStatus } from '../components/tree/VerificationStatus'
 import { formatGpsSource } from '../types/gps'
 import { treeService } from '../services/treeService'
+import { formatDisplayName } from '../services/authService'
 import { classifyAccuracy, accuracyLabel } from '../services/gps/gpsAccuracy'
+
+
 
 export function TreeDetailPage() {
   const { id } = useParams()
@@ -41,12 +44,13 @@ export function TreeDetailPage() {
     'Azadirachta indica'
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
   const updatedAt = tree.updatedAt || '31-08-2026'
-  const student = tree.student || 'SORNA SAKTHI GANESH V'
+  const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
   const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
   const cluster = tree.cluster || 'TRV'
   const institution = tree.institution || 'APJAKTU NSSCELL NRPF'
   const verifiedBy = tree.verifiedBy || 'IEEE YP CSTF'
   const verificationDate = tree.verificationDate || '31-08-2026'
+
   const accuracyTier = classifyAccuracy(tree.accuracy)
   const sourceLabel = formatGpsSource(tree.gpsSource)
   const stability = tree.gpsStability || (tree.stabilityScore >= 75 ? 'Stable' : 'Moderate')
@@ -281,7 +285,7 @@ export function TreeDetailPage() {
           {/* Action Link to Live Map */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
             <Link
-              to={`/map?user=sorna-sakthi-ganesh&tree=${tree.id}`}
+              to={`/map?user=${encodeURIComponent(tree.userId || 'planter')}&tree=${tree.id}`}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-secondary text-white font-label-md text-xs font-bold rounded-lg shadow-sm transition-colors cursor-pointer"
             >
               <span className="material-symbols-outlined text-[16px]">location_on</span>

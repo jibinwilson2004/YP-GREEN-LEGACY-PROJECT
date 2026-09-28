@@ -1,4 +1,5 @@
 import { VerificationStatus } from './VerificationStatus'
+import { formatDisplayName } from '../../services/authService'
 import type { Tree } from '../../types/tree'
 
 interface TreeInformationProps {
@@ -11,10 +12,11 @@ export function TreeInformation({ tree }: TreeInformationProps) {
   const botanicalName = tree.botanicalName || (tree.species === 'Azardica indica' ? 'Azadirachta indica' : tree.species) || 'Azadirachta indica'
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
   const updatedAt = tree.updatedAt || '31-08-2026'
-  const student = tree.student || 'SORNA SAKTHI GANESH V'
+  const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
   const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
   const cluster = tree.cluster || 'TRV'
   const institution = tree.institution || 'APJAKTU NSSCELL NRPF'
+
 
   return (
     <div className="space-y-3.5">
