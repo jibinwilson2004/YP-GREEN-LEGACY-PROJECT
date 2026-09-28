@@ -101,3 +101,28 @@ body {
 .max-w-6xl { max-width: 72rem !important; }
 .max-w-7xl { max-width: 80rem !important; }
 
+/* Global Tactile Button Press Feedback */
+button,
+a[role="button"],
+input[type="button"],
+input[type="submit"] {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+button:active:not(:disabled),
+a[role="button"]:active,
+input[type="button"]:active:not(:disabled),
+input[type="submit"]:active:not(:disabled) {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+}
+
+button:hover:not(:disabled),
+a[role="button"]:hover,
+input[type="button"]:hover:not(:disabled),
+input[type="submit"]:hover:not(:disabled) {
+  filter: brightness(1.04);
+}
+
