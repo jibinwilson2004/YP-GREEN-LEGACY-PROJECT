@@ -2,11 +2,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
-import { authService } from '../services/authService'
+import { authService, formatDisplayName } from '../services/authService'
 import { treeService } from '../services/treeService'
 import type { Tree } from '../types/tree'
 
 type AdminTab = 'overview' | 'pending' | 'participants' | 'all'
+
 
 interface Participant {
   userId: string
@@ -151,7 +152,7 @@ export function AdminPage() {
               const rows = [
                 ['#', 'Email / User ID', 'Display Name', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
                 ...participants.map((p, i) => [
-                  String(i + 1), p.userId, p.userId.split('@')[0],
+                  String(i + 1), p.userId, formatDisplayName(p.userId),
                   String(p.treeCount), String(p.verifiedCount), String(p.pendingCount),
                   p.treeCount > 0 ? `${Math.round((p.verifiedCount / p.treeCount) * 100)}%` : '0%',
                 ]),
@@ -399,7 +400,7 @@ export function AdminPage() {
                   const rows = [
                     ['#', 'Email / User ID', 'Display Name', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
                     ...participants.map((p, i) => [
-                      String(i + 1), p.userId, p.userId.split('@')[0],
+                      String(i + 1), p.userId, formatDisplayName(p.userId),
                       String(p.treeCount), String(p.verifiedCount), String(p.pendingCount),
                       p.treeCount > 0 ? `${Math.round((p.verifiedCount / p.treeCount) * 100)}%` : '0%',
                     ]),
@@ -433,16 +434,17 @@ export function AdminPage() {
                   <tbody className="divide-y divide-outline-variant/20">
                     {participants.map((p, i) => {
                       const pct = p.treeCount > 0 ? Math.round((p.verifiedCount / p.treeCount) * 100) : 0
+                      const name = formatDisplayName(p.userId)
                       return (
                         <tr key={p.userId} className="hover:bg-surface-container-low/50 transition-colors">
                           <td className="py-3.5 px-4 font-mono text-outline text-xs">#{i + 1}</td>
                           <td className="py-3.5 px-4">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xs flex-shrink-0">
-                                {p.userId[0]?.toUpperCase()}
+                                {name[0]?.toUpperCase() ?? 'U'}
                               </div>
                               <div>
-                                <div className="font-semibold text-primary text-sm">{p.userId.split('@')[0]}</div>
+                                <div className="font-semibold text-primary text-sm">{name}</div>
                                 <div className="text-[11px] text-outline font-mono">{p.userId}</div>
                               </div>
                             </div>

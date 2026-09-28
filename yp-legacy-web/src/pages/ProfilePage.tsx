@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { treeService } from '../services/treeService'
-import { authService } from '../services/authService'
+import { authService, formatDisplayName } from '../services/authService'
 
 interface UserProfile {
   fullName?: string
@@ -36,26 +36,31 @@ export function ProfilePage() {
     if (authUser?.role === 'admin') navigate('/admin')
   }, [authUser, navigate])
 
-  // Load signup profile data if available
+  // Load signup profile data if available and matches current logged-in email
   const storedProfile: UserProfile = (() => {
     try {
-      const raw = localStorage.getItem('tree_tag_user')
-      return raw ? (JSON.parse(raw) as UserProfile) : {}
+      const email = authUser?.email ?? ''
+      const raw = localStorage.getItem(`tree_tag_user_${email}`) || localStorage.getItem('tree_tag_user')
+      if (!raw) return {}
+      const parsed = JSON.parse(raw) as UserProfile
+      if (parsed.email && authUser?.email && parsed.email.toLowerCase() !== authUser.email.toLowerCase()) {
+        return {}
+      }
+      return parsed
     } catch {
       return {}
     }
   })()
 
-  // Determine display values — signup data takes priority, then auth email
-  const displayName =
-    storedProfile.fullName ||
-    authUser?.displayName ||
-    authUser?.email?.split('@')[0] ||
-    'User'
+  // Determine display values — format name correctly based on email
+  const displayName = authUser?.email
+    ? authService.getCurrentUser()?.displayName || formatDisplayName(authUser.email, storedProfile.fullName)
+    : storedProfile.fullName || 'User'
 
   const displayEmail = storedProfile.email || authUser?.email || ''
   const displayInstitution = storedProfile.institution || '—'
   const userId = authUser?.email ?? ''
+
 
   const myTrees = userId ? treeService.getByUser(userId) : []
   const verifiedCount = myTrees.filter((t) => t.verificationStatus === 'VERIFIED').length
