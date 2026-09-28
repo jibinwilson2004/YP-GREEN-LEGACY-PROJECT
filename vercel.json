@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm --prefix yp-legacy-web run build",
+  "outputDirectory": "yp-legacy-web/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
