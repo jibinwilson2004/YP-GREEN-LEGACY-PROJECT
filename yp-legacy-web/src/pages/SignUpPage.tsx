@@ -69,39 +69,37 @@ export function SignUpPage() {
     let success = false
     let message = ''
 
-    try {
-      let response: Response | null = null
+    const endpoints = [
+      'http://127.0.0.1:5001/api/send-otp',
+      'http://localhost:5001/api/send-otp',
+      '/api/send-otp',
+    ]
+
+    for (const url of endpoints) {
+      if (success) break
       try {
-        response = await fetch('/api/send-otp', {
+        const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim(), name: fullName.trim() }),
         })
-      } catch {
-        try {
-          response = await fetch('http://localhost:5001/api/send-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.trim(), name: fullName.trim() }),
-          })
-        } catch { /* ignore */ }
-      }
-
-      if (response && response.ok) {
-        const contentType = response.headers.get('content-type') ?? ''
-        if (contentType.includes('application/json')) {
-          const data = await response.json()
-          if (data.success) {
-            success = true
-            message = data.message || `Verification code sent to ${email}`
+        if (response.ok) {
+          const contentType = response.headers.get('content-type') ?? ''
+          if (contentType.includes('application/json')) {
+            const data = await response.json()
+            if (data.success) {
+              success = true
+              message = data.message || `Verification code sent to ${email}`
+              break
+            }
           }
         }
+      } catch {
+        /* try next endpoint */
       }
-    } catch {
-      /* ignore backend network errors */
     }
 
-    // Serverless (Vercel) fallback mode
+    // Serverless (Vercel) fallback mode if Python OTP server is offline
     if (!success) {
       const generated = String(Math.floor(100000 + Math.random() * 900000))
       setDemoCode(generated)
@@ -124,10 +122,45 @@ export function SignUpPage() {
     setOtpLoading(true)
     setOtpError('')
 
-    const generated = String(Math.floor(100000 + Math.random() * 900000))
-    setDemoCode(generated)
-    setOtpSuccessMessage(`New verification code generated: ${generated}`)
-    setResendCooldown(60)
+    let success = false
+    const endpoints = [
+      'http://127.0.0.1:5001/api/send-otp',
+      'http://localhost:5001/api/send-otp',
+      '/api/send-otp',
+    ]
+
+    for (const url of endpoints) {
+      if (success) break
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.trim(), name: fullName.trim() }),
+        })
+        if (response.ok) {
+          const contentType = response.headers.get('content-type') ?? ''
+          if (contentType.includes('application/json')) {
+            const data = await response.json()
+            if (data.success) {
+              success = true
+              setOtpSuccessMessage(`A new verification code was sent to ${email}`)
+              setResendCooldown(60)
+              break
+            }
+          }
+        }
+      } catch {
+        /* try next */
+      }
+    }
+
+    if (!success) {
+      const generated = String(Math.floor(100000 + Math.random() * 900000))
+      setDemoCode(generated)
+      setOtpSuccessMessage(`New verification code generated: ${generated}`)
+      setResendCooldown(60)
+    }
+
     setOtpLoading(false)
   }
 
@@ -145,32 +178,34 @@ export function SignUpPage() {
 
     let verified = false
 
-    try {
-      let response: Response | null = null
+    const endpoints = [
+      'http://127.0.0.1:5001/api/verify-otp',
+      'http://localhost:5001/api/verify-otp',
+      '/api/verify-otp',
+    ]
+
+    for (const url of endpoints) {
+      if (verified) break
       try {
-        response = await fetch('/api/verify-otp', {
+        const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim(), otp: otpCode.trim() }),
         })
-      } catch {
-        try {
-          response = await fetch('http://localhost:5001/api/verify-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.trim(), otp: otpCode.trim() }),
-          })
-        } catch { /* ignore */ }
-      }
-
-      if (response && response.ok) {
-        const contentType = response.headers.get('content-type') ?? ''
-        if (contentType.includes('application/json')) {
-          const data = await response.json()
-          if (data.success) verified = true
+        if (response.ok) {
+          const contentType = response.headers.get('content-type') ?? ''
+          if (contentType.includes('application/json')) {
+            const data = await response.json()
+            if (data.success) {
+              verified = true
+              break
+            }
+          }
         }
+      } catch {
+        /* try next */
       }
-    } catch { /* ignore */ }
+    }
 
     // Fallback verification on Vercel / serverless hosting
     if (!verified) {
