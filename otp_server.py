@@ -283,6 +283,53 @@ class OTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 print(f"[Partner Request Error] {e}")
                 self._respond_json(500, {"success": False, "message": f"Failed to send email: {str(e)}"})
 
+        elif self.path == "/api/notify-tree-tag":
+            try:
+                content_length = int(self.headers.get("Content-Length", 0))
+                body = self.rfile.read(content_length)
+                data = json.loads(body.decode("utf-8"))
+            except Exception as e:
+                self._respond_json(400, {"success": False, "message": f"Invalid JSON: {str(e)}"})
+                return
+
+            tree_id = str(data.get("treeId", "New Tag")).strip()
+            species = str(data.get("species", "Tree")).strip()
+            planter = str(data.get("planter", "User")).strip()
+            lat     = str(data.get("latitude", ""))
+            lng     = str(data.get("longitude", ""))
+
+            print(f"[Tree Tag Notification] New tree {tree_id} tagged by {planter} ({species})")
+
+            def _send_admin_alert():
+                try:
+                    msg = EmailMessage()
+                    msg["Subject"] = f"Action Required: New Tree Tag Request #{tree_id} by {planter}"
+                    msg["From"]    = f"IEEE YP Green Legacy <{GMAIL_ADDRESS}>"
+                    msg["To"]      = "jibinwilson315@gmail.com"
+
+                    plain = (
+                        f"New Tree Tag Pending Verification\n"
+                        f"=================================\n"
+                        f"Tree ID  : {tree_id}\n"
+                        f"Species  : {species}\n"
+                        f"Planter  : {planter}\n"
+                        f"Location : {lat}, {lng}\n\n"
+                        f"Log in to the Admin Dashboard to review and approve this tag request.\n"
+                        f"— IEEE YP Green Legacy System"
+                    )
+                    msg.set_content(plain)
+
+                    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as smtp:
+                        smtp.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+                        smtp.send_message(msg)
+                    print(f"[Admin Alert Sent] Email notification sent to admin for tree {tree_id}")
+                except Exception as ex:
+                    print(f"[Admin Alert Failed] {ex}")
+
+            threading.Thread(target=_send_admin_alert, daemon=True).start()
+            self._respond_json(200, {"success": True, "message": f"Admin notified of tree tag {tree_id}"})
+
+
         else:
             self._respond_json(404, {"error": "Endpoint not found"})
 

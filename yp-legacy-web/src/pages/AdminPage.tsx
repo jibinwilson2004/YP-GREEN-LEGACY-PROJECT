@@ -48,11 +48,27 @@ export function AdminPage() {
     setPendingTrees(treeService.getPending())
     setAllTrees(treeService.getAll())
     setParticipants(treeService.getAllParticipants())
+
+    // Asynchronously fetch latest from Neon DB to pick up new user tags instantly
+    treeService.fetchLatestFromDb().then(() => {
+      setPendingTrees(treeService.getPending())
+      setAllTrees(treeService.getAll())
+      setParticipants(treeService.getAllParticipants())
+    }).catch(() => { /* ignore */ })
   }, [])
 
   useEffect(() => {
     refresh()
+    // Poll Neon DB every 5 seconds for new tree requests submitted from any phone/laptop
+    const timer = setInterval(refresh, 5000)
+    const handleUpdate = () => refresh()
+    window.addEventListener('trees-updated', handleUpdate)
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('trees-updated', handleUpdate)
+    }
   }, [refresh])
+
 
   function handleApprove(id: string) {
     treeService.approveTree(id, actionNote[id])

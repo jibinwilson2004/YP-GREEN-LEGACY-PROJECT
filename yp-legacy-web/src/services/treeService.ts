@@ -227,13 +227,57 @@ export const treeService = {
     return id
   },
 
+  async fetchLatestFromDb(): Promise<Tree[]> {
+    try {
+      const dbTrees = await neonService.fetchTreesFromDb()
+      if (dbTrees && dbTrees.length > 0) {
+        cache = dbTrees
+        saveStore(dbTrees)
+        return dbTrees
+      }
+    } catch { /* ignore */ }
+    return trees()
+  },
+
   registerTree(tree: Tree): Tree {
     const store = trees()
-    store.unshift(tree)
+    // Avoid duplicate insertions
+    if (!store.some((t) => t.id === tree.id)) {
+      store.unshift(tree)
+    }
     cache = store
     saveStore(store)
+
+    // Notify backend and admin asynchronously
+    try {
+      fetch('/api/notify-tree-tag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          treeId: tree.id,
+          species: tree.species,
+          planter: tree.student || tree.userId || 'Anonymous Planter',
+          latitude: tree.latitude,
+          longitude: tree.longitude,
+        }),
+      }).catch(() => {
+        fetch('http://127.0.0.1:5001/api/notify-tree-tag', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            treeId: tree.id,
+            species: tree.species,
+            planter: tree.student || tree.userId || 'Anonymous Planter',
+            latitude: tree.latitude,
+            longitude: tree.longitude,
+          }),
+        }).catch(() => { /* ignore */ })
+      })
+    } catch { /* ignore */ }
+
     return tree
   },
+
 
   buildTreeFromDraft(
     draft: TreeCaptureDraft,
