@@ -1,25 +1,46 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
 import type { TreeCaptureDraft } from '../types/tree'
 
+export type QueueItemStatus =
+  | 'DRAFT'
+  | 'PENDING_SYNC'
+  | 'UPLOADING_PHOTO'
+  | 'PENDING_TREE_PERSIST'
+  | 'SYNCED'
+  | 'FAILED_RETRYABLE'
+  | 'FAILED_FATAL'
+
+export interface QueuedSubmission {
+  id: string
+  submissionKey: string
+  status: QueueItemStatus
+  createdAt: number
+  updatedAt: number
+  retryCount: number
+  nextRetryTime: number
+  lastError?: string
+  photoUploadedUrl?: string
+  draft: TreeCaptureDraft
+  photoBlob?: Blob
+}
+
 interface YpDb extends DBSchema {
   pendingTrees: {
     key: string
-    value: {
-      id: string
-      createdAt: number
-      draft: TreeCaptureDraft
-      photoBlob?: Blob
-    }
+    value: QueuedSubmission
   }
 }
 
 let dbPromise: Promise<IDBPDatabase<YpDb>> | null = null
+let isSyncInProgress = false
 
 function getDb() {
   if (!dbPromise) {
-    dbPromise = openDB<YpDb>('yp-legacy-offline', 1, {
-      upgrade(db) {
-        db.createObjectStore('pendingTrees', { keyPath: 'id' })
+    dbPromise = openDB<YpDb>('yp-legacy-offline', 2, {
+      upgrade(db, oldVersion) {
+        if (oldVersion < 1) {
+          db.createObjectStore('pendingTrees', { keyPath: 'id' })
+        }
       },
     })
   }
@@ -31,40 +52,107 @@ export async function enqueueCapture(
   photoBlob?: Blob,
 ): Promise<string> {
   const id = crypto.randomUUID()
-  const db = await getDb()
-  await db.put('pendingTrees', {
+  const submissionKey = draft.treeIdPreview || `sub_${Date.now()}_${id.slice(0, 8)}`
+  const now = Date.now()
+  const item: QueuedSubmission = {
     id,
-    createdAt: Date.now(),
+    submissionKey,
+    status: 'PENDING_SYNC',
+    createdAt: now,
+    updatedAt: now,
+    retryCount: 0,
+    nextRetryTime: now,
     draft,
     photoBlob,
-  })
+  }
+
+  const db = await getDb()
+  await db.put('pendingTrees', item)
   return id
 }
 
-export async function listPending() {
+export async function listPending(): Promise<QueuedSubmission[]> {
   const db = await getDb()
   return db.getAll('pendingTrees')
 }
 
-export async function removePending(id: string) {
+export async function removePending(id: string): Promise<void> {
   const db = await getDb()
   await db.delete('pendingTrees', id)
 }
 
+export async function updatePendingItem(item: QueuedSubmission): Promise<void> {
+  const db = await getDb()
+  item.updatedAt = Date.now()
+  await db.put('pendingTrees', item)
+}
+
+// Bounded exponential backoff with jitter: 2s, 4s, 8s, 16s, 32s + jitter
+function calculateBackoff(retryCount: number): number {
+  const baseMs = 2000
+  const maxMs = 60000
+  const exponential = Math.min(maxMs, baseMs * Math.pow(2, retryCount))
+  const jitter = Math.random() * 1000
+  return exponential + jitter
+}
+
 export async function syncPending(
-  register: (draft: TreeCaptureDraft) => Promise<void>,
+  registerTree: (draft: TreeCaptureDraft, photoUrl?: string) => Promise<void>,
+  uploadPhoto?: (blob: Blob, submissionKey: string) => Promise<string>
 ): Promise<number> {
-  if (!navigator.onLine) return 0
-  const pending = await listPending()
+  if (!navigator.onLine || isSyncInProgress) return 0
+  isSyncInProgress = true
+
   let synced = 0
-  for (const item of pending) {
-    try {
-      await register(item.draft)
-      await removePending(item.id)
-      synced += 1
-    } catch {
-      break
+  try {
+    const pending = await listPending()
+    const now = Date.now()
+
+    for (const item of pending) {
+      if (item.status === 'FAILED_FATAL') continue
+      if (item.nextRetryTime > now) continue
+      if (item.retryCount >= 5) {
+        item.status = 'FAILED_FATAL'
+        item.lastError = 'Maximum retry limit (5 attempts) exceeded'
+        await updatePendingItem(item)
+        continue
+      }
+
+      try {
+        let photoUrl = item.photoUploadedUrl
+
+        // Step 1: Upload photo if not yet uploaded
+        if (item.photoBlob && !photoUrl && uploadPhoto) {
+          item.status = 'UPLOADING_PHOTO'
+          await updatePendingItem(item)
+
+          photoUrl = await uploadPhoto(item.photoBlob, item.submissionKey)
+          item.photoUploadedUrl = photoUrl
+          item.status = 'PENDING_TREE_PERSIST'
+          await updatePendingItem(item)
+        }
+
+        // Step 2: Persist tree record with stable submissionKey
+        item.status = 'PENDING_TREE_PERSIST'
+        await updatePendingItem(item)
+
+        await registerTree(item.draft, photoUrl)
+
+        // Step 3: Confirmation and safe deletion from offline queue
+        item.status = 'SYNCED'
+        await removePending(item.id)
+        synced += 1
+      } catch (err: any) {
+        item.retryCount += 1
+        item.lastError = err.message || 'Network sync error'
+        item.nextRetryTime = Date.now() + calculateBackoff(item.retryCount)
+        item.status = 'FAILED_RETRYABLE'
+        await updatePendingItem(item)
+      }
     }
+  } finally {
+    isSyncInProgress = false
   }
+
   return synced
 }

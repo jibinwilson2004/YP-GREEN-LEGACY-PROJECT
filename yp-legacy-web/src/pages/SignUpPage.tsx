@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { IEEE_MEMBERSHIP_GRADES, IEEE_REGIONS } from '../constants/ieeeRegions'
-import { neonService } from '../services/neonService'
+import { authService } from '../services/authService'
+
 
 
 export function SignUpPage() {
@@ -231,19 +232,10 @@ export function SignUpPage() {
       }
 
       const userId = email.trim().toLowerCase()
-      localStorage.setItem(`tree_tag_user_${userId}`, JSON.stringify(userProfile))
-      localStorage.setItem('tree_tag_user', JSON.stringify(userProfile))
+      authService.registerUser(userProfile)
       localStorage.setItem('tree_tag_logged_in', 'true')
       localStorage.setItem('tree_tag_user_id', userId)
       localStorage.setItem('tree_tag_role', 'user')
-
-      // Sync user profile to Neon Postgres DB
-      neonService.upsertUser({
-        email: userId,
-        fullName,
-        institution,
-        ieeeId: isIeeeMember ? ieeeId : undefined,
-      }).catch(() => { /* ignore */ })
 
       window.dispatchEvent(new Event('auth-change'))
 

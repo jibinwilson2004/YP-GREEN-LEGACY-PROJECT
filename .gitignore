@@ -14,3 +14,19 @@ logs/
 .vscode/
 .idea/
 .tempmediaStorage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+credentials.json
+
+# Local server fallback & uploads
+**/server/uploads/
+**/server/data_fallback.json
+server/uploads/
+server/data_fallback.json
+

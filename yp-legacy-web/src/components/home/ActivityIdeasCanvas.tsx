@@ -16,7 +16,7 @@ export interface ActivityIdea {
   gradient: string
 }
 
-export const ACTIVITY_IDEAS: ActivityIdea[] = [
+const ACTIVITY_IDEAS: ActivityIdea[] = [
   {
     id: 'adopt-a-tree',
     title: '“Adopt a Tree” Challenge',

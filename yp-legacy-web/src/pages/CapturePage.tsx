@@ -8,7 +8,8 @@ import { TreeVerification } from '../components/tree/TreeVerification'
 import { useGPS } from '../hooks/useGPS'
 import { useTreeCapture } from '../hooks/useTreeCapture'
 import { useOfflineQueue } from '../hooks/useOfflineQueue'
-import { compressImage, blobToPreviewUrl } from '../utils/imageCompression'
+import { compressImage, blobToPreviewUrl, blobToBase64 } from '../utils/imageCompression'
+
 import { registerTreeApi } from '../services/api'
 import { treeService } from '../services/treeService'
 import { authService } from '../services/authService'
@@ -29,6 +30,16 @@ export function CapturePage() {
   const capture = useTreeCapture()
   const offline = useOfflineQueue()
   const [submitting, setSubmitting] = useState(false)
+  const [registerError, setRegisterError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (gps.verified && capture.step === 'location') {
+      capture.updateDraft({
+        location: gps.verified,
+        anomalies: gps.anomalies,
+      })
+    }
+  }, [gps.verified, gps.anomalies, capture])
 
   // Auth guard — must be a registered/logged-in user (not admin)
   const authUser = authService.getCurrentUser()
@@ -70,16 +81,6 @@ export function CapturePage() {
       </div>
     )
   }
-  const [registerError, setRegisterError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (gps.verified && capture.step === 'location') {
-      capture.updateDraft({
-        location: gps.verified,
-        anomalies: gps.anomalies,
-      })
-    }
-  }, [gps.verified, gps.anomalies, capture])
 
   const stepIndex =
     capture.step === 'intro'
@@ -97,7 +98,12 @@ export function CapturePage() {
   async function handlePhoto(file: File) {
     try {
       const compressed = await compressImage(file)
-      const url = blobToPreviewUrl(compressed)
+      let url = ''
+      try {
+        url = await blobToBase64(compressed)
+      } catch {
+        url = blobToPreviewUrl(compressed)
+      }
       capture.updateDraft({
         photoBlob: compressed,
         photoPreviewUrl: url,
@@ -128,6 +134,21 @@ export function CapturePage() {
         capture.setStep('success')
         return
       }
+
+      // If photo exists as base64, upload to server storage
+      if (draft.photoPreviewUrl && draft.photoPreviewUrl.startsWith('data:')) {
+        try {
+          const { uploadPhotoApi } = await import('../services/api')
+          const photo = await uploadPhotoApi(tree.id, draft.photoPreviewUrl, 'image/jpeg', 'primary')
+          if (photo?.url) {
+            tree.imageUrl = photo.url
+            tree.images = [photo.url]
+          }
+        } catch (uploadErr) {
+          console.warn('[Photo Upload warning]', uploadErr)
+        }
+      }
+
       await registerTreeApi(tree)
       capture.setStep('success')
     } catch {

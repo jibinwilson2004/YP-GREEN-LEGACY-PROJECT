@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
@@ -22,11 +22,6 @@ export function LoginPage() {
   const [resetError, setResetError] = useState<string | null>(null)
   const [resetMsg, setResetMsg] = useState<string | null>(null)
 
-  // Ensure fields start completely empty on mount
-  useEffect(() => {
-    setEmail('')
-    setPassword('')
-  }, [])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()

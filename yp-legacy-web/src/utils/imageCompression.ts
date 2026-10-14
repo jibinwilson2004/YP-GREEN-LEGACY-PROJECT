@@ -22,3 +22,13 @@ export async function compressImage(file: Blob, maxWidth = 1280, quality = 0.82)
 export function blobToPreviewUrl(blob: Blob): string {
   return URL.createObjectURL(blob)
 }
+
+export function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
+

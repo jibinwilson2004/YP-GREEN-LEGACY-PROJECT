@@ -12,6 +12,8 @@ export function TreesPage() {
   const [scopeFilter, setScopeFilter] = useState<'my' | 'all'>('all')
   const [treesVer, setTreesVer] = useState(0)
 
+  const [page, setPage] = useState(1)
+  const pageSize = 12
   const currentUserId = localStorage.getItem('tree_tag_user_id') ?? ''
 
   useEffect(() => {
@@ -22,6 +24,8 @@ export function TreesPage() {
   }, [])
 
   const trees = useMemo(() => {
+    // Reference treesVer to recompute when custom event trees-updated fires
+    void treesVer
     if (scopeFilter === 'my' && currentUserId) {
       return treeService.getByUser(currentUserId)
     }
@@ -42,6 +46,12 @@ export function TreesPage() {
       return matchSearch && matchStatus && matchSpecies
     })
   }, [trees, search, statusFilter, speciesFilter])
+
+  const totalPages = Math.max(1, Math.ceil(filteredTrees.length / pageSize))
+  const paginatedTrees = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return filteredTrees.slice(start, start + pageSize)
+  }, [filteredTrees, page, pageSize])
 
   return (
     <div className="min-h-screen bg-background font-body-md text-on-surface antialiased flex flex-col justify-between">
@@ -187,10 +197,42 @@ export function TreesPage() {
 
         {/* Tree List Grid */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTrees.map((t) => (
+          {paginatedTrees.map((t) => (
             <TreeCard key={t.id} tree={t} />
           ))}
         </div>
+
+        {/* Pagination Bar */}
+        {filteredTrees.length > pageSize && (
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
+            <span className="text-xs text-on-surface-variant font-mono">
+              Showing {(page - 1) * pageSize + 1}–{Math.min(page * pageSize, filteredTrees.length)} of {filteredTrees.length} registered trees
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                disabled={page <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="px-3 py-1.5 rounded-lg border border-outline-variant/50 text-xs font-semibold text-primary disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-container-low transition-colors flex items-center gap-1"
+              >
+                <span className="material-symbols-outlined text-[16px]">chevron_left</span>
+                Previous
+              </button>
+              <span className="text-xs font-bold text-primary px-2 font-mono">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                type="button"
+                disabled={page >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                className="px-3 py-1.5 rounded-lg border border-outline-variant/50 text-xs font-semibold text-primary disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-container-low transition-colors flex items-center gap-1"
+              >
+                Next
+                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {filteredTrees.length === 0 && (
           <div className="bg-surface-container-lowest rounded-xl p-12 text-center border border-outline-variant/40 mt-6">

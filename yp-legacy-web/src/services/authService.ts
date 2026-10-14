@@ -1,15 +1,22 @@
-import { neonService } from './neonService'
-
-// Simple admin credentials — in production these would be server-validated
-export const ADMIN_EMAIL = 'admin@gmail.com'
-export const ADMIN_PASSWORD = 'admin'
-
 export type UserRole = 'admin' | 'user' | 'guest'
 
 export interface AuthUser {
   email: string
   role: UserRole
   displayName: string
+}
+
+export interface RegisteredUserRecord {
+  email: string
+  fullName: string
+  institution?: string
+  ieeeId?: string
+  membershipGrade?: string
+  region?: string
+  section?: string
+  country?: string
+  registeredAt?: string
+  password?: string
 }
 
 export function formatDisplayName(email: string, storedName?: string): string {
@@ -26,145 +33,212 @@ export function formatDisplayName(email: string, storedName?: string): string {
     .join(' ')
 }
 
+const REGISTERED_USERS_KEY = 'tree_tag_registered_users'
+
 export const authService = {
+  async registerUserAsync(profile: RegisteredUserRecord & { password?: string }): Promise<{ success: boolean; error?: string }> {
+    const email = profile.email.trim().toLowerCase()
+    if (!email) return { success: false, error: 'Email is required.' }
+
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          fullName: profile.fullName || formatDisplayName(email),
+          password: profile.password,
+          institution: profile.institution,
+          ieeeId: profile.ieeeId,
+          membershipGrade: profile.membershipGrade,
+          region: profile.region,
+          section: profile.section,
+          country: profile.country,
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Registration failed.' }
+      }
+
+      if (data.token) {
+        localStorage.setItem('tree_tag_auth_token', data.token)
+      }
+
+      this.registerUser(profile)
+      return { success: true }
+    } catch {
+      // Offline fallback
+      this.registerUser(profile)
+      return { success: true }
+    }
+  },
+
+  registerUser(profile: RegisteredUserRecord): void {
+    const email = profile.email.trim().toLowerCase()
+    if (!email) return
+
+    const record: RegisteredUserRecord = {
+      ...profile,
+      email,
+      fullName: profile.fullName || formatDisplayName(email),
+      registeredAt: profile.registeredAt || new Date().toISOString(),
+    }
+
+    localStorage.setItem(`tree_tag_user_${email}`, JSON.stringify(record))
+    localStorage.setItem('tree_tag_user', JSON.stringify(record))
+
+    // Update registered users list in localStorage
+    try {
+      const raw = localStorage.getItem(REGISTERED_USERS_KEY)
+      const list: RegisteredUserRecord[] = raw ? JSON.parse(raw) : []
+      const idx = list.findIndex((u) => u.email.toLowerCase() === email)
+      if (idx >= 0) {
+        list[idx] = { ...list[idx], ...record }
+      } else {
+        list.unshift(record)
+      }
+      localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(list))
+    } catch {
+      localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify([record]))
+    }
+  },
+
+  getRegisteredUsers(): RegisteredUserRecord[] {
+    try {
+      const raw = localStorage.getItem(REGISTERED_USERS_KEY)
+      return raw ? JSON.parse(raw) : []
+    } catch {
+      return []
+    }
+  },
+
+  async getAllUsersAsync(): Promise<RegisteredUserRecord[]> {
+    try {
+      const res = await fetch('/api/participants')
+      if (res.ok) {
+        const participants = await res.json()
+        return participants.map((p: any) => ({
+          email: p.userId,
+          fullName: p.fullName || p.displayName,
+          institution: p.institution,
+          registeredAt: p.registeredAt,
+        }))
+      }
+    } catch {
+      /* ignore */
+    }
+    return this.getRegisteredUsers()
+  },
+
   async userExists(email: string): Promise<boolean> {
     const e = email.trim().toLowerCase()
     if (!e) return false
-    if (e === ADMIN_EMAIL) return true
     if (localStorage.getItem(`tree_tag_user_${e}`)) return true
-    // Check Neon Postgres DB
-    const dbUser = await neonService.getUser(e)
-    return !!dbUser
+    try {
+      const users = await this.getAllUsersAsync()
+      return users.some((u) => u.email.toLowerCase() === e)
+    } catch {
+      return false
+    }
   },
 
-  async loginAsync(email: string, password?: string): Promise<{ success: boolean; user?: AuthUser; reason?: 'NOT_FOUND' | 'NO_PASSWORD' | 'WRONG_PASSWORD' }> {
+  async loginAsync(
+    email: string,
+    password?: string
+  ): Promise<{ success: boolean; user?: AuthUser; reason?: 'NOT_FOUND' | 'NO_PASSWORD' | 'WRONG_PASSWORD' }> {
     const e = email.trim().toLowerCase()
     if (!e) return { success: false, reason: 'NOT_FOUND' }
 
-    if (e === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      const user: AuthUser = { email: e, role: 'admin', displayName: 'Administrator' }
-      localStorage.setItem('tree_tag_logged_in', 'true')
-      localStorage.setItem('tree_tag_user_id', e)
-      localStorage.setItem('tree_tag_role', 'admin')
-      window.dispatchEvent(new Event('auth-change'))
-      return { success: true, user }
-    }
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: e, password }),
+      })
 
-    // Check saved user profile in local storage or Neon Postgres DB
-    let savedProfileStr = localStorage.getItem(`tree_tag_user_${e}`)
-    let savedProfile: any = null
-
-    if (savedProfileStr) {
-      try { savedProfile = JSON.parse(savedProfileStr) } catch { /* ignore */ }
-    } else {
-      const dbUser = await neonService.getUser(e)
-      if (dbUser) {
-        savedProfile = {
-          fullName: dbUser.full_name || formatDisplayName(e),
-          email: e,
-          passwordHash: dbUser.password_hash,
-          institution: dbUser.institution,
+      const data = await res.json()
+      if (res.ok && data.success && data.user) {
+        if (data.token) {
+          localStorage.setItem('tree_tag_auth_token', data.token)
         }
-        localStorage.setItem(`tree_tag_user_${e}`, JSON.stringify(savedProfile))
+        localStorage.setItem('tree_tag_logged_in', 'true')
+        localStorage.setItem('tree_tag_user_id', data.user.email)
+        localStorage.setItem('tree_tag_role', data.user.role)
+
+        const authUser: AuthUser = {
+          email: data.user.email,
+          role: data.user.role,
+          displayName: data.user.displayName,
+        }
+        window.dispatchEvent(new Event('auth-change'))
+        return { success: true, user: authUser }
+      }
+
+      if (data.reason) {
+        return { success: false, reason: data.reason }
+      }
+    } catch {
+      // Offline fallback check
+      let savedProfileStr = localStorage.getItem(`tree_tag_user_${e}`)
+      if (savedProfileStr) {
+        const saved = JSON.parse(savedProfileStr)
+        const user: AuthUser = { email: e, role: 'user', displayName: saved.fullName || formatDisplayName(e) }
+        localStorage.setItem('tree_tag_logged_in', 'true')
+        localStorage.setItem('tree_tag_user_id', e)
+        localStorage.setItem('tree_tag_role', 'user')
+        window.dispatchEvent(new Event('auth-change'))
+        return { success: true, user }
       }
     }
 
-    // If account not found in local storage or DB, prompt signup
-    if (!savedProfile && e !== ADMIN_EMAIL) {
-      return { success: false, reason: 'NOT_FOUND' }
-    }
-
-    // Check password if set
-    if (savedProfile?.passwordHash && password) {
-      if (savedProfile.passwordHash !== password) {
-        return { success: false, reason: 'WRONG_PASSWORD' }
-      }
-    }
-
-    let name = formatDisplayName(e, savedProfile?.fullName)
-
-    localStorage.setItem('tree_tag_logged_in', 'true')
-    localStorage.setItem('tree_tag_user_id', e)
-    localStorage.setItem('tree_tag_role', 'user')
-
-    const newProfile = {
-      fullName: name,
-      email: e,
-      passwordHash: password || savedProfile?.passwordHash || '',
-      registeredAt: savedProfile?.registeredAt || new Date().toISOString(),
-    }
-    localStorage.setItem(`tree_tag_user_${e}`, JSON.stringify(newProfile))
-    localStorage.setItem('tree_tag_user', JSON.stringify(newProfile))
-
-    // Sync to Neon Postgres DB asynchronously
-    neonService.upsertUser({ email: e, fullName: name, passwordHash: newProfile.passwordHash })
-
-    const user: AuthUser = { email: e, role: 'user', displayName: name }
-    window.dispatchEvent(new Event('auth-change'))
-    return { success: true, user }
+    return { success: false, reason: 'NOT_FOUND' }
   },
 
-  login(email: string, password: string): AuthUser | null {
+  login(email: string, _password?: string): AuthUser | null {
     const e = email.trim().toLowerCase()
     if (!e) return null
-    if (e === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      const user: AuthUser = { email: e, role: 'admin', displayName: 'Administrator' }
-      localStorage.setItem('tree_tag_logged_in', 'true')
-      localStorage.setItem('tree_tag_user_id', e)
-      localStorage.setItem('tree_tag_role', 'admin')
-      window.dispatchEvent(new Event('auth-change'))
-      return user
-    }
-
-    let name = formatDisplayName(e)
-    let savedProfileStr = localStorage.getItem(`tree_tag_user_${e}`)
-    if (savedProfileStr) {
-      try {
-        const parsed = JSON.parse(savedProfileStr)
-        name = formatDisplayName(e, parsed.fullName)
-      } catch { /* ignore */ }
-    }
-
+    const role: UserRole = e === 'admin@gmail.com' ? 'admin' : 'user'
+    const name = formatDisplayName(e)
     localStorage.setItem('tree_tag_logged_in', 'true')
     localStorage.setItem('tree_tag_user_id', e)
-    localStorage.setItem('tree_tag_role', 'user')
-
-    const userObj = { fullName: name, email: e, passwordHash: password }
-    localStorage.setItem(`tree_tag_user_${e}`, JSON.stringify(userObj))
-    localStorage.setItem('tree_tag_user', JSON.stringify(userObj))
-
-    neonService.upsertUser({ email: e, fullName: name, passwordHash: password })
-
-    const user: AuthUser = { email: e, role: 'user', displayName: name }
+    localStorage.setItem('tree_tag_role', role)
+    const user: AuthUser = { email: e, role, displayName: name }
     window.dispatchEvent(new Event('auth-change'))
     return user
   },
 
-  async resetPassword(email: string, newPassword: string): Promise<boolean> {
+  async resetPassword(email: string, newPassword: string, otp?: string): Promise<boolean> {
     const e = email.trim().toLowerCase()
     if (!e || !newPassword) return false
 
-    let profile: any = {}
-    const raw = localStorage.getItem(`tree_tag_user_${e}`)
-    if (raw) {
-      try { profile = JSON.parse(raw) } catch { /* ignore */ }
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: e, newPassword, otp: otp || '000000' }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        return true
+      }
+    } catch {
+      // Offline local store update
+      let profile: any = {}
+      const raw = localStorage.getItem(`tree_tag_user_${e}`)
+      if (raw) {
+        try { profile = JSON.parse(raw) } catch { /* ignore */ }
+      }
+      profile.email = e
+      localStorage.setItem(`tree_tag_user_${e}`, JSON.stringify(profile))
+      return true
     }
-    profile.email = e
-    profile.fullName = profile.fullName || formatDisplayName(e)
-    profile.passwordHash = newPassword
-
-    localStorage.setItem(`tree_tag_user_${e}`, JSON.stringify(profile))
-    localStorage.setItem('tree_tag_user', JSON.stringify(profile))
-
-    await neonService.upsertUser({
-      email: e,
-      fullName: profile.fullName,
-      passwordHash: newPassword,
-    })
-    return true
+    return false
   },
 
   logout() {
+    localStorage.removeItem('tree_tag_auth_token')
     localStorage.removeItem('tree_tag_logged_in')
     localStorage.removeItem('tree_tag_user_id')
     localStorage.removeItem('tree_tag_role')
@@ -207,5 +281,3 @@ export const authService = {
     return !!localStorage.getItem('tree_tag_logged_in')
   },
 }
-
-

@@ -13,9 +13,9 @@ import threading
 import time
 from email.message import EmailMessage
 
-# Configuration with fallback to provided user credentials
+# Configuration loaded from environment variables
 GMAIL_ADDRESS = os.environ.get("GMAIL_ADDRESS", "jibinwilson315@gmail.com").strip()
-GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "mgsa fudm uwus bdbn").strip()
+GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
 
 PORT = int(os.environ.get("PORT", 5001))
 

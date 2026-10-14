@@ -7,13 +7,45 @@ import { VerificationStatus } from '../components/tree/VerificationStatus'
 import { formatGpsSource } from '../types/gps'
 import { treeService } from '../services/treeService'
 import { formatDisplayName } from '../services/authService'
+import { useState, useEffect } from 'react'
+import type { Tree } from '../types/tree'
 import { classifyAccuracy, accuracyLabel } from '../services/gps/gpsAccuracy'
-
-
+import { fetchTreeById } from '../services/api'
 
 export function TreeDetailPage() {
   const { id } = useParams()
-  const tree = id ? treeService.getById(id) : undefined
+  const cachedTree = id ? treeService.getById(id) : undefined
+  const [remoteTree, setRemoteTree] = useState<Tree | null>(null)
+  const [loading, setLoading] = useState(!cachedTree)
+
+  useEffect(() => {
+    if (!cachedTree && id) {
+      fetchTreeById(id)
+        .then((t) => {
+          setRemoteTree(t)
+          setLoading(false)
+        })
+        .catch(() => {
+          setLoading(false)
+        })
+    }
+  }, [cachedTree, id])
+
+  const tree = cachedTree || remoteTree
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col justify-between">
+        <AppHeader />
+        <main className="max-w-3xl mx-auto px-4 py-24 text-center flex-1 flex flex-col items-center justify-center">
+          <div className="w-12 h-12 border-4 border-[#004d36] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <h2 className="font-headline-sm text-lg font-bold text-primary">Loading Tree Telemetry Dossier...</h2>
+          <p className="text-sm text-outline mt-1 font-mono">Querying precision GIS registry for #{id}</p>
+        </main>
+        <AppFooter />
+      </div>
+    )
+  }
 
   if (!tree) {
     return (
@@ -22,7 +54,7 @@ export function TreeDetailPage() {
         <main className="max-w-3xl mx-auto px-4 py-20 text-center flex-1">
           <span className="material-symbols-outlined text-[56px] text-outline">error_outline</span>
           <h1 className="font-headline-lg text-2xl font-bold text-primary mt-2">Tree Record Not Found</h1>
-          <p className="text-on-surface-variant mt-2">The requested tree record does not exist in the active registry.</p>
+          <p className="text-on-surface-variant mt-2">The requested tree record #{id} does not exist in the active registry.</p>
           <Link
             to="/trees"
             className="inline-flex items-center gap-1.5 mt-6 bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md hover:bg-secondary transition-colors"

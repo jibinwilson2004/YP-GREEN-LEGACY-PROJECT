@@ -5,6 +5,11 @@
   "description": "YP Legacy Project — verifiable precision tree registry, GPS verification, and telemetry mapping.",
   "scripts": {
     "dev": "npm --prefix yp-legacy-web run dev",
+    "server": "npm --prefix yp-legacy-web run server",
+    "migrate": "npm --prefix yp-legacy-web run migrate",
+    "verify:drive": "npm --prefix yp-legacy-web run verify:drive",
+    "seed:admin": "npm --prefix yp-legacy-web run seed:admin",
+    "test": "npm --prefix yp-legacy-web run test",
     "build": "npm --prefix yp-legacy-web run build",
     "preview": "npm --prefix yp-legacy-web run preview",
     "lint": "npm --prefix yp-legacy-web run lint"

@@ -3,18 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { authService, formatDisplayName } from '../services/authService'
-import { treeService } from '../services/treeService'
+import { treeService, type ParticipantStats } from '../services/treeService'
 import type { Tree } from '../types/tree'
 
 type AdminTab = 'overview' | 'pending' | 'participants' | 'all'
 
-
-interface Participant {
-  userId: string
-  treeCount: number
-  pendingCount: number
-  verifiedCount: number
-}
 
 // CSV helper
 function downloadCsv(filename: string, rows: string[][]) {
@@ -29,9 +22,9 @@ function downloadCsv(filename: string, rows: string[][]) {
 export function AdminPage() {
   const navigate = useNavigate()
   const [tab, setTab] = useState<AdminTab>('overview')
-  const [pendingTrees, setPendingTrees] = useState<Tree[]>([])
-  const [allTrees, setAllTrees] = useState<Tree[]>([])
-  const [participants, setParticipants] = useState<Participant[]>([])
+  const [pendingTrees, setPendingTrees] = useState<Tree[]>(() => treeService.getPending())
+  const [allTrees, setAllTrees] = useState<Tree[]>(() => treeService.getAll())
+  const [participants, setParticipants] = useState<ParticipantStats[]>(() => treeService.getAllParticipants())
   const [actionNote, setActionNote] = useState<Record<string, string>>({})
   const [successMsg, setSuccessMsg] = useState<string | null>(null)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null) // tree id to confirm
@@ -49,21 +42,28 @@ export function AdminPage() {
     setAllTrees(treeService.getAll())
     setParticipants(treeService.getAllParticipants())
 
-    // Asynchronously fetch latest from Neon DB to pick up new user tags instantly
+    // Asynchronously fetch latest trees & users from Neon DB
     treeService.fetchLatestFromDb().then(() => {
       setPendingTrees(treeService.getPending())
       setAllTrees(treeService.getAll())
-      setParticipants(treeService.getAllParticipants())
+    }).catch(() => { /* ignore */ })
+
+    treeService.getAllParticipantsAsync().then((list) => {
+      setParticipants(list)
     }).catch(() => { /* ignore */ })
   }, [])
 
+
   useEffect(() => {
-    refresh()
-    // Poll Neon DB every 5 seconds for new tree requests submitted from any phone/laptop
-    const timer = setInterval(refresh, 5000)
+    const initialSync = setTimeout(() => {
+      refresh()
+    }, 0)
+    // Poll DB every 8 seconds for new tree requests submitted from any phone/laptop
+    const timer = setInterval(refresh, 8000)
     const handleUpdate = () => refresh()
     window.addEventListener('trees-updated', handleUpdate)
     return () => {
+      clearTimeout(initialSync)
       clearInterval(timer)
       window.removeEventListener('trees-updated', handleUpdate)
     }
@@ -414,9 +414,9 @@ export function AdminPage() {
                 type="button"
                 onClick={() => {
                   const rows = [
-                    ['#', 'Email / User ID', 'Display Name', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
+                    ['#', 'Email / User ID', 'Full Name', 'Institution', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
                     ...participants.map((p, i) => [
-                      String(i + 1), p.userId, formatDisplayName(p.userId),
+                      String(i + 1), p.userId, p.fullName || formatDisplayName(p.userId), p.institution || '',
                       String(p.treeCount), String(p.verifiedCount), String(p.pendingCount),
                       p.treeCount > 0 ? `${Math.round((p.verifiedCount / p.treeCount) * 100)}%` : '0%',
                     ]),
@@ -432,15 +432,16 @@ export function AdminPage() {
             {participants.length === 0 ? (
               <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/40 p-12 text-center">
                 <span className="material-symbols-outlined text-[48px] text-outline">group_off</span>
-                <p className="text-on-surface-variant mt-2">No participants have registered trees yet.</p>
+                <p className="text-on-surface-variant mt-2">No registered participants found.</p>
               </div>
             ) : (
               <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/40 overflow-x-auto shadow-xs">
-                <table className="w-full text-left text-sm min-w-[600px]">
+                <table className="w-full text-left text-sm min-w-[700px]">
                   <thead>
                     <tr className="border-b border-outline-variant/40 bg-surface-container-low text-[11px] uppercase tracking-wider text-outline font-semibold">
                       <th className="py-3 px-4">#</th>
-                      <th className="py-3 px-4">User / Email</th>
+                      <th className="py-3 px-4">Participant / Email</th>
+                      <th className="py-3 px-4">Institution</th>
                       <th className="py-3 px-4 text-center">Total Trees</th>
                       <th className="py-3 px-4 text-center">Verified</th>
                       <th className="py-3 px-4 text-center">Pending</th>
@@ -450,7 +451,7 @@ export function AdminPage() {
                   <tbody className="divide-y divide-outline-variant/20">
                     {participants.map((p, i) => {
                       const pct = p.treeCount > 0 ? Math.round((p.verifiedCount / p.treeCount) * 100) : 0
-                      const name = formatDisplayName(p.userId)
+                      const name = p.fullName || formatDisplayName(p.userId)
                       return (
                         <tr key={p.userId} className="hover:bg-surface-container-low/50 transition-colors">
                           <td className="py-3.5 px-4 font-mono text-outline text-xs">#{i + 1}</td>
@@ -464,6 +465,9 @@ export function AdminPage() {
                                 <div className="text-[11px] text-outline font-mono">{p.userId}</div>
                               </div>
                             </div>
+                          </td>
+                          <td className="py-3.5 px-4 text-xs text-on-surface-variant font-medium">
+                            {p.institution || '—'}
                           </td>
                           <td className="py-3.5 px-4 text-center font-bold text-primary">{p.treeCount}</td>
                           <td className="py-3.5 px-4 text-center">
@@ -479,7 +483,7 @@ export function AdminPage() {
                                 {p.pendingCount}
                               </span>
                             ) : (
-                              <span className="text-outline">—</span>
+                              <span className="text-outline">0</span>
                             )}
                           </td>
                           <td className="py-3.5 px-4 text-center">
@@ -500,6 +504,7 @@ export function AdminPage() {
                 </table>
               </div>
             )}
+
           </div>
         )}
 

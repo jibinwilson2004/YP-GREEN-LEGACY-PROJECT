@@ -65,15 +65,10 @@ export function MapPage() {
     return () => window.removeEventListener('trees-updated', handleUpdate)
   }, [])
 
-  useEffect(() => {
-    if (isUserFilter && treeService.getById('YP-000001')) {
-      setSelectedTree(FEATURED_NEEM_TREE)
-      setPopoverOpen(true)
-      setUserTab('user')
-    }
-  }, [isUserFilter])
-
-  const allTrees = useMemo(() => treeService.getAll(), [treesVer])
+  const allTrees = useMemo(() => {
+    void treesVer
+    return treeService.getAll()
+  }, [treesVer])
 
   // Trees displayed on map based on user tab
   const displayTrees = useMemo(() => {

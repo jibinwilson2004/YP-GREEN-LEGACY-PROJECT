@@ -1,9 +1,45 @@
 import type { Tree, TreeCaptureDraft, ViewportBounds } from '../types/tree'
-import { formatDisplayName } from './authService'
+import { authService, formatDisplayName } from './authService'
 import { neonService } from './neonService'
+import { reviewTreeApi, deleteTreeApi, fetchTrees } from './api'
 
 const STORAGE_KEY = 'yp-legacy-trees'
 let seq = 1
+
+function mergeTrees(local: Tree[], remote: Tree[]): Tree[] {
+  const map = new Map<string, Tree>()
+
+  // Remote trees first
+  for (const r of remote) {
+    map.set(r.id, r)
+  }
+
+  // Local trees override or add if not present in remote
+  for (const l of local) {
+    const existing = map.get(l.id)
+    if (!existing) {
+      map.set(l.id, l)
+    } else {
+      // Keep local image URL if base64 and remote is blank
+      const imageUrl = l.imageUrl && l.imageUrl.startsWith('data:') ? l.imageUrl : existing.imageUrl || l.imageUrl
+      map.set(l.id, {
+        ...existing,
+        ...l,
+        imageUrl,
+      })
+    }
+  }
+
+  const merged = Array.from(map.values())
+  // Re-calculate max seq number
+  const max = merged.reduce((m, t) => {
+    const n = parseInt(t.id.replace(/\D/g, ''), 10)
+    return Number.isFinite(n) ? Math.max(m, n) : m
+  }, 0)
+  if (max >= seq) seq = max + 1
+
+  return merged
+}
 
 function loadStore(): Tree[] {
   try {
@@ -18,10 +54,11 @@ function loadStore(): Tree[] {
       // Asynchronously load and sync from Neon Postgres
       neonService.fetchTreesFromDb().then((remoteTrees) => {
         if (remoteTrees && remoteTrees.length > 0) {
-          cache = remoteTrees
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteTrees))
+          const merged = mergeTrees(parsed, remoteTrees)
+          cache = merged
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
           if (typeof window !== 'undefined') {
-            window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: remoteTrees } }))
+            window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: merged } }))
           }
         } else {
           neonService.syncTreesToDb(parsed)
@@ -133,6 +170,17 @@ function inViewport(t: Tree, q: ViewportBounds): boolean {
   )
 }
 
+export interface ParticipantStats {
+  userId: string
+  displayName: string
+  fullName: string
+  institution?: string
+  registeredAt?: string
+  treeCount: number
+  pendingCount: number
+  verifiedCount: number
+}
+
 export const treeService = {
   getAll(): Tree[] {
     return [...trees()]
@@ -180,6 +228,7 @@ export const treeService = {
     }
     cache = store
     saveStore(store)
+    reviewTreeApi(id, 'VERIFIED', adminNote).catch(() => {})
     return true
   },
 
@@ -196,6 +245,7 @@ export const treeService = {
     }
     cache = store
     saveStore(store)
+    reviewTreeApi(id, 'REJECTED', adminNote).catch(() => {})
     return true
   },
 
@@ -206,21 +256,112 @@ export const treeService = {
     store.splice(idx, 1)
     cache = store
     saveStore(store)
+    deleteTreeApi(id).catch(() => {})
     return true
   },
 
-  getAllParticipants(): { userId: string; treeCount: number; pendingCount: number; verifiedCount: number }[] {
+  addOrUpdateLocal(tree: Tree) {
     const store = trees()
-    const map = new Map<string, { treeCount: number; pendingCount: number; verifiedCount: number }>()
+    const idx = store.findIndex((t) => t.id === tree.id)
+    if (idx >= 0) {
+      store[idx] = { ...store[idx], ...tree }
+    } else {
+      store.unshift(tree)
+    }
+    cache = store
+    saveStore(store)
+  },
+
+  removeLocal(id: string) {
+    const store = trees()
+    const idx = store.findIndex((t) => t.id === id)
+    if (idx >= 0) {
+      store.splice(idx, 1)
+      cache = store
+      saveStore(store)
+    }
+  },
+
+  getAllParticipants(): ParticipantStats[] {
+    const store = trees()
+    const registeredUsers = authService.getRegisteredUsers()
+    const map = new Map<string, ParticipantStats>()
+
+    // Initialize registered users
+    for (const u of registeredUsers) {
+      const uid = u.email.toLowerCase()
+      map.set(uid, {
+        userId: u.email,
+        displayName: formatDisplayName(u.email, u.fullName),
+        fullName: u.fullName || formatDisplayName(u.email),
+        institution: u.institution,
+        registeredAt: u.registeredAt,
+        treeCount: 0,
+        pendingCount: 0,
+        verifiedCount: 0,
+      })
+    }
+
+    // Accumulate tree stats
     for (const t of store) {
       if (!t.userId) continue
-      const entry = map.get(t.userId) ?? { treeCount: 0, pendingCount: 0, verifiedCount: 0 }
-      entry.treeCount += 1
-      if (t.verificationStatus === 'PENDING') entry.pendingCount += 1
-      if (t.verificationStatus === 'VERIFIED') entry.verifiedCount += 1
-      map.set(t.userId, entry)
+      const uid = t.userId.toLowerCase()
+      const existing = map.get(uid) ?? {
+        userId: t.userId,
+        displayName: formatDisplayName(t.userId, t.student),
+        fullName: t.student || formatDisplayName(t.userId),
+        institution: t.institution || t.college,
+        treeCount: 0,
+        pendingCount: 0,
+        verifiedCount: 0,
+      }
+      existing.treeCount += 1
+      if (t.verificationStatus === 'PENDING') existing.pendingCount += 1
+      if (t.verificationStatus === 'VERIFIED') existing.verifiedCount += 1
+      map.set(uid, existing)
     }
-    return Array.from(map.entries()).map(([userId, stats]) => ({ userId, ...stats }))
+
+    return Array.from(map.values()).sort((a, b) => b.treeCount - a.treeCount)
+  },
+
+  async getAllParticipantsAsync(): Promise<ParticipantStats[]> {
+    const store = trees()
+    const registeredUsers = await authService.getAllUsersAsync()
+    const map = new Map<string, ParticipantStats>()
+
+    for (const u of registeredUsers) {
+      const uid = u.email.toLowerCase()
+      map.set(uid, {
+        userId: u.email,
+        displayName: formatDisplayName(u.email, u.fullName),
+        fullName: u.fullName || formatDisplayName(u.email),
+        institution: u.institution,
+        registeredAt: u.registeredAt,
+        treeCount: 0,
+        pendingCount: 0,
+        verifiedCount: 0,
+      })
+    }
+
+    for (const t of store) {
+      if (!t.userId) continue
+      const uid = t.userId.toLowerCase()
+      const existing = map.get(uid) ?? {
+        userId: t.userId,
+        displayName: formatDisplayName(t.userId, t.student),
+        fullName: t.student || formatDisplayName(t.userId),
+        institution: t.institution || t.college,
+        treeCount: 0,
+        pendingCount: 0,
+        verifiedCount: 0,
+      }
+      existing.treeCount += 1
+      if (t.verificationStatus === 'PENDING') existing.pendingCount += 1
+      if (t.verificationStatus === 'VERIFIED') existing.verifiedCount += 1
+      map.set(uid, existing)
+    }
+
+    return Array.from(map.values()).sort((a, b) => b.treeCount - a.treeCount)
   },
 
   nextTreeId(): string {
@@ -231,18 +372,20 @@ export const treeService = {
 
   async fetchLatestFromDb(): Promise<Tree[]> {
     try {
-      const dbTrees = await neonService.fetchTreesFromDb()
-      if (dbTrees && dbTrees.length > 0) {
-        cache = dbTrees
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(dbTrees))
+      const res = await fetchTrees({ limit: 100 })
+      if (res && res.trees && res.trees.length > 0) {
+        const merged = mergeTrees(trees(), res.trees)
+        cache = merged
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: dbTrees } }))
+          window.dispatchEvent(new CustomEvent('trees-updated', { detail: { trees: merged } }))
         }
-        return dbTrees
+        return merged
       }
     } catch { /* ignore */ }
     return trees()
   },
+
 
   registerTree(tree: Tree): Tree {
     const store = trees()
@@ -333,4 +476,3 @@ export const treeService = {
     }
   },
 }
-

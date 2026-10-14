@@ -7,24 +7,30 @@ const COLLECTION_MS_MAX = 15000
 const SAMPLE_INTERVAL_MS = 800
 
 export function locationStatusFrom(
-  _accuracy: number,
+  accuracy: number,
   confidence: number,
-  _stable: boolean,
+  stable: boolean,
 ): LocationStatus {
-  // Accuracy check bypassed — always accept the reading
-  if (confidence >= 85) return 'HIGH'
-  if (confidence >= 60) return 'MEDIUM'
+  if (accuracy > 50 || confidence < 40) return 'REJECTED'
+  if (accuracy <= 6 && confidence >= 80 && stable) return 'HIGH'
+  if (accuracy <= 16 && confidence >= 60) return 'MEDIUM'
   return 'LOW'
 }
 
 export function computeLocationConfidence(
-  _accuracy: number,
+  accuracy: number,
   stabilityScore: number,
   readingCount: number,
 ): number {
-  // Accuracy ignored — confidence based only on stability and reading count
-  const countBoost = Math.min(8, readingCount)
-  return Math.round(Math.min(100, stabilityScore * 0.85 + countBoost * 1.875))
+  // Accuracy score: 0m -> 100, 3m -> 95, 10m -> 75, 20m -> 45, >=40m -> 0
+  const accuracyScore = Math.max(0, Math.min(100, Math.round(100 - (accuracy * 2.5))))
+  const countScore = Math.min(100, readingCount * 10)
+  
+  // Weighted confidence: 45% stability, 45% accuracy, 10% reading count sample depth
+  const weighted = Math.round(
+    stabilityScore * 0.45 + accuracyScore * 0.45 + countScore * 0.1
+  )
+  return Math.max(0, Math.min(100, weighted))
 }
 
 function medianCoordinate(readings: GeoReading[]): { lat: number; lng: number } {
