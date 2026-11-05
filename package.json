@@ -1,21 +1,15 @@
 {
-  "name": "yp-legacy-project",
+  "name": "yp-green-legacy-workspace",
   "version": "1.0.0",
   "private": true,
-  "description": "YP Legacy Project — verifiable precision tree registry, GPS verification, and telemetry mapping.",
+  "description": "IEEE YP Green Legacy Project — Verifiable precision tree registry, GPS telemetry, and cartographic mapping engine.",
   "scripts": {
-    "dev": "npm --prefix yp-legacy-web run dev",
-    "server": "npm --prefix yp-legacy-web run server",
-    "migrate": "npm --prefix yp-legacy-web run migrate",
-    "verify:drive": "npm --prefix yp-legacy-web run verify:drive",
-    "seed:admin": "npm --prefix yp-legacy-web run seed:admin",
-    "test": "npm --prefix yp-legacy-web run test",
-    "build": "npm --prefix yp-legacy-web run build",
-    "preview": "npm --prefix yp-legacy-web run preview",
-    "lint": "npm --prefix yp-legacy-web run lint"
-  },
-  "dependencies": {
-    "@neon/config": "^1.8.2",
-    "@neon/env": "^1.4.7"
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "python -m uvicorn app.main:app --reload --app-dir backend --port 8000",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:frontend": "npm --prefix frontend run test",
+    "test:backend": "python -m pytest backend/tests",
+    "test": "npm run test:frontend && npm run test:backend",
+    "migrate": "python -m alembic -c backend/alembic.ini upgrade head"
   }
 }

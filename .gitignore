@@ -6,6 +6,10 @@ node_modules/
 dist/
 **/dist/
 dist-ssr/
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+.venv/
 
 # Logs and temp
 logs/
@@ -29,4 +33,3 @@ credentials.json
 **/server/data_fallback.json
 server/uploads/
 server/data_fallback.json
-
