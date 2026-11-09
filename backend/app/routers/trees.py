@@ -137,8 +137,10 @@ def delete_tree(tree_id: str, db: Session = Depends(get_db), user: User = Depend
     tree = db.scalar(_visible_tree_query().where(Tree.id == tree_id))
     if tree is None:
         raise HTTPException(status_code=404, detail="Tree not found")
-    if user.role != "admin" and tree.user_id != user.email:
+    if user.role != "admin" and tree.user_id.lower() != user.email.lower():
         raise HTTPException(status_code=403, detail="You may only delete your own tree")
+    if user.role != "admin" and tree.verification_status == "VERIFIED":
+        raise HTTPException(status_code=409, detail="Verified trees cannot be deleted by their owner")
     tree.deleted_at = datetime.now(timezone.utc)
     db.add(AuditLog(actor_id=user.id, action="tree.deleted", entity_type="tree", entity_id=tree.id))
     db.commit()

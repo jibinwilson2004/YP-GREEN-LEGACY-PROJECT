@@ -4,6 +4,7 @@ import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { TreeCard } from '../components/tree/TreeCard'
 import { fetchPublicStatsApi, fetchTrees } from '../services/api'
+import { treeService } from '../services/treeService'
 import type { Tree } from '../types/tree'
 
 export function TreesPage() {
@@ -18,6 +19,25 @@ export function TreesPage() {
   const [total, setTotal] = useState(0)
   const [stats, setStats] = useState({ verifiedTrees: 0, institutionCount: 0, averageAccuracy: null as number | null })
   const [loadError, setLoadError] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [deletingTreeId, setDeletingTreeId] = useState<string | null>(null)
+
+  const handleDeleteTree = async (tree: Tree) => {
+    if (tree.verificationStatus === 'VERIFIED') return
+    if (!window.confirm(`Delete unverified tree ${tree.id}? This cannot be undone.`)) return
+
+    setDeleteError(null)
+    setDeletingTreeId(tree.id)
+    try {
+      await treeService.deleteTree(tree.id)
+      setTrees((current) => current.filter((item) => item.id !== tree.id))
+      setTotal((current) => Math.max(0, current - 1))
+    } catch (error) {
+      setDeleteError(error instanceof Error ? error.message : 'Could not delete the tree.')
+    } finally {
+      setDeletingTreeId(null)
+    }
+  }
 
   useEffect(() => {
     let active = true
@@ -204,11 +224,29 @@ export function TreesPage() {
             Could not load tree records: {loadError}
           </div>
         )}
+        {deleteError && (
+          <div className="mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm" role="alert">
+            Could not delete tree: {deleteError}
+          </div>
+        )}
 
         {/* Tree List Grid */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {trees.map((t) => (
-            <TreeCard key={t.id} tree={t} />
+            <div key={t.id}>
+              <TreeCard tree={t} />
+              {scopeFilter === 'my' && t.verificationStatus !== 'VERIFIED' && (
+                <button
+                  type="button"
+                  disabled={deletingTreeId === t.id}
+                  onClick={() => void handleDeleteTree(t)}
+                  className="mt-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  aria-label={`Delete unverified tree ${t.id}`}
+                >
+                  {deletingTreeId === t.id ? 'Deleting…' : 'Delete unverified tree'}
+                </button>
+              )}
+            </div>
           ))}
         </div>
 
