@@ -7,6 +7,7 @@
     "dev:frontend": "npm --prefix frontend run dev",
     "dev:backend": "python -m uvicorn app.main:app --reload --app-dir backend --port 8000",
     "build:frontend": "npm --prefix frontend run build",
+    "build": "npm --prefix frontend run build && node -e \"const fs = require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive: true});\"",
     "test:frontend": "npm --prefix frontend run test",
     "test:backend": "python -m pytest backend/tests",
     "test": "npm run test:frontend && npm run test:backend",
