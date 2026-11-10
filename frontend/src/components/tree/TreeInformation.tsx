@@ -33,6 +33,22 @@ export function TreeInformation({ tree }: TreeInformationProps) {
         </p>
       </div>
 
+      {/* Rejection Alert if Rejected */}
+      {tree.verificationStatus === 'REJECTED' && (
+        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-900 text-xs flex items-start gap-2">
+          <span className="material-symbols-outlined text-red-600 text-[18px] flex-shrink-0">cancel</span>
+          <div className="flex-1 min-w-0">
+            <span className="font-bold uppercase tracking-wider text-[10px] block text-red-800">Record Rejected</span>
+            <span className="text-[11px] text-red-900">Marked as rejected by an administrator.</span>
+            {tree.adminNote && (
+              <p className="mt-1 text-[11px] text-red-950 font-medium">
+                <strong>Reason:</strong> {tree.adminNote}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* 2. Planting Dates Strip */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-on-surface-variant font-medium pt-1 pb-2 border-b border-outline-variant/30">
         <div className="flex items-center gap-1.5">

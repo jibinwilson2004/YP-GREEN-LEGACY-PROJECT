@@ -142,6 +142,27 @@ export function TreeDetailPage() {
         </div>
 
         {/* 1. TOP HERO: LIVE INTERACTIVE MAP (Primary Visual Element: Where the tree is) */}
+        {/* Rejection Alert Banner if Rejected */}
+        {tree.verificationStatus === 'REJECTED' && (
+          <div className="mt-4 mb-2 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 flex items-start gap-3 shadow-xs">
+            <span className="material-symbols-outlined text-red-600 text-[26px] flex-shrink-0 mt-0.5">cancel</span>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-sm font-bold text-red-900 uppercase tracking-wide">
+                Tree Record Marked as Rejected
+              </h3>
+              <p className="text-xs text-red-800 mt-1 leading-relaxed">
+                This tree record was audited by an administrator and marked as <strong>Rejected</strong>. It is not approved as an active tagged sapling.
+              </p>
+              {tree.adminNote && (
+                <div className="mt-2.5 p-3 rounded-lg bg-red-100/80 border border-red-200 text-xs text-red-950 font-medium">
+                  <span className="font-bold text-red-900">Rejection Reason: </span>
+                  <span>{tree.adminNote}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="mt-6 rounded-2xl overflow-hidden shadow-xl border border-outline-variant/50 bg-[#e5ede9]">
           <TreeLocationMap
             tree={tree}
@@ -237,15 +258,20 @@ export function TreeDetailPage() {
 
         {/* LOCATION VERIFICATION & AUDIT AUDIT SECTION */}
         <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/40 shadow-xs mt-6 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-surface-variant/40">
+          <div className="flex items-center justify-between pb-3 border-b border-surface-variant/40 flex-wrap gap-2">
             <h2 className="font-headline-sm text-base sm:text-lg font-bold text-primary flex items-center gap-2">
               <span className="material-symbols-outlined text-[20px] text-secondary">verified_user</span>
               <span>Location Verification &amp; Planting Audit</span>
             </h2>
-            <span className="text-xs font-bold text-secondary flex items-center gap-1">
-              <span>✓</span>
-              <span>Verification Status: Verified</span>
-            </span>
+            {(() => {
+              const tagInfo = getTreeTagStatus(tree.verificationStatus)
+              return (
+                <span className={`text-xs font-bold flex items-center gap-1.5 px-3 py-1 rounded-full border ${tagInfo.badgeClass}`}>
+                  <span className="material-symbols-outlined text-[15px]">{tagInfo.iconName}</span>
+                  <span>{tagInfo.label}</span>
+                </span>
+              )
+            })()}
           </div>
 
           <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
@@ -330,6 +356,31 @@ export function TreeDetailPage() {
                 <span>{tree.country || 'India'}</span>
               </dd>
             </div>
+
+            {/* Verification Status */}
+            {(() => {
+              const tagInfo = getTreeTagStatus(tree.verificationStatus)
+              const isRejected = tree.verificationStatus === 'REJECTED'
+              return (
+                <div className={`p-3.5 rounded-lg border ${isRejected ? 'bg-red-50/90 border-red-300' : 'bg-surface-container-low border-surface-variant/40'}`}>
+                  <dt className="text-[10px] uppercase font-semibold text-outline">Verification Status</dt>
+                  <dd className={`font-bold text-sm mt-1 flex items-center gap-1.5 ${isRejected ? 'text-red-700' : tagInfo.isTagged ? 'text-secondary' : 'text-amber-800'}`}>
+                    <span className="material-symbols-outlined text-[16px]">{tagInfo.iconName}</span>
+                    <span>{tagInfo.label}</span>
+                  </dd>
+                </div>
+              )
+            })()}
+
+            {/* Rejection Reason / Admin Note if available */}
+            {tree.adminNote && (
+              <div className={`p-3.5 rounded-lg border sm:col-span-2 lg:col-span-3 ${tree.verificationStatus === 'REJECTED' ? 'bg-red-50/90 border-red-300 text-red-950' : 'bg-surface-container-low border-surface-variant/40 text-primary'}`}>
+                <dt className="text-[10px] uppercase font-semibold text-outline">
+                  {tree.verificationStatus === 'REJECTED' ? 'Rejection Reason / Administrator Audit Note' : 'Administrator Audit Note'}
+                </dt>
+                <dd className="font-medium text-sm mt-1 leading-normal">{tree.adminNote}</dd>
+              </div>
+            )}
           </dl>
 
           {/* Action Links & Admin Management Controls */}

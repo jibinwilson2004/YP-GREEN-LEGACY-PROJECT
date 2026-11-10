@@ -132,6 +132,26 @@ export function TreeDetailsCard({
 
       {/* 2. COMPLETE TREE DETAILS BODY (Direct complete presentation without separate view details button) */}
       <div className="p-4 flex-1 overflow-y-auto space-y-3.5 pr-3">
+        {/* Rejection Alert Banner if Rejected */}
+        {tree.verificationStatus === 'REJECTED' && (
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-900 flex items-start gap-2.5 text-xs shadow-xs">
+            <span className="material-symbols-outlined text-red-600 text-[20px] flex-shrink-0 mt-0.5">cancel</span>
+            <div className="min-w-0 flex-1">
+              <span className="font-bold uppercase tracking-wider text-[11px] block text-red-800">
+                Tree Record Rejected
+              </span>
+              <p className="text-[11px] text-red-800 mt-0.5 leading-normal">
+                This tree record was reviewed and marked as rejected by an administrator. It is not approved as an active tagged tree.
+              </p>
+              {tree.adminNote && (
+                <div className="mt-2 p-2 rounded-lg bg-red-100/70 border border-red-200 text-[11px] text-red-950 font-medium">
+                  <strong>Rejection Note:</strong> {tree.adminNote}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Tree Species Header */}
         <div className="border-b border-outline-variant/30 pb-2.5">
           <div className="flex items-start justify-between gap-2">
@@ -245,25 +265,45 @@ export function TreeDetailsCard({
         {/* Audit & Verification Block */}
         {(() => {
           const tagInfo = getTreeTagStatus(tree.verificationStatus)
+          const isRejected = tagInfo.isRejected
+          const borderBg = tagInfo.isTagged
+            ? 'bg-emerald-50/70 border-emerald-200'
+            : isRejected
+              ? 'bg-red-50/80 border-red-300'
+              : 'bg-amber-50/70 border-amber-200'
+          const textColor = tagInfo.isTagged
+            ? 'text-secondary'
+            : isRejected
+              ? 'text-red-700'
+              : 'text-amber-800'
+
           return (
-            <div className={`space-y-1 text-[11px] p-2.5 rounded-lg border ${tagInfo.isTagged ? 'bg-emerald-50/70 border-emerald-200' : 'bg-amber-50/70 border-amber-200'}`}>
+            <div className={`space-y-1.5 text-[11px] p-3 rounded-xl border ${borderBg}`}>
               <div className="flex justify-between items-center">
-                <span className="text-outline text-[10px] uppercase font-semibold">Status:</span>
-                <span className={`font-bold flex items-center gap-1 ${tagInfo.isTagged ? 'text-secondary' : 'text-amber-800'}`}>
-                  {tagInfo.isTagged && <span>✓</span>}
+                <span className="text-outline text-[10px] uppercase font-semibold">Verification Status:</span>
+                <span className={`font-bold flex items-center gap-1.5 ${textColor}`}>
+                  <span className="material-symbols-outlined text-[15px]">{tagInfo.iconName}</span>
                   <span>{tagInfo.label}</span>
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-outline text-[10px]">Verified By:</span>
-                <span className="font-medium text-primary text-[11px]">{tree.verifiedBy || (tagInfo.isTagged ? 'IEEE YP CSTF' : 'Pending Review')}</span>
+                <span className="text-outline text-[10px]">{isRejected ? 'Reviewed By:' : 'Verified By:'}</span>
+                <span className="font-medium text-primary text-[11px]">
+                  {tree.verifiedBy || (tagInfo.isTagged ? 'IEEE YP CSTF' : isRejected ? 'Administrator' : 'Pending Review')}
+                </span>
               </div>
               {tree.verificationDate && (
                 <div className="flex justify-between items-center">
-                  <span className="text-outline text-[10px]">Audit Date:</span>
+                  <span className="text-outline text-[10px]">{isRejected ? 'Rejection Date:' : 'Audit Date:'}</span>
                   <span className="font-mono text-primary text-[10px]">
                     {new Date(tree.verificationDate).toLocaleDateString('en-IN')}
                   </span>
+                </div>
+              )}
+              {tree.adminNote && (
+                <div className={`pt-1.5 mt-1 border-t text-[11px] ${isRejected ? 'border-red-200 text-red-950' : 'border-outline-variant/30 text-on-surface'}`}>
+                  <span className="font-semibold">{isRejected ? 'Rejection Reason: ' : 'Admin Note: '}</span>
+                  <span>{tree.adminNote}</span>
                 </div>
               )}
             </div>

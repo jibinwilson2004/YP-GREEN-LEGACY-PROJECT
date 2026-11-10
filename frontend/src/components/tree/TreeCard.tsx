@@ -38,6 +38,12 @@ export function TreeCard({ tree }: { tree: Tree }) {
             <span className="text-outline">•</span>
             <span className="text-on-surface-variant">Stability: {tree.stabilityScore}%</span>
           </div>
+          {tree.verificationStatus === 'REJECTED' && (
+            <div className="mt-1.5 pt-1.5 border-t border-red-100 text-[10px] text-red-700 font-medium truncate flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px]">cancel</span>
+              <span>Rejected{tree.adminNote ? `: ${tree.adminNote}` : ' by admin'}</span>
+            </div>
+          )}
         </div>
       </div>
     </Link>

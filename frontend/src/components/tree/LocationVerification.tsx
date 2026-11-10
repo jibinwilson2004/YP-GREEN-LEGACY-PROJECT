@@ -28,11 +28,26 @@ export function LocationVerification({ tree, className = '' }: LocationVerificat
           <span className="material-symbols-outlined text-[15px] text-secondary">my_location</span>
           <span>LOCATION VERIFICATION</span>
         </h3>
-        <span className={`text-[11px] font-bold flex items-center gap-1 ${tagInfo.isTagged ? 'text-secondary' : 'text-amber-700'}`}>
-          {tagInfo.isTagged && <span>✓</span>}
+        <span className={`text-[11px] font-bold flex items-center gap-1.5 ${tagInfo.isTagged ? 'text-secondary' : tree.verificationStatus === 'REJECTED' ? 'text-red-700' : 'text-amber-700'}`}>
+          <span className="material-symbols-outlined text-[15px]">{tagInfo.iconName}</span>
           <span>{tagInfo.label}</span>
         </span>
       </div>
+
+      {/* Rejection notice if rejected */}
+      {tree.verificationStatus === 'REJECTED' && (
+        <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-900 text-[11px]">
+          <div className="font-bold flex items-center gap-1 text-red-800">
+            <span className="material-symbols-outlined text-[15px]">cancel</span>
+            <span>Record Marked as Rejected</span>
+          </div>
+          {tree.adminNote && (
+            <p className="mt-1 text-red-950">
+              <strong>Reason:</strong> {tree.adminNote}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Primary Coordinates Readout */}
       <div className="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">

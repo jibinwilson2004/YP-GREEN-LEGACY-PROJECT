@@ -98,6 +98,14 @@ export function TreeMapMarker({ tree, onViewDetails }: TreeMapMarkerProps) {
             </div>
           </div>
 
+          {/* Rejection Notice if Rejected */}
+          {tree.verificationStatus === 'REJECTED' && (
+            <div className="mt-2 p-1.5 rounded bg-red-50 border border-red-200 text-[10px] text-red-900">
+              <span className="font-bold text-red-800">Rejected: </span>
+              <span>{tree.adminNote || 'Marked as rejected by admin.'}</span>
+            </div>
+          )}
+
           {/* Action */}
           <div className="mt-3 pt-2 border-t border-surface-variant/50">
             {onViewDetails ? (
