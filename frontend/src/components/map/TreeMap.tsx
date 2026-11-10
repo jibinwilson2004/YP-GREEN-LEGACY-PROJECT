@@ -29,13 +29,40 @@ const createTreeIcon = (color = '#109367') =>
     popupAnchor: [0, -14],
   })
 
-function MapController({ selectedTree }: { selectedTree: Tree | null }) {
+export const GLOBE_CENTER: { lat: number; lng: number } = { lat: 20, lng: 15 }
+export const GLOBE_ZOOM = 2
+
+function MapController({
+  selectedTree,
+  resetGlobeTrigger,
+}: {
+  selectedTree: Tree | null
+  resetGlobeTrigger?: number
+}) {
   const map = useMap()
+  const initializedRef = useRef(false)
+
+  useEffect(() => {
+    if (!initializedRef.current) {
+      initializedRef.current = true
+      if (!selectedTree) {
+        map.setView([GLOBE_CENTER.lat, GLOBE_CENTER.lng], GLOBE_ZOOM)
+      }
+    }
+  }, [map, selectedTree])
+
   useEffect(() => {
     if (selectedTree) {
       map.flyTo([selectedTree.latitude, selectedTree.longitude], 14, { duration: 1.2 })
     }
   }, [selectedTree, map])
+
+  useEffect(() => {
+    if (resetGlobeTrigger && resetGlobeTrigger > 0) {
+      map.flyTo([GLOBE_CENTER.lat, GLOBE_CENTER.lng], GLOBE_ZOOM, { duration: 1.2 })
+    }
+  }, [resetGlobeTrigger, map])
+
   return null
 }
 
@@ -69,9 +96,12 @@ function ClusterLayer({
     })
 
     trees.forEach((tree) => {
+      const isVerified = tree.verificationStatus === 'VERIFIED'
+      const isRejected = tree.verificationStatus === 'REJECTED'
+      const pinColor = isVerified ? '#109367' : isRejected ? '#dc2626' : '#d97706'
       const marker = L.marker([tree.latitude, tree.longitude], {
-        icon: createTreeIcon(tree.verificationStatus === 'VERIFIED' ? '#109367' : '#2f7c5f'),
-        title: `${tree.species} (#${tree.id})`,
+        icon: createTreeIcon(pinColor),
+        title: `${tree.species} (#${tree.id}) - ${isVerified ? 'Tagged' : isRejected ? 'Rejected' : 'Pending Verification'}`,
       })
       marker.on('click', () => onSelect(tree))
       group.addLayer(marker)
@@ -110,11 +140,19 @@ function ViewportLoader({
   const load = useCallback(() => {
     const b = map.getBounds()
     const zoom = map.getZoom()
+    const isGlobal = zoom <= 3
+
+    // When zoomed out at global globe level, load worldwide entries without 422 bounding errors
+    const minLat = isGlobal ? -85 : Math.max(-85, Math.min(85, b.getSouth()))
+    const maxLat = isGlobal ? 85 : Math.max(-85, Math.min(85, b.getNorth()))
+    const minLng = isGlobal ? -180 : Math.max(-180, Math.min(180, b.getWest()))
+    const maxLng = isGlobal ? 180 : Math.max(-180, Math.min(180, b.getEast()))
+
     void fetchTreesInViewport({
-      minLat: b.getSouth(),
-      maxLat: b.getNorth(),
-      minLng: b.getWest(),
-      maxLng: b.getEast(),
+      minLat,
+      maxLat,
+      minLng,
+      maxLng,
       zoom,
       search,
       institution: filters.institution,
@@ -147,6 +185,7 @@ export function TreeMap({
   viewMode = 'clusters',
   filters = {},
   onLoadError,
+  resetGlobeTrigger = 0,
   className,
 }: {
   search: string
@@ -155,10 +194,11 @@ export function TreeMap({
   viewMode?: 'clusters' | 'heatmap' | 'satellite'
   filters?: { institution?: string; cluster?: string; status?: string; userId?: string }
   onLoadError?: (message: string | null) => void
+  resetGlobeTrigger?: number
   className?: string
 }) {
   const [trees, setTrees] = useState<Tree[]>([])
-  const center = useMemo(() => ({ lat: 10.2, lng: 76.4 }), [])
+  const center = useMemo(() => GLOBE_CENTER, [])
 
   const handleTrees = useCallback((newTrees: Tree[]) => {
     setTrees(newTrees)
@@ -176,10 +216,18 @@ export function TreeMap({
 
   return (
     <div className={className ?? 'h-full w-full min-h-[400px] rounded-xl overflow-hidden relative'}>
-      <MapContainer center={center} zoom={8} className="h-full w-full" scrollWheelZoom>
+      <MapContainer
+        center={center}
+        zoom={GLOBE_ZOOM}
+        minZoom={2}
+        maxZoom={19}
+        worldCopyJump={true}
+        className="h-full w-full"
+        scrollWheelZoom
+      >
         <TileLayer key={viewMode} attribution={tileAttr} url={tileUrl} />
         <ViewportLoader search={search} onTrees={handleTrees} filters={filters} onLoadError={onLoadError} />
-        <MapController selectedTree={selectedTree ?? null} />
+        <MapController selectedTree={selectedTree ?? null} resetGlobeTrigger={resetGlobeTrigger} />
         <ClusterLayer trees={trees} onSelect={(t) => onSelectTree(t)} />
       </MapContainer>
     </div>

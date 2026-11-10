@@ -36,7 +36,7 @@ def map_trees(
     if status and status != "VERIFIED" and not is_admin and not own_filter:
         raise HTTPException(status_code=403, detail="Only administrators can view unverified tree markers")
     envelope = func.ST_MakeEnvelope(min_lng, min_lat, max_lng, max_lat, 4326)
-    limit = min(limit, max(100, zoom * 50))
+    limit = min(limit, max(500, zoom * 50))
     query = _visible_tree_query().where(func.ST_Intersects(Tree.location, envelope))
     if not is_admin and not own_filter:
         query = query.where(Tree.verification_status == "VERIFIED")

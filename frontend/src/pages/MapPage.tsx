@@ -37,12 +37,18 @@ export function MapPage() {
   }, [treeParam])
 
   const activeTree = selectedTree
+  const [resetGlobeTrigger, setResetGlobeTrigger] = useState(0)
 
-  const handleShowAll = () => {
+  const handleResetToGlobe = () => {
     setSearchParams({})
     setUserTab('all')
     setSelectedTree(null)
     setPopoverOpen(false)
+    setResetGlobeTrigger((n) => n + 1)
+  }
+
+  const handleShowAll = () => {
+    handleResetToGlobe()
   }
 
   return (
@@ -122,12 +128,26 @@ export function MapPage() {
               </div>
             )}
 
+            {/* Quick Globe View Control */}
+            <div className="absolute top-3 left-14 z-20">
+              <button
+                type="button"
+                onClick={handleResetToGlobe}
+                className="px-3 py-1.5 rounded-lg bg-surface-container-lowest/90 backdrop-blur-md hover:bg-white text-primary border border-outline-variant/60 shadow-md font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                title="Reset map view to whole world globe view"
+              >
+                <span className="material-symbols-outlined text-[16px] text-secondary">public</span>
+                <span>Globe View</span>
+              </button>
+            </div>
+
             {/* Real Interactive Leaflet Map with clustering & viewport loading */}
             <TreeMap
               search={search}
               selectedTree={activeTree}
               filters={mapFilters}
               onLoadError={setMapError}
+              resetGlobeTrigger={resetGlobeTrigger}
               onSelectTree={(t) => {
                 if (t) {
                   setSelectedTree(t)
