@@ -5,16 +5,21 @@ import { AppFooter } from '../components/layout/AppFooter'
 import { TreeCard } from '../components/tree/TreeCard'
 import { fetchPublicStatsApi, fetchTrees } from '../services/api'
 import { treeService } from '../services/treeService'
+import { authService } from '../services/authService'
 import type { Tree } from '../types/tree'
 
 export function TreesPage() {
+  const authUser = authService.getCurrentUser()
+  const isAdmin = authUser?.role === 'admin'
+  const isRegularUser = !!authUser && !isAdmin
+  const currentUserId = authUser?.email || ''
+
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [speciesFilter, setSpeciesFilter] = useState('ALL')
-  const [scopeFilter, setScopeFilter] = useState<'my' | 'all'>('all')
+  const [scopeFilter, setScopeFilter] = useState<'my' | 'all'>('my')
   const [page, setPage] = useState(1)
   const pageSize = 12
-  const currentUserId = localStorage.getItem('tree_tag_user_id') ?? ''
   const [trees, setTrees] = useState<Tree[]>([])
   const [total, setTotal] = useState(0)
   const [stats, setStats] = useState({ verifiedTrees: 0, institutionCount: 0, averageAccuracy: null as number | null })
@@ -23,8 +28,8 @@ export function TreesPage() {
   const [deletingTreeId, setDeletingTreeId] = useState<string | null>(null)
 
   const handleDeleteTree = async (tree: Tree) => {
-    if (tree.verificationStatus === 'VERIFIED') return
-    if (!window.confirm(`Delete unverified tree ${tree.id}? This cannot be undone.`)) return
+    if (!isAdmin && tree.verificationStatus === 'VERIFIED') return
+    if (!window.confirm(`Are you sure you want to delete tree record #${tree.id}? This action cannot be undone.`)) return
 
     setDeleteError(null)
     setDeletingTreeId(tree.id)
@@ -40,14 +45,16 @@ export function TreesPage() {
   }
 
   useEffect(() => {
+    if (!authUser) return
     let active = true
+    const effectiveUserId = isRegularUser || scopeFilter === 'my' ? currentUserId : undefined
     void fetchTrees({
       page,
       limit: pageSize,
       search: search.trim() || undefined,
       status: statusFilter,
       species: speciesFilter,
-      userId: scopeFilter === 'my' ? currentUserId : undefined,
+      userId: effectiveUserId,
     }).then((response) => {
       if (!active) return
       setTrees(response.trees)
@@ -57,7 +64,7 @@ export function TreesPage() {
       if (active) setLoadError(error instanceof Error ? error.message : 'Failed to load tree records.')
     })
     return () => { active = false }
-  }, [page, pageSize, search, statusFilter, speciesFilter, scopeFilter, currentUserId])
+  }, [page, pageSize, search, statusFilter, speciesFilter, scopeFilter, currentUserId, isRegularUser, authUser])
 
   useEffect(() => {
     void fetchPublicStatsApi()
@@ -68,6 +75,47 @@ export function TreesPage() {
       }))
       .catch((error) => console.error('[Registry statistics unavailable]', error))
   }, [])
+
+  // If user is not logged in, display sign-in prompt as required
+  if (!authUser) {
+    return (
+      <div className="min-h-screen bg-background font-body-md text-on-surface antialiased flex flex-col justify-between">
+        <AppHeader />
+
+        <main className="max-w-xl mx-auto w-full px-4 py-20 flex-1 flex items-center justify-center">
+          <div className="bg-surface-container-lowest rounded-2xl p-8 sm:p-10 border border-outline-variant/50 shadow-xl text-center w-full animate-fade-in">
+            <div className="w-16 h-16 rounded-2xl bg-secondary-container/80 text-secondary flex items-center justify-center mx-auto mb-5 shadow-xs">
+              <span className="material-symbols-outlined text-[36px]">lock</span>
+            </div>
+            <h1 className="font-headline-lg text-2xl sm:text-3xl font-bold text-primary tracking-tight">
+              Sign In Required
+            </h1>
+            <p className="text-body-md text-on-surface-variant mt-3 mb-8 max-w-md mx-auto leading-relaxed">
+              The <strong>My Trees</strong> registry is accessible only to authenticated users. Sign in to view, monitor, and manage your tagged saplings.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-on-primary font-label-md px-6 py-3 rounded-xl shadow-sm transition-colors text-sm font-bold"
+              >
+                <span className="material-symbols-outlined text-[18px]">login</span>
+                <span>Sign In to Account</span>
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 font-label-md px-6 py-3 rounded-xl transition-colors text-sm font-bold"
+              >
+                <span className="material-symbols-outlined text-[18px]">person_add</span>
+                <span>Create an Account</span>
+              </Link>
+            </div>
+          </div>
+        </main>
+
+        <AppFooter />
+      </div>
+    )
+  }
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize))
   const start = total === 0 ? 0 : (page - 1) * pageSize + 1
@@ -84,9 +132,13 @@ export function TreesPage() {
               <span className="material-symbols-outlined text-[16px]">verified</span>
               <span>IEEE CSTF Precision Registry</span>
             </div>
-            <h1 className="font-headline-lg text-3xl font-bold text-primary tracking-tight">Tree Registry</h1>
+            <h1 className="font-headline-lg text-3xl font-bold text-primary tracking-tight">
+              {isRegularUser ? 'My Tagged Trees' : 'Tree Registry'}
+            </h1>
             <p className="text-body-md text-on-surface-variant mt-1">
-              Browse cryptographically logged sapling verification records and multi-reading geospatial audits.
+              {isRegularUser
+                ? 'View and manage your registered saplings and verification telemetry.'
+                : 'Browse cryptographically logged sapling verification records and multi-reading geospatial audits.'}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -151,7 +203,7 @@ export function TreesPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-            {currentUserId && (
+            {isAdmin && (
               <div className="flex rounded-lg border border-outline-variant/40 bg-surface-container-low p-0.5 text-xs font-semibold">
                 <button
                   type="button"
@@ -175,6 +227,12 @@ export function TreesPage() {
                 >
                   My Tagged Trees
                 </button>
+              </div>
+            )}
+            {isRegularUser && (
+              <div className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-1.5 shadow-xs">
+                <span className="material-symbols-outlined text-[16px] text-emerald-600">person</span>
+                <span>My Tagged Trees</span>
               </div>
             )}
 
@@ -235,15 +293,16 @@ export function TreesPage() {
           {trees.map((t) => (
             <div key={t.id}>
               <TreeCard tree={t} />
-              {scopeFilter === 'my' && t.verificationStatus !== 'VERIFIED' && (
+              {((scopeFilter === 'my' && t.verificationStatus !== 'VERIFIED') || isAdmin) && (
                 <button
                   type="button"
                   disabled={deletingTreeId === t.id}
                   onClick={() => void handleDeleteTree(t)}
-                  className="mt-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-label={`Delete unverified tree ${t.id}`}
+                  className="mt-2 w-full inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-red-50/50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50 transition-colors cursor-pointer"
+                  aria-label={`Delete tree ${t.id}`}
                 >
-                  {deletingTreeId === t.id ? 'Deleting…' : 'Delete unverified tree'}
+                  <span className="material-symbols-outlined text-[15px]">delete</span>
+                  <span>{deletingTreeId === t.id ? 'Deleting…' : isAdmin ? `Delete Tree Record #${t.id}` : 'Delete Unverified Tree'}</span>
                 </button>
               )}
             </div>

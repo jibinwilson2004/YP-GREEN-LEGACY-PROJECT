@@ -289,6 +289,7 @@ export const treeService = {
       college: institutionName || 'IEEE YP Green Legacy Campus Unit',
       cluster: 'IEEE-YP',
       institution: institutionName || 'APJAKTU NSSCELL NRPF',
+      country: draft.country || 'India',
       verificationStatus: 'PENDING',
       identificationConfidence: draft.identificationConfidence,
     }

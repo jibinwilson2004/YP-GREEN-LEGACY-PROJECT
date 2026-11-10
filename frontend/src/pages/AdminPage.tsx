@@ -4,20 +4,27 @@ import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { authService, formatDisplayName } from '../services/authService'
 import { treeService, type ParticipantStats } from '../services/treeService'
-import { fetchParticipantsApi, fetchPendingTreesApi, fetchTrees } from '../services/api'
+import { fetchParticipantsApi, fetchPendingTreesApi, fetchTrees, downloadTreeRecordsFile } from '../services/api'
 import type { Tree } from '../types/tree'
 
 type AdminTab = 'overview' | 'pending' | 'participants' | 'all'
 
 
-// CSV helper
-function downloadCsv(filename: string, rows: string[][]) {
-  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+// Download blob helper
+function downloadBlob(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
-  a.href = url; a.download = filename; a.click()
+  a.href = url
+  a.download = filename
+  a.click()
   URL.revokeObjectURL(url)
+}
+
+// CSV helper
+function downloadCsv(filename: string, rows: string[][]) {
+  const csv = '\ufeff' + rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n')
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  downloadBlob(filename, blob)
 }
 
 export function AdminPage() {
@@ -108,12 +115,65 @@ export function AdminPage() {
   async function handleDelete(id: string) {
     try {
       await treeService.deleteTree(id)
-      setSuccessMsg(`Tree ${id} deleted.`)
+      setSuccessMsg(`Tree record ${id} has been permanently deleted.`)
       setConfirmDelete(null)
       await refresh()
       setTimeout(() => setSuccessMsg(null), 4000)
     } catch (error) {
       setErrorMsg(error instanceof Error ? error.message : `Failed to delete ${id}.`)
+    }
+  }
+
+  async function handleDownloadTreeRecords(format: 'csv' | 'excel') {
+    const filename = `tagged-trees-records-${new Date().toISOString().slice(0, 10)}.${format === 'csv' ? 'csv' : 'xls'}`
+    try {
+      const blob = await downloadTreeRecordsFile(format)
+      downloadBlob(filename, blob)
+      setSuccessMsg(`Tree records exported successfully as ${format.toUpperCase()}.`)
+      setTimeout(() => setSuccessMsg(null), 3500)
+    } catch {
+      // Robust client fallback respecting the institution-visibility restriction for public users
+      const headers = [
+        'Tree ID', 'Species', 'Common Name', 'Botanical Name', 'Country',
+        'Latitude', 'Longitude', 'Accuracy (m)', 'GPS Source', 'Location Confidence (%)',
+        'Location Status', 'Stability Score (%)', 'Reading Count', 'Date of Planting',
+        'Captured At', 'Student Planter', 'Submitted By (User)', 'Verification Status',
+        'Verified By', 'Verification Date', 'Identification Confidence (%)', 'Admin Note',
+        'Institution (Public Restriction)',
+      ]
+      const rows = [
+        headers,
+        ...allTrees.map((t) => [
+          t.id,
+          t.species,
+          t.commonName || '',
+          t.botanicalName || '',
+          t.country || 'India',
+          t.latitude.toFixed(6),
+          t.longitude.toFixed(6),
+          t.accuracy?.toFixed(1) || '',
+          t.gpsSource || '',
+          String(t.locationConfidence ?? ''),
+          t.locationStatus || '',
+          String(t.stabilityScore ?? ''),
+          String(t.readingCount ?? ''),
+          t.dateOfPlanting || '',
+          t.capturedAt || '',
+          t.student || '',
+          t.userId || '',
+          t.verificationStatus,
+          t.verifiedBy || '',
+          t.verificationDate || '',
+          String(t.identificationConfidence ?? ''),
+          t.adminNote || '',
+          '[Hidden for Public Privacy]',
+        ]),
+      ]
+      const csvContent = '\ufeff' + rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n')
+      const mimeType = format === 'csv' ? 'text/csv;charset=utf-8;' : 'application/vnd.ms-excel;charset=utf-8;'
+      downloadBlob(filename, new Blob([csvContent], { type: mimeType }))
+      setSuccessMsg(`Tree records downloaded as ${format.toUpperCase()}.`)
+      setTimeout(() => setSuccessMsg(null), 3500)
     }
   }
 
@@ -144,12 +204,15 @@ export function AdminPage() {
 
         {/* Delete confirmation modal */}
         {confirmDelete && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-            <div className="bg-white rounded-2xl shadow-2xl border border-red-200 p-7 max-w-md w-full text-center">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+            <div className="bg-white rounded-2xl shadow-2xl border border-red-200 p-7 max-w-md w-full text-center animate-fade-in">
               <span className="material-symbols-outlined text-[48px] text-red-500 mb-2">delete_forever</span>
-              <h2 className="font-bold text-xl text-gray-900 mb-1">Delete Tree {confirmDelete}?</h2>
-              <p className="text-sm text-gray-500 mb-6">
-                This action is <strong>permanent</strong> and cannot be undone. The tree record will be removed from the registry.
+              <h2 className="font-bold text-xl text-gray-900 mb-1">Delete Tree Record #{confirmDelete}?</h2>
+              <p className="text-sm text-gray-700 font-semibold mb-2">
+                Administrator Tree Record Removal
+              </p>
+              <p className="text-xs text-gray-500 mb-6 leading-relaxed">
+                Confirm deletion of duplicate entries, incorrect information, or conflicting tree records. This action is <strong>permanent</strong> and immediately removes the record from the registry and map.
               </p>
               <div className="flex gap-3 justify-center">
                 <button
@@ -158,7 +221,7 @@ export function AdminPage() {
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-colors cursor-pointer shadow-sm"
                 >
                   <span className="material-symbols-outlined text-[18px]">delete</span>
-                  Yes, Delete Permanently
+                  <span>Yes, Delete Permanently</span>
                 </button>
                 <button
                   type="button"
@@ -171,8 +234,9 @@ export function AdminPage() {
             </div>
           </div>
         )}
+
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 mb-2">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse flex-shrink-0" />
@@ -182,27 +246,50 @@ export function AdminPage() {
               IEEE YP Green Legacy Admin Dashboard
             </h1>
             <p className="text-sm text-on-surface-variant mt-1">
-              IEEE YP CSTF — Verification &amp; Registry Management
+              IEEE YP CSTF — Verification, Tree Record Management &amp; Data Audits
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              const rows = [
-                ['#', 'Email / User ID', 'Display Name', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
-                ...participants.map((p, i) => [
-                  String(i + 1), p.userId, formatDisplayName(p.userId),
-                  String(p.treeCount), String(p.verifiedCount), String(p.pendingCount),
-                  p.treeCount > 0 ? `${Math.round((p.verifiedCount / p.treeCount) * 100)}%` : '0%',
-                ]),
-              ]
-              downloadCsv(`tree-tag-participants-${new Date().toISOString().slice(0,10)}.csv`, rows)
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-sm"
-          >
-            <span className="material-symbols-outlined text-[18px]">download</span>
-            Export Participants CSV
-          </button>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => void handleDownloadTreeRecords('csv')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-secondary text-white text-xs sm:text-sm font-semibold transition-colors shadow-sm cursor-pointer"
+              title="Download tagged tree records as CSV"
+            >
+              <span className="material-symbols-outlined text-[18px]">download</span>
+              <span>Download Trees (CSV)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => void handleDownloadTreeRecords('excel')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-semibold transition-colors shadow-sm cursor-pointer"
+              title="Download tagged tree records as Excel"
+            >
+              <span className="material-symbols-outlined text-[18px]">table_view</span>
+              <span>Download Trees (Excel)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                const rows = [
+                  ['#', 'Email / User ID', 'Display Name', 'Total Trees', 'Verified', 'Pending', 'Verification %'],
+                  ...participants.map((p, i) => [
+                    String(i + 1), p.userId, formatDisplayName(p.userId),
+                    String(p.treeCount), String(p.verifiedCount), String(p.pendingCount),
+                    p.treeCount > 0 ? `${Math.round((p.verifiedCount / p.treeCount) * 100)}%` : '0%',
+                  ]),
+                ]
+                downloadCsv(`tree-tag-participants-${new Date().toISOString().slice(0,10)}.csv`, rows)
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold transition-colors shadow-sm cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[18px]">group</span>
+              <span>Participants CSV</span>
+            </button>
+          </div>
         </div>
 
         {/* Success toast */}
@@ -540,17 +627,55 @@ export function AdminPage() {
         {/* ── ALL TREES ── */}
         {tab === 'all' && (
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-              <h2 className="font-headline-sm text-xl font-bold text-primary">
-                All Registered Trees ({allTrees.length})
-              </h2>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-headline-sm text-xl font-bold text-primary">
+                  All Registered Trees ({allTrees.length})
+                </h2>
+                <p className="text-xs text-on-surface-variant mt-0.5">
+                  Manage all system tree records, resolve conflicts or duplicate entries, and export data.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="relative w-full sm:w-64">
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                  <input
+                    type="text"
+                    placeholder="Search tag ID, species, user…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-surface-container-low text-on-surface text-xs rounded-lg border border-outline-variant/40 focus:ring-1 focus:ring-secondary outline-none"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => void handleDownloadTreeRecords('csv')}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary hover:bg-secondary text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                >
+                  <span className="material-symbols-outlined text-[16px]">download</span>
+                  <span>Export CSV</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => void handleDownloadTreeRecords('excel')}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                >
+                  <span className="material-symbols-outlined text-[16px]">table_view</span>
+                  <span>Export Excel</span>
+                </button>
+              </div>
             </div>
+
             <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/40 overflow-x-auto shadow-xs">
               <table className="w-full text-left text-sm min-w-[700px]">
                 <thead>
                   <tr className="border-b border-outline-variant/40 bg-surface-container-low text-[11px] uppercase tracking-wider text-outline font-semibold">
                     <th className="py-3 px-4">Tree ID</th>
                     <th className="py-3 px-4">Species</th>
+                    <th className="py-3 px-4">Country</th>
                     <th className="py-3 px-4">Submitted By</th>
                     <th className="py-3 px-4">Captured</th>
                     <th className="py-3 px-4 text-center">Status</th>
@@ -558,10 +683,19 @@ export function AdminPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant/20">
-                  {allTrees.map((t) => (
+                  {allTrees
+                    .filter(
+                      (t) =>
+                        search === '' ||
+                        t.id.toLowerCase().includes(search.toLowerCase()) ||
+                        t.species.toLowerCase().includes(search.toLowerCase()) ||
+                        (t.userId ?? '').toLowerCase().includes(search.toLowerCase()),
+                    )
+                    .map((t) => (
                     <tr key={t.id} className="hover:bg-surface-container-low/40 transition-colors">
                       <td className="py-3 px-4 font-mono font-bold text-primary text-xs">{t.id}</td>
                       <td className="py-3 px-4 text-on-surface-variant text-xs italic">{t.species}</td>
+                      <td className="py-3 px-4 text-xs font-medium text-primary">{t.country || 'India'}</td>
                       <td className="py-3 px-4 text-xs text-outline font-mono">{t.userId ?? '—'}</td>
                       <td className="py-3 px-4 text-xs text-outline">{new Date(t.capturedAt).toLocaleDateString('en-IN')}</td>
                       <td className="py-3 px-4 text-center">
@@ -604,9 +738,11 @@ export function AdminPage() {
                           <button
                             type="button"
                             onClick={() => setConfirmDelete(t.id)}
-                            className="text-xs text-red-600 font-bold hover:underline cursor-pointer"
+                            className="text-xs text-red-600 font-bold hover:underline cursor-pointer flex items-center gap-0.5"
+                            title="Delete duplicate, conflict or erroneous tree record"
                           >
-                            Delete
+                            <span className="material-symbols-outlined text-[14px]">delete</span>
+                            <span>Delete</span>
                           </button>
                         </div>
                       </td>

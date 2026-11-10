@@ -86,6 +86,20 @@ def get_object_url(object_key: str) -> str:
         raise HTTPException(status_code=502, detail="Could not create an R2 download URL") from exc
 
 
+def upload_object(object_key: str, data: bytes, mime_type: str) -> None:
+    """Upload bytes directly to R2 (server-side, no CORS)."""
+    settings = get_settings()
+    try:
+        _client().put_object(
+            Bucket=settings.r2_bucket_name,
+            Key=object_key,
+            Body=data,
+            ContentType=mime_type,
+        )
+    except (BotoCoreError, ClientError) as exc:
+        raise HTTPException(status_code=502, detail="Could not upload object to R2") from exc
+
+
 def delete_object(object_key: str) -> None:
     settings = get_settings()
     try:

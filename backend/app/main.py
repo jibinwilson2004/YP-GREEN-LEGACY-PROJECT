@@ -26,6 +26,16 @@ app.include_router(photos.router, prefix="/api/v1")
 app.include_router(resources.router, prefix="/api/v1")
 
 
+@app.on_event("startup")
+def init_schema():
+    try:
+        with get_session_factory()() as db:
+            db.execute(text("ALTER TABLE trees ADD COLUMN IF NOT EXISTS country VARCHAR(100)"))
+            db.commit()
+    except Exception:
+        logging.getLogger(__name__).warning("Schema auto-patch deferred (DB unreachable or already updated)")
+
+
 @app.get("/healthz")
 def health():
     return {"status": "ok"}

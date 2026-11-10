@@ -97,3 +97,62 @@ def test_user_cannot_delete_another_owners_unverified_tree():
 
     assert error.value.status_code == 403
     assert tree.deleted_at is None
+
+
+def test_admin_can_delete_verified_or_duplicate_tree():
+    tree = SimpleNamespace(
+        id="YP-TEST",
+        user_id="owner@example.com",
+        verification_status="VERIFIED",
+        deleted_at=None,
+    )
+    db = FakeDatabase(tree)
+    admin_user = SimpleNamespace(id=99, email="admin@example.com", role="admin")
+
+    delete_tree(tree.id, db, admin_user)
+
+    assert tree.deleted_at is not None
+    assert db.committed
+    assert any(getattr(item, "action", None) == "tree.deleted" for item in db.added)
+
+
+def test_institution_hidden_from_public_in_tree_output():
+    from datetime import datetime, timezone
+    from app.models.entities import Tree
+    from app.routers.trees import _tree_output
+
+    tree = Tree(
+        id="YP-TEST-PUBLIC",
+        species="Azadirachta indica",
+        latitude=10.0,
+        longitude=76.0,
+        accuracy=5.0,
+        gps_source="SMARTPHONE_GPS",
+        location_confidence=90,
+        location_status="HIGH",
+        reading_count=5,
+        stability_score=85,
+        verification_status="VERIFIED",
+        identification_confidence=92,
+        institution="APJAKTU NSSCELL",
+        college="GEC Barton Hill",
+        institution_id=1,
+        captured_at=datetime.now(timezone.utc),
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc),
+        location="POINT(76.0 10.0)",
+    )
+    db = FakeDatabase(tree)
+
+    # Public user / non-admin
+    public_output = _tree_output(tree, db, is_admin=False)
+    assert public_output.institution is None
+    assert public_output.college is None
+    assert public_output.institution_id is None
+
+    # Admin user
+    admin_output = _tree_output(tree, db, is_admin=True)
+    assert admin_output.institution == "APJAKTU NSSCELL"
+    assert admin_output.college == "GEC Barton Hill"
+    assert admin_output.institution_id == 1
+

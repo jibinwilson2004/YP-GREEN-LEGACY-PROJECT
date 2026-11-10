@@ -14,6 +14,7 @@ import { registerTreeApi } from '../services/api'
 import { treeService } from '../services/treeService'
 import { authService } from '../services/authService'
 import { SITE_NAME } from '../constants/assets'
+import { reverseGeocodeCountry } from '../services/gps/reverseGeocoding'
 
 const STEPS = [
   'Capture Tree',
@@ -38,6 +39,9 @@ export function CapturePage() {
       capture.updateDraft({
         location: gps.verified,
         anomalies: gps.anomalies,
+      })
+      void reverseGeocodeCountry(gps.verified.latitude, gps.verified.longitude).then((country) => {
+        capture.updateDraft({ country })
       })
     }
   }, [gps.verified, gps.anomalies, capture])
@@ -283,6 +287,27 @@ export function CapturePage() {
                 onChange={(e) => capture.updateDraft({ commonName: e.target.value })}
               />
             </label>
+            <div className="block">
+              <span className="text-label-sm uppercase text-outline flex items-center justify-between">
+                <span>Country (Auto-detected via GPS)</span>
+                <span className="text-[11px] font-semibold text-secondary flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[13px]">my_location</span>
+                  Reverse Geocoded
+                </span>
+              </span>
+              <div className="mt-1 flex items-center gap-2 w-full rounded-lg border border-outline-variant/60 bg-surface-container-low px-3 py-2.5 text-on-surface">
+                <span className="material-symbols-outlined text-secondary text-[18px]">public</span>
+                <input
+                  type="text"
+                  readOnly
+                  value={capture.draft.country || 'Detecting country from GPS…'}
+                  className="bg-transparent font-semibold text-sm outline-none w-full cursor-default text-primary"
+                />
+              </div>
+              <p className="text-[11px] text-on-surface-variant mt-1">
+                Country identified automatically from detected GPS coordinates without requiring manual selection.
+              </p>
+            </div>
             <p className="text-body-sm text-on-surface-variant">
               Tree identification confidence (preview):{' '}
               <strong className="text-primary">{capture.identificationConfidence}%</strong>

@@ -33,3 +33,4 @@ credentials.json
 **/server/data_fallback.json
 server/uploads/
 server/data_fallback.json
+archive/

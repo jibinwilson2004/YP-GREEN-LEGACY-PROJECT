@@ -41,6 +41,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/trees" element={<TreesPage />} />
+          <Route path="/my-trees" element={<TreesPage />} />
           <Route path="/trees/:id" element={<TreeDetailPage />} />
           <Route path="/admin" element={<ProtectedPage admin><AdminPage /></ProtectedPage>} />
           <Route path="*" element={<Navigate to="/" replace />} />

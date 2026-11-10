@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { TreeImageGallery } from './TreeImageGallery'
 import { VerificationStatus } from './VerificationStatus'
 import { formatGpsSource } from '../../types/gps'
 import { formatDisplayName } from '../../services/authService'
+import { classifyAccuracy, accuracyLabel } from '../../services/gps/gpsAccuracy'
 import type { Tree } from '../../types/tree'
 
 interface TreeDetailsCardProps {
   tree: Tree
   onClose?: () => void
-  onViewDetails?: () => void
   className?: string
   fullWidth?: boolean
   initialMinimized?: boolean
@@ -18,39 +17,39 @@ interface TreeDetailsCardProps {
 export function TreeDetailsCard({
   tree,
   onClose,
-  onViewDetails,
   className = '',
   fullWidth = false,
   initialMinimized = false,
 }: TreeDetailsCardProps) {
   const [isMinimized, setIsMinimized] = useState(initialMinimized)
-  const [showTelemetry, setShowTelemetry] = useState(false)
 
   const images =
     tree.images && tree.images.length > 0
       ? tree.images
       : [tree.imageUrl || '/assets/images/tree-sapling.png']
-  const commonName = tree.commonName || 'Neem'
+  const commonName = tree.commonName || tree.species || 'Neem'
   const botanicalName =
     tree.botanicalName ||
     (tree.species === 'Azardica indica' ? 'Azadirachta indica' : tree.species) ||
     'Azadirachta indica'
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
+  const capturedAtFormatted = tree.capturedAt ? new Date(tree.capturedAt).toLocaleDateString('en-IN') : dateOfPlanting
   const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
-  const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
-  const institution = tree.institution || tree.college || 'APJAKTU NSSCELL NRPF'
   const sourceLabel = formatGpsSource(tree.gpsSource)
+  const accuracyTier = classifyAccuracy(tree.accuracy)
+  const stability = tree.gpsStability || (tree.stabilityScore >= 75 ? 'Stable' : 'Moderate')
+  const country = tree.country || 'India'
 
-  // Minimized floating pill mode for maximum map visibility
+  // Minimized floating pill mode for quick toggling
   if (isMinimized) {
     return (
       <div
         className={`bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-xl border border-outline-variant/60 p-2.5 flex items-center justify-between gap-3 text-on-surface select-none transition-all ${
-          fullWidth ? 'w-full' : 'w-full max-w-[320px] sm:max-w-[340px]'
+          fullWidth ? 'w-full' : 'w-full max-w-[320px] sm:max-w-[360px]'
         } ${className}`}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container border border-outline-variant/30">
+          <div className="w-9 h-9 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container border border-outline-variant/30">
             <img src={images[0]} alt={commonName} className="w-full h-full object-cover" />
           </div>
           <div className="min-w-0">
@@ -71,7 +70,7 @@ export function TreeDetailsCard({
             type="button"
             onClick={() => setIsMinimized(false)}
             className="w-7 h-7 rounded-lg hover:bg-surface-container-high text-primary flex items-center justify-center transition-colors cursor-pointer"
-            title="Expand Details Card"
+            title="Expand Complete Tree Details"
             aria-label="Expand"
           >
             <span className="material-symbols-outlined text-[18px]">open_in_full</span>
@@ -94,23 +93,24 @@ export function TreeDetailsCard({
 
   return (
     <div
-      className={`bg-surface-container-lowest/95 backdrop-blur-md rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden flex flex-col transition-all text-on-surface ${
-        fullWidth ? 'w-full' : 'w-full max-w-[320px] sm:max-w-[340px]'
+      className={`bg-surface-container-lowest/98 backdrop-blur-md rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden flex flex-col transition-all text-on-surface max-h-[82vh] ${
+        fullWidth ? 'w-full' : 'w-full max-w-[340px] sm:max-w-[380px]'
       } ${className}`}
     >
-      {/* 1. COMPACT HERO PHOTO CAROUSEL */}
-      <div className="relative">
+      {/* 1. HERO PHOTO CAROUSEL */}
+      <div className="relative flex-shrink-0">
         <TreeImageGallery
           images={images}
           speciesName={commonName}
-          heightClass="h-32 sm:h-36"
+          heightClass="h-36 sm:h-44"
           roundedClass="rounded-t-2xl rounded-b-none"
           showBadge={false}
           onClose={onClose}
         />
+
         {/* Top Badges & Controls Overlay */}
         <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5 pointer-events-none">
-          <span className="font-mono text-[10px] font-bold bg-primary/85 text-primary-fixed backdrop-blur-xs px-2 py-0.5 rounded-full shadow-xs">
+          <span className="font-mono text-[11px] font-bold bg-primary/90 text-primary-fixed backdrop-blur-xs px-2.5 py-0.5 rounded-full shadow-xs">
             #{tree.id}
           </span>
           <VerificationStatus status={tree.verificationStatus} />
@@ -129,29 +129,51 @@ export function TreeDetailsCard({
         </div>
       </div>
 
-      {/* 2. CARD BODY: COMPACT TREE SPECIES & ESSENTIAL METRICS */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col space-y-3">
-        {/* Tree Name & Botanical Subtitle */}
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <h3 className="font-headline-sm text-base sm:text-lg font-bold text-primary tracking-tight leading-tight">
-              {commonName}
-            </h3>
-            <p className="text-xs italic font-medium text-secondary mt-0.5 leading-none">
-              {botanicalName}
-            </p>
+      {/* 2. COMPLETE TREE DETAILS BODY (Direct complete presentation without separate view details button) */}
+      <div className="p-4 flex-1 overflow-y-auto space-y-3.5 pr-3">
+        {/* Tree Species Header */}
+        <div className="border-b border-outline-variant/30 pb-2.5">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <h3 className="font-headline-sm text-lg font-bold text-primary tracking-tight leading-tight">
+                {commonName}
+              </h3>
+              <p className="text-xs italic font-medium text-secondary mt-0.5">
+                {botanicalName}
+              </p>
+            </div>
+            <span className="text-[10px] font-mono font-bold bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full whitespace-nowrap">
+              {country}
+            </span>
           </div>
-          <span className="flex-shrink-0 text-[11px] font-mono font-bold bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">
-            {tree.locationConfidence}% Conf
-          </span>
         </div>
 
-        {/* Compact Key Attributes Grid */}
+        {/* Dual Confidence Badges */}
+        <div className="grid grid-cols-2 gap-2 text-center">
+          <div className="p-2 rounded-lg bg-emerald-50 border border-emerald-100 flex flex-col items-center justify-center">
+            <span className="text-[10px] uppercase font-semibold text-emerald-800 tracking-wider">
+              Tree ID Conf
+            </span>
+            <span className="font-bold text-base font-mono text-emerald-900 mt-0.5">
+              {tree.identificationConfidence ?? 91}%
+            </span>
+          </div>
+          <div className="p-2 rounded-lg bg-teal-50 border border-teal-100 flex flex-col items-center justify-center">
+            <span className="text-[10px] uppercase font-semibold text-teal-800 tracking-wider">
+              Location Conf
+            </span>
+            <span className="font-bold text-base font-mono text-teal-900 mt-0.5">
+              {tree.locationConfidence}%
+            </span>
+          </div>
+        </div>
+
+        {/* Planter & Planting Details */}
         <div className="grid grid-cols-2 gap-2 text-[11px]">
           <div className="p-2 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col justify-between">
             <span className="text-[10px] uppercase font-semibold text-outline tracking-wider flex items-center gap-1">
               <span className="material-symbols-outlined text-[13px] text-secondary">person</span>
-              <span>Student</span>
+              <span>Student Planter</span>
             </span>
             <span className="font-bold text-primary truncate mt-0.5" title={student}>
               {student}
@@ -160,86 +182,85 @@ export function TreeDetailsCard({
 
           <div className="p-2 rounded-lg bg-surface-container-low border border-outline-variant/30 flex flex-col justify-between">
             <span className="text-[10px] uppercase font-semibold text-outline tracking-wider flex items-center gap-1">
-              <span className="material-symbols-outlined text-[13px] text-secondary">school</span>
-              <span>Institution</span>
+              <span className="material-symbols-outlined text-[13px] text-secondary">calendar_today</span>
+              <span>Planted On</span>
             </span>
-            <span className="font-bold text-primary truncate mt-0.5" title={institution}>
-              {institution}
+            <span className="font-bold text-primary font-mono truncate mt-0.5">
+              {dateOfPlanting}
             </span>
           </div>
         </div>
 
-        {/* GPS Coordinates & Accuracy Bar */}
-        <div className="px-2.5 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/30 flex items-center justify-between text-[11px]">
-          <div className="flex items-center gap-1.5 font-mono font-medium text-primary">
-            <span className="material-symbols-outlined text-[15px] text-secondary">my_location</span>
-            <span>{tree.latitude.toFixed(4)}°, {tree.longitude.toFixed(4)}°</span>
+        {/* Complete Geospatial Telemetry Dossier */}
+        <div className="space-y-1.5 text-[11px] bg-surface-container-low/70 p-3 rounded-xl border border-outline-variant/30">
+          <div className="text-[10px] uppercase font-bold text-secondary tracking-wider flex items-center gap-1 mb-1 border-b border-outline-variant/20 pb-1">
+            <span className="material-symbols-outlined text-[14px]">satellite_alt</span>
+            <span>Geospatial Verification Telemetry</span>
           </div>
-          <span className="font-mono font-semibold text-outline text-[10px]">
-            ±{tree.accuracy.toFixed(1)}m
-          </span>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">GPS Coordinates:</span>
+            <span className="font-mono font-bold text-primary text-[11px]">
+              {tree.latitude.toFixed(5)}°, {tree.longitude.toFixed(5)}°
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">GPS Accuracy:</span>
+            <span className="font-mono font-semibold text-primary">
+              ±{tree.accuracy.toFixed(1)}m ({accuracyLabel(accuracyTier)})
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">GPS Source:</span>
+            <span className="font-medium text-primary">{sourceLabel}</span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">Multi-Sample Stability:</span>
+            <span className="font-medium text-emerald-800 flex items-center gap-1">
+              <span className="text-emerald-600 font-bold">✓</span>
+              <span>{stability} ({tree.stabilityScore}%)</span>
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">Audit Samples:</span>
+            <span className="font-mono text-primary font-semibold">{tree.readingCount} readings</span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">Country:</span>
+            <span className="font-medium text-primary">{country}</span>
+          </div>
+
+          <div className="flex justify-between items-center py-0.5">
+            <span className="text-outline">Recorded Timestamp:</span>
+            <span className="font-mono text-primary text-[10px]">{capturedAtFormatted}</span>
+          </div>
         </div>
 
-        {/* Expandable Telemetry Accordion */}
-        <div className="border-t border-outline-variant/30 pt-2">
-          <button
-            type="button"
-            onClick={() => setShowTelemetry(!showTelemetry)}
-            className="w-full flex items-center justify-between text-[11px] font-label-sm font-semibold text-outline hover:text-primary transition-colors cursor-pointer py-0.5"
-          >
-            <span>Telemetry &amp; Audit Details</span>
-            <span className={`material-symbols-outlined text-[16px] transition-transform ${showTelemetry ? 'rotate-180' : ''}`}>
-              expand_more
+        {/* Audit & Verification Block */}
+        <div className="space-y-1 text-[11px] bg-emerald-50/60 p-2.5 rounded-lg border border-emerald-100">
+          <div className="flex justify-between items-center">
+            <span className="text-outline text-[10px] uppercase font-semibold">Verification:</span>
+            <span className="font-bold text-secondary flex items-center gap-1">
+              <span>✓</span>
+              <span>{tree.verificationStatus}</span>
             </span>
-          </button>
-
-          {showTelemetry && (
-            <div className="mt-2 space-y-1.5 text-[11px] text-on-surface-variant bg-surface-container-low/60 p-2.5 rounded-lg border border-outline-variant/20 animate-fade-in">
-              <div className="flex justify-between">
-                <span className="text-outline">College:</span>
-                <span className="font-medium text-right text-primary truncate max-w-[170px]" title={college}>
-                  {college}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-outline">Planting Date:</span>
-                <span className="font-mono font-semibold text-primary">{dateOfPlanting}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-outline">GPS Source:</span>
-                <span className="text-primary truncate max-w-[170px]">{sourceLabel}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-outline">Readings:</span>
-                <span className="font-mono font-semibold text-primary">{tree.readingCount} samples</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-outline">Verified By:</span>
-                <span className="text-secondary font-semibold">{tree.verifiedBy || 'IEEE YP CSTF'}</span>
-              </div>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-outline text-[10px]">Verified By:</span>
+            <span className="font-medium text-primary text-[11px]">{tree.verifiedBy || 'IEEE YP CSTF'}</span>
+          </div>
+          {tree.verificationDate && (
+            <div className="flex justify-between items-center">
+              <span className="text-outline text-[10px]">Audit Date:</span>
+              <span className="font-mono text-primary text-[10px]">
+                {new Date(tree.verificationDate).toLocaleDateString('en-IN')}
+              </span>
             </div>
-          )}
-        </div>
-
-        {/* Action Button: View Full Tree Details */}
-        <div className="pt-1">
-          {onViewDetails ? (
-            <button
-              type="button"
-              onClick={onViewDetails}
-              className="w-full py-2 px-3.5 bg-primary hover:bg-secondary text-on-primary font-label-md text-xs font-bold rounded-lg transition-colors cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
-            >
-              <span>View Full Tree Details</span>
-              <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
-            </button>
-          ) : (
-            <Link
-              to={`/trees/${tree.id}`}
-              className="w-full py-2 px-3.5 bg-primary hover:bg-secondary text-on-primary font-label-md text-xs font-bold rounded-lg transition-colors text-center shadow-sm flex items-center justify-center gap-1.5"
-            >
-              <span>View Full Tree Details</span>
-              <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
-            </Link>
           )}
         </div>
       </div>

@@ -141,9 +141,9 @@ export function MapPage() {
               className="absolute inset-0 w-full h-full"
             />
 
-            {/* COMPACT FLOATING TREE DETAILS CARD (Positioned gracefully in corner for proper map view) */}
+            {/* DIRECT COMPLETE TREE DETAILS CARD */}
             {popoverOpen && activeTree && (
-              <div className="absolute top-16 sm:top-4 right-2 left-2 sm:left-auto sm:right-4 z-30 max-w-full sm:w-[340px] animate-fade-in drop-shadow-2xl">
+              <div className="absolute top-16 sm:top-4 right-2 left-2 sm:left-auto sm:right-4 z-30 max-w-full sm:w-[380px] animate-fade-in drop-shadow-2xl">
                 <TreeDetailsCard
                   tree={activeTree}
                   onClose={() => setPopoverOpen(false)}

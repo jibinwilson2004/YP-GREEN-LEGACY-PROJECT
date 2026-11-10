@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { TreeLocationMap } from '../components/tree/TreeLocationMap'
@@ -6,7 +6,7 @@ import { TreeImageGallery } from '../components/tree/TreeImageGallery'
 import { VerificationStatus } from '../components/tree/VerificationStatus'
 import { formatGpsSource } from '../types/gps'
 import { treeService } from '../services/treeService'
-import { formatDisplayName } from '../services/authService'
+import { authService, formatDisplayName } from '../services/authService'
 import { useState, useEffect } from 'react'
 import type { Tree } from '../types/tree'
 import { classifyAccuracy, accuracyLabel } from '../services/gps/gpsAccuracy'
@@ -14,9 +14,28 @@ import { fetchTreeById } from '../services/api'
 
 export function TreeDetailPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const cachedTree = id ? treeService.getById(id) : undefined
   const [remoteTree, setRemoteTree] = useState<Tree | null>(null)
   const [loading, setLoading] = useState(!cachedTree)
+  const [deleting, setDeleting] = useState(false)
+
+  const handleAdminDelete = async () => {
+    if (!tree) return
+    const confirmed = window.confirm(
+      `Administrator Confirmation:\n\nAre you sure you want to permanently delete tree record #${tree.id}?\n\nThis is used to remove duplicate entries, conflicting records, or incorrect data. This action cannot be undone.`
+    )
+    if (!confirmed) return
+    setDeleting(true)
+    try {
+      await treeService.deleteTree(tree.id)
+      alert(`Tree record #${tree.id} was permanently deleted.`)
+      navigate('/admin')
+    } catch (err) {
+      alert(`Could not delete tree: ${err instanceof Error ? err.message : 'Unknown error'}`)
+      setDeleting(false)
+    }
+  }
 
   useEffect(() => {
     if (id) {
@@ -79,9 +98,6 @@ export function TreeDetailPage() {
   const dateOfPlanting = tree.dateOfPlanting || '31-08-2026'
   const updatedAt = tree.updatedAt || '31-08-2026'
   const student = tree.student || (tree.userId ? formatDisplayName(tree.userId) : 'IEEE YP CSTF Planter')
-  const college = tree.college || 'GOVT. ENGINEERING COLLEGE, BARTON HILL-TRV'
-  const cluster = tree.cluster || 'TRV'
-  const institution = tree.institution || 'APJAKTU NSSCELL NRPF'
   const verifiedBy = tree.verifiedBy || 'IEEE YP CSTF'
   const verificationDate = tree.verificationDate || '31-08-2026'
 
@@ -179,32 +195,15 @@ export function TreeDetailPage() {
           </div>
         </div>
 
-        {/* 4. Planting Information & Academic Institution Details */}
+        {/* 4. Planter Record */}
         <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/40 shadow-xs mt-6">
           <h2 className="font-headline-sm text-base sm:text-lg font-bold text-primary mb-4 flex items-center gap-2">
             <span className="material-symbols-outlined text-[20px] text-secondary">person_pin</span>
-            <span>Planting &amp; Academic Institution Record</span>
+            <span>Planter Record</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40">
-              <span className="text-[10px] uppercase font-semibold text-outline block">Student Planter</span>
-              <span className="font-bold text-sm text-primary mt-0.5 block">{student}</span>
-            </div>
-
-            <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40">
-              <span className="text-[10px] uppercase font-semibold text-outline block">Cluster</span>
-              <span className="font-bold text-sm text-primary mt-0.5 block font-mono">{cluster}</span>
-            </div>
-
-            <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40 sm:col-span-2">
-              <span className="text-[10px] uppercase font-semibold text-outline block">College</span>
-              <span className="font-medium text-sm text-on-surface mt-0.5 block leading-snug">{college}</span>
-            </div>
-
-            <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40 sm:col-span-2">
-              <span className="text-[10px] uppercase font-semibold text-outline block">Institution</span>
-              <span className="font-medium text-sm text-on-surface mt-0.5 block leading-snug">{institution}</span>
-            </div>
+          <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40">
+            <span className="text-[10px] uppercase font-semibold text-outline block">Student Planter</span>
+            <span className="font-bold text-sm text-primary mt-0.5 block">{student}</span>
           </div>
         </div>
 
@@ -314,17 +313,42 @@ export function TreeDetailPage() {
                 {dateOfPlanting}
               </dd>
             </div>
+
+            {/* Country (Auto-detected via GPS) */}
+            <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-variant/40">
+              <dt className="text-[10px] uppercase font-semibold text-outline">Country</dt>
+              <dd className="font-semibold text-sm text-primary mt-1 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[16px] text-secondary">public</span>
+                <span>{tree.country || 'India'}</span>
+              </dd>
+            </div>
           </dl>
 
-          {/* Action Link to Live Map */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <Link
-              to={`/map?user=${encodeURIComponent(tree.userId || 'planter')}&tree=${tree.id}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-secondary text-white font-label-md text-xs font-bold rounded-lg shadow-sm transition-colors cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[16px]">location_on</span>
-              <span>View Tree Location on Live Map</span>
-            </Link>
+          {/* Action Links & Admin Management Controls */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 flex-wrap">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <Link
+                to={`/map?user=${encodeURIComponent(tree.userId || 'planter')}&tree=${tree.id}`}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-secondary text-white font-label-md text-xs font-bold rounded-lg shadow-sm transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[16px]">location_on</span>
+                <span>View Tree Location on Live Map</span>
+              </Link>
+
+              {authService.isAdmin() && (
+                <button
+                  type="button"
+                  disabled={deleting}
+                  onClick={() => void handleAdminDelete()}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-label-md text-xs font-bold rounded-lg shadow-sm transition-colors cursor-pointer"
+                  title="Delete duplicate, conflict, or erroneous tree record"
+                >
+                  <span className="material-symbols-outlined text-[16px]">delete</span>
+                  <span>{deleting ? 'Deleting…' : 'Delete Tree Record (Admin)'}</span>
+                </button>
+              )}
+            </div>
+
             <Link
               to="/trees"
               className="text-xs text-outline hover:text-primary font-medium transition-colors"

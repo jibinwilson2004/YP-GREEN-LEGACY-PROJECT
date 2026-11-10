@@ -49,7 +49,7 @@ def map_trees(
     if status:
         query = query.where(Tree.verification_status == status)
     rows = db.scalars(query.order_by(Tree.created_at.desc()).limit(limit)).all()
-    return [_tree_output(row, db) for row in rows]
+    return [_tree_output(row, db, is_admin=is_admin) for row in rows]
 
 
 @router.get("/clusters")

@@ -189,31 +189,29 @@ export async function uploadPhotoApi(
   mimeType = 'image/jpeg',
   role = 'primary',
 ): Promise<{ id: string; url: string }> {
-  const blob = image instanceof Blob ? image : await (await fetch(image)).blob()
+  const blob = image instanceof Blob
+    ? image
+    : await (await fetch(image)).blob()
+
   const contentType = blob.type || mimeType
-  const presign = await apiRequest<{ uploadUrl: string; objectKey: string; headers: Record<string, string> }>(
-    `/trees/${encodeURIComponent(treeId)}/photos/upload-url`,
+  const extension = contentType.split('/')[1]?.replace('jpeg', 'jpg') || 'jpg'
+
+  const formData = new FormData()
+  formData.append('file', blob, `${role}.${extension}`)
+  formData.append('photo_type', role)
+
+  const photo = await apiRequest<PhotoRecord>(
+    `/trees/${encodeURIComponent(treeId)}/photos/upload`,
     {
       method: 'POST',
-      body: JSON.stringify({
-        fileName: `${role}.${contentType.split('/')[1] || 'jpg'}`,
-        mimeType: contentType,
-        sizeBytes: blob.size,
-        photoType: role,
-      }),
+      body: formData,
     },
   )
-  const uploadResponse = await fetch(presign.uploadUrl, {
-    method: 'PUT',
-    headers: presign.headers,
-    body: blob,
-  })
-  if (!uploadResponse.ok) throw new ApiError('Image upload to Cloudflare R2 failed', uploadResponse.status)
-  const photo = await apiRequest<PhotoRecord>(`/trees/${encodeURIComponent(treeId)}/photos/confirm`, {
-    method: 'POST',
-    body: JSON.stringify({ objectKey: presign.objectKey }),
-  })
-  return { id: String(photo.id), url: photo.url }
+
+  return {
+    id: String(photo.id),
+    url: photo.url,
+  }
 }
 
 export async function fetchTreePhotos(treeId: string): Promise<PhotoRecord[]> {
@@ -300,4 +298,15 @@ export async function submitPartnerRequestApi(request: {
       message: request.message,
     }),
   })
+}
+
+export async function downloadTreeRecordsFile(format: 'csv' | 'excel' = 'csv'): Promise<Blob> {
+  const headers = authHeaders()
+  const response = await fetch(`${API_PREFIX}/admin/trees/export?format=${format}`, {
+    headers,
+  })
+  if (!response.ok) {
+    throw new Error(`Export failed: ${response.statusText}`)
+  }
+  return response.blob()
 }

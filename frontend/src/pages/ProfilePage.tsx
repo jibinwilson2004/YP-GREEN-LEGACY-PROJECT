@@ -4,6 +4,7 @@ import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { authService, formatDisplayName } from '../services/authService'
 import { fetchTrees } from '../services/api'
+import { TreeCard } from '../components/tree/TreeCard'
 import type { Tree } from '../types/tree'
 
 interface UserProfile {
@@ -72,7 +73,6 @@ export function ProfilePage() {
 
   const verifiedCount = myTrees.filter((t) => t.verificationStatus === 'VERIFIED').length
   const pendingCount = myTrees.filter((t) => t.verificationStatus === 'PENDING').length
-  const primaryTree = myTrees[0]
 
   const handleEditSocial = () => {
     const url = prompt('Enter your LinkedIn or Twitter URL:', socialLink === 'N.A' ? '' : socialLink)
@@ -218,57 +218,29 @@ export function ProfilePage() {
                 )}
               </div>
 
-              {/* Primary Tree Card */}
-              {primaryTree ? (
-                <Link
-                  to={`/trees/${primaryTree.id}`}
-                  className="group block p-4 rounded-xl border border-secondary/40 bg-secondary-container/20 hover:bg-secondary-container/40 transition-all shadow-xs"
-                  title="View your latest registered tree"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-secondary text-white flex items-center justify-center">
-                        <span className="material-symbols-outlined text-[24px]">forest</span>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-bold text-primary text-sm">#{primaryTree.id} • {primaryTree.species}</span>
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                            primaryTree.verificationStatus === 'VERIFIED'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : primaryTree.verificationStatus === 'PENDING'
-                                ? 'bg-amber-100 text-amber-800'
-                                : 'bg-red-100 text-red-700'
-                          }`}>
-                            {primaryTree.verificationStatus}
-                          </span>
-                        </div>
-                        <p className="text-xs text-on-surface-variant mt-0.5">
-                          Lat: {primaryTree.latitude.toFixed(5)}° N, Lon: {primaryTree.longitude.toFixed(5)}° E • ±{primaryTree.accuracy?.toFixed(1)} m
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 text-secondary font-bold text-xs group-hover:translate-x-1 transition-transform">
-                      <span>View</span>
-                      <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </div>
-                  </div>
-                </Link>
-              ) : (
-                <div className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low text-sm text-on-surface-variant text-center">
-                  <span className="material-symbols-outlined text-[28px] text-outline block mb-1">park</span>
-                  No trees registered yet.{' '}
-                  <Link to="/capture" className="text-secondary font-semibold hover:underline">Capture your first tree →</Link>
+              {/* Tagged Trees List */}
+              <div className="pt-2 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-gray-900 tracking-tight">My Tagged Trees</h3>
+                  {myTrees.length > 0 && (
+                    <span className="text-xs text-gray-500 font-semibold">{myTrees.length} tree{myTrees.length !== 1 ? 's' : ''}</span>
+                  )}
                 </div>
-              )}
 
-              {/* All trees link */}
-              {myTrees.length > 1 && (
-                <Link to="/trees" className="text-sm text-secondary font-semibold hover:underline flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[16px]">list</span>
-                  View all {myTrees.length} registered trees
-                </Link>
-              )}
+                {myTrees.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {myTrees.map((tree) => (
+                      <TreeCard key={tree.id} tree={tree} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low text-sm text-on-surface-variant text-center">
+                    <span className="material-symbols-outlined text-[28px] text-outline block mb-1">park</span>
+                    No trees registered yet.{' '}
+                    <Link to="/capture" className="text-secondary font-semibold hover:underline">Capture your first tree →</Link>
+                  </div>
+                )}
+              </div>
             </section>
           </div>
 

@@ -1,12 +1,15 @@
+import csv
+import io
 import math
 import uuid
 from datetime import datetime, timezone
+from typing import Literal
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from geoalchemy2.shape import from_shape
 from shapely.geometry import Point
 from sqlalchemy import func, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.database.session import get_db
 from app.models.entities import AuditLog, Cluster, GpsReading, Institution, Tree, TreePhoto, User, Verification
@@ -19,6 +22,7 @@ from app.schemas.common import (
     TreeRead,
     TreeUpdate,
 )
+from app.services.storage import get_object_url
 from app.utils.security import get_current_user, get_optional_user, require_admin
 
 router = APIRouter(tags=["trees"])
@@ -28,18 +32,34 @@ def _tree_code() -> str:
     return f"YP-{uuid.uuid4().hex[:12].upper()}"
 
 
-def _tree_output(tree: Tree, db: Session) -> TreeRead:
+def _tree_output(tree: Tree, db: Session, is_admin: bool = False) -> TreeRead:
+    photo_urls: list[str] = []
+    try:
+        photos = getattr(tree, "photos", None)
+        if photos is None:
+            photos = db.scalars(select(TreePhoto).where(TreePhoto.tree_id == tree.id).order_by(TreePhoto.created_at)).all()
+        photo_urls = [get_object_url(p.object_key) for p in photos]
+    except Exception:
+        pass
+
+    raw_data = {column.name: getattr(tree, column.name) for column in Tree.__table__.columns if column.name != "location"}
+    # Hide institution details from non-administrators / public viewers
+    if not is_admin:
+        raw_data["institution"] = None
+        raw_data["college"] = None
+        raw_data["institution_id"] = None
+
     return TreeRead.model_validate(
         {
-            **{column.name: getattr(tree, column.name) for column in Tree.__table__.columns if column.name != "location"},
-            "image_url": None,
-            "images": [],
+            **raw_data,
+            "image_url": photo_urls[0] if photo_urls else None,
+            "images": photo_urls,
         }
     )
 
 
 def _visible_tree_query():
-    return select(Tree).where(Tree.deleted_at.is_(None))
+    return select(Tree).where(Tree.deleted_at.is_(None)).options(selectinload(Tree.photos))
 
 
 @router.post("/trees", response_model=TreeRead, status_code=201)
@@ -48,7 +68,7 @@ def create_tree(payload: TreeCreate, db: Session = Depends(get_db), user: User =
     existing = db.get(Tree, code)
     if existing is not None:
         if existing.user_id == user.email and existing.deleted_at is None:
-            return _tree_output(existing, db)
+            return _tree_output(existing, db, is_admin=(user.role == "admin"))
         raise HTTPException(status_code=409, detail="Tree code already exists")
     values = payload.model_dump(exclude={"id", "captured_at"})
     institution = db.scalar(select(Institution).where(Institution.name == payload.institution)) if payload.institution else None
@@ -66,7 +86,7 @@ def create_tree(payload: TreeCreate, db: Session = Depends(get_db), user: User =
     db.add(AuditLog(actor_id=user.id, action="tree.created", entity_type="tree", entity_id=code))
     db.commit()
     db.refresh(tree)
-    return _tree_output(tree, db)
+    return _tree_output(tree, db, is_admin=(user.role == "admin"))
 
 
 @router.get("/trees", response_model=TreeList)
@@ -81,9 +101,10 @@ def list_trees(
     user: User | None = Depends(get_optional_user),
 ):
     query = _visible_tree_query()
+    is_admin = user is not None and user.role == "admin"
     if user is None:
         query = query.where(Tree.verification_status == "VERIFIED")
-    elif user.role != "admin":
+    elif not is_admin:
         query = query.where((Tree.verification_status == "VERIFIED") | (Tree.user_id == user.email))
     if search:
         query = query.where(Tree.species.ilike(f"%{search}%") | Tree.id.ilike(f"%{search}%"))
@@ -92,10 +113,12 @@ def list_trees(
     if status:
         query = query.where(Tree.verification_status == status.upper())
     if user_id:
-        query = query.where(Tree.user_id == user_id)
+        if not is_admin and (user is None or user_id.lower() != user.email.lower()):
+            raise HTTPException(status_code=403, detail="You may only access your own tree-tagging records")
+        query = query.where(func.lower(Tree.user_id) == user_id.lower())
     total = db.scalar(select(func.count()).select_from(query.subquery())) or 0
     items = db.scalars(query.order_by(Tree.created_at.desc()).offset((page - 1) * limit).limit(limit)).all()
-    return TreeList(trees=[_tree_output(item, db) for item in items], total=total, page=page, total_pages=math.ceil(total / limit))
+    return TreeList(trees=[_tree_output(item, db, is_admin=is_admin) for item in items], total=total, page=page, total_pages=math.ceil(total / limit))
 
 
 @router.get("/trees/{tree_id}", response_model=TreeRead)
@@ -106,7 +129,8 @@ def get_tree(tree_id: str, db: Session = Depends(get_db), user: User | None = De
         and (user is None or (user.role != "admin" and tree.user_id != user.email))
     ):
         raise HTTPException(status_code=404, detail="Tree not found")
-    return _tree_output(tree, db)
+    is_admin = user is not None and user.role == "admin"
+    return _tree_output(tree, db, is_admin=is_admin)
 
 
 @router.patch("/trees/{tree_id}", response_model=TreeRead)
@@ -129,7 +153,7 @@ def update_tree(tree_id: str, payload: TreeUpdate, db: Session = Depends(get_db)
     db.add(AuditLog(actor_id=user.id, action="tree.updated", entity_type="tree", entity_id=tree.id))
     db.commit()
     db.refresh(tree)
-    return _tree_output(tree, db)
+    return _tree_output(tree, db, is_admin=(user.role == "admin"))
 
 
 @router.delete("/trees/{tree_id}", status_code=204)
@@ -186,7 +210,7 @@ def get_gps_readings(tree_id: str, db: Session = Depends(get_db), user: User = D
 @router.get("/verification/pending", response_model=list[TreeRead])
 def pending_verification(db: Session = Depends(get_db), _admin: User = Depends(require_admin)):
     rows = db.scalars(_visible_tree_query().where(Tree.verification_status == "PENDING").order_by(Tree.created_at)).all()
-    return [_tree_output(item, db) for item in rows]
+    return [_tree_output(item, db, is_admin=True) for item in rows]
 
 
 @router.post("/verification/{tree_id}/approve", response_model=TreeRead)
@@ -216,4 +240,86 @@ def _review(tree_id: str, status: str, note: str | None, db: Session, admin: Use
     db.add(AuditLog(actor_id=admin.id, action=f"tree.{status.lower()}", entity_type="tree", entity_id=tree.id))
     db.commit()
     db.refresh(tree)
-    return _tree_output(tree, db)
+    return _tree_output(tree, db, is_admin=True)
+
+
+@router.get("/admin/trees/export")
+def export_tree_records(
+    format: Literal["csv", "excel"] = "csv",
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin),
+):
+    trees = db.scalars(_visible_tree_query().order_by(Tree.created_at.desc())).all()
+    headers = [
+        "Tree ID",
+        "Species",
+        "Common Name",
+        "Botanical Name",
+        "Country",
+        "Latitude",
+        "Longitude",
+        "Accuracy (m)",
+        "GPS Source",
+        "Location Confidence (%)",
+        "Location Status",
+        "Stability Score (%)",
+        "Reading Count",
+        "Date of Planting",
+        "Captured At",
+        "Student Planter",
+        "Submitted By (User)",
+        "Verification Status",
+        "Verified By",
+        "Verification Date",
+        "Identification Confidence (%)",
+        "Admin Note",
+        "Photo URLs",
+        "Institution (Public Restriction)",
+    ]
+
+    output = io.StringIO()
+    output.write("\ufeff")
+    writer = csv.writer(output)
+    writer.writerow(headers)
+
+    for tree in trees:
+        photos = getattr(tree, "photos", None) or []
+        photo_urls = [get_object_url(p.object_key) for p in photos]
+        writer.writerow([
+            tree.id,
+            tree.species,
+            tree.common_name or "",
+            tree.botanical_name or "",
+            getattr(tree, "country", None) or "",
+            f"{tree.latitude:.6f}",
+            f"{tree.longitude:.6f}",
+            f"{tree.accuracy:.1f}",
+            tree.gps_source,
+            str(tree.location_confidence),
+            tree.location_status,
+            str(tree.stability_score),
+            str(tree.reading_count),
+            tree.date_of_planting or "",
+            tree.captured_at.isoformat() if tree.captured_at else "",
+            tree.student or "",
+            tree.user_id or "",
+            tree.verification_status,
+            tree.verified_by or "",
+            tree.verification_date.isoformat() if tree.verification_date else "",
+            str(tree.identification_confidence),
+            tree.admin_note or "",
+            "; ".join(photo_urls),
+            "[Hidden for Public Privacy]",
+        ])
+
+    csv_data = output.getvalue().encode("utf-8")
+    date_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    extension = "csv" if format == "csv" else "xls"
+    filename = f"tagged_trees_records_{date_str}.{extension}"
+    media_type = "text/csv; charset=utf-8" if format == "csv" else "application/vnd.ms-excel; charset=utf-8"
+
+    return Response(
+        content=csv_data,
+        media_type=media_type,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )

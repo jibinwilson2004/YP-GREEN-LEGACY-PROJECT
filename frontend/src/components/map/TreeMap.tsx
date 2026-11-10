@@ -71,15 +71,8 @@ function ClusterLayer({
     trees.forEach((tree) => {
       const marker = L.marker([tree.latitude, tree.longitude], {
         icon: createTreeIcon(tree.verificationStatus === 'VERIFIED' ? '#109367' : '#2f7c5f'),
+        title: `${tree.species} (#${tree.id})`,
       })
-      marker.bindPopup(`
-        <div style="font-family: sans-serif; padding: 4px;">
-          <div style="font-size: 11px; font-weight: 600; color: #109367; text-transform: uppercase;">${tree.verificationStatus}</div>
-          <div style="font-size: 14px; font-weight: bold; color: #002218; margin-top: 2px;">${tree.species}</div>
-          <div style="font-size: 11px; color: #666; font-family: monospace;">#${tree.id}</div>
-          <div style="font-size: 11px; color: #444; margin-top: 4px;">Acc: ${tree.accuracy}m · Conf: ${tree.locationConfidence}%</div>
-        </div>
-      `)
       marker.on('click', () => onSelect(tree))
       group.addLayer(marker)
     })

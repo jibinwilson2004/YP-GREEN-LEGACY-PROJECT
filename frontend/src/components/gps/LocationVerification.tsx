@@ -50,14 +50,36 @@ export function LocationVerification({
       )}
 
       {phase === 'error' && error && (
-        <div className="rounded-xl p-5 bg-error-container text-on-error-container border border-error/20">
-          <div className="flex items-center gap-2 font-label-md">
-            <span className="material-symbols-outlined">error</span>
-            {error}
+        <div className="rounded-xl p-5 bg-error-container text-on-error-container border border-error/30 shadow-xs animate-fade-in">
+          <div className="flex items-start gap-3">
+            <span className="material-symbols-outlined text-[24px] text-error flex-shrink-0 mt-0.5">
+              {error.toLowerCase().includes('denied') || error.toLowerCase().includes('permission')
+                ? 'location_disabled'
+                : 'signal_cellular_connected_no_internet_0_bar'}
+            </span>
+            <div className="space-y-1.5 flex-1">
+              <h3 className="font-bold text-sm text-error">
+                {error.toLowerCase().includes('denied') || error.toLowerCase().includes('permission')
+                  ? 'Location Access Denied'
+                  : 'GPS Location Unavailable'}
+              </h3>
+              <p className="text-xs text-on-error-container leading-relaxed">
+                {error.toLowerCase().includes('denied') || error.toLowerCase().includes('permission')
+                  ? 'GPS access was denied by your browser or device permissions. To tag a tree, please allow location access in your browser or device site settings and click Try Again.'
+                  : error}
+              </p>
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={onStart}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                >
+                  <span className="material-symbols-outlined text-[16px]">refresh</span>
+                  <span>Grant Permission &amp; Try Again</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <button type="button" onClick={onStart} className="mt-4 text-label-md font-semibold text-primary underline">
-            Try again
-          </button>
         </div>
       )}
 

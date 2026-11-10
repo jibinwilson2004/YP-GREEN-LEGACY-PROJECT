@@ -79,6 +79,7 @@ class Tree(Base):
     institution_id: Mapped[int | None] = mapped_column(ForeignKey("institutions.id", ondelete="SET NULL"))
     cluster_id: Mapped[int | None] = mapped_column(ForeignKey("clusters.id", ondelete="SET NULL"))
     institution: Mapped[str | None] = mapped_column(String(250))
+    country: Mapped[str | None] = mapped_column(String(100))
     user_id: Mapped[str | None] = mapped_column(ForeignKey("users.email", ondelete="SET NULL"), index=True)
     verification_status: Mapped[str] = mapped_column(String(20), default="PENDING", nullable=False, index=True)
     verified_by: Mapped[str | None] = mapped_column(String(320))

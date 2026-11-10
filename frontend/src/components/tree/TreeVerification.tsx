@@ -36,6 +36,15 @@ export function TreeVerification({
             <dt className="text-label-sm uppercase text-outline">Species</dt>
             <dd className="font-medium text-primary mt-1">{draft.species}</dd>
           </div>
+          {draft.country && (
+            <div className="p-3 rounded-lg bg-surface-container-low">
+              <dt className="text-label-sm uppercase text-outline">Country (Auto-Detected)</dt>
+              <dd className="font-medium text-primary mt-1 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[16px] text-secondary">public</span>
+                <span>{draft.country}</span>
+              </dd>
+            </div>
+          )}
           <div className="p-3 rounded-lg bg-surface-container-low sm:col-span-2">
             <dt className="text-label-sm uppercase text-outline">Location</dt>
             <dd className="font-mono-metric text-[14px] mt-1">

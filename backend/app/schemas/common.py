@@ -72,6 +72,8 @@ class TreeCreate(ApiModel):
     college: str | None = None
     cluster: str | None = None
     institution: str | None = None
+    country: str | None = None
+    country: str | None = None
     identification_confidence: int = Field(default=0, ge=0, le=100)
 
     @field_validator("id")
@@ -91,6 +93,7 @@ class TreeUpdate(ApiModel):
     college: str | None = None
     cluster: str | None = None
     institution: str | None = None
+    country: str | None = None
 
 
 class TreeRead(ApiModel):
@@ -117,6 +120,7 @@ class TreeRead(ApiModel):
     college: str | None
     cluster: str | None
     institution: str | None
+    country: str | None = None
     cluster_id: int | None = None
     institution_id: int | None = None
     user_id: str | None

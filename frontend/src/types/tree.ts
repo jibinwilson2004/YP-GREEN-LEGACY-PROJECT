@@ -34,6 +34,7 @@ export interface Tree {
   college?: string
   cluster?: string
   institution?: string
+  country?: string
   verifiedBy?: string
   verificationDate?: string
   userId?: string
@@ -78,6 +79,7 @@ export interface TreeCaptureDraft {
   photoPreviewUrl?: string
   location?: VerifiedLocation
   identificationConfidence: number
+  country?: string
   anomalies: LocationAnomaly[]
   treeIdPreview?: string
 }
