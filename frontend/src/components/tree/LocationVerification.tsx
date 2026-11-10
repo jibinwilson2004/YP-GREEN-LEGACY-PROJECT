@@ -1,5 +1,6 @@
 import { formatGpsSource } from '../../types/gps'
 import type { Tree } from '../../types/tree'
+import { getTreeTagStatus } from '../../utils/treeStatus'
 
 interface LocationVerificationProps {
   tree: Tree
@@ -15,7 +16,7 @@ export function LocationVerification({ tree, className = '' }: LocationVerificat
   const readingsCount = tree.readingCount
   const sourceLabel = formatGpsSource(tree.gpsSource)
   const stability = tree.gpsStability || (tree.stabilityScore >= 75 ? 'Stable' : 'Moderate')
-  const verificationStatus = tree.verificationStatus === 'VERIFIED' ? 'Verified' : tree.verificationStatus
+  const tagInfo = getTreeTagStatus(tree.verificationStatus)
   const verifiedBy = tree.verifiedBy || 'IEEE YP CSTF'
   const verificationDate = tree.verificationDate || '31-08-2026'
 
@@ -27,9 +28,9 @@ export function LocationVerification({ tree, className = '' }: LocationVerificat
           <span className="material-symbols-outlined text-[15px] text-secondary">my_location</span>
           <span>LOCATION VERIFICATION</span>
         </h3>
-        <span className="text-[11px] font-bold text-secondary flex items-center gap-1">
-          <span>✓</span>
-          <span>{verificationStatus}</span>
+        <span className={`text-[11px] font-bold flex items-center gap-1 ${tagInfo.isTagged ? 'text-secondary' : 'text-amber-700'}`}>
+          {tagInfo.isTagged && <span>✓</span>}
+          <span>{tagInfo.label}</span>
         </span>
       </div>
 

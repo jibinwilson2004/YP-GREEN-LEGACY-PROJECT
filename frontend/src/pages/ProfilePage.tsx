@@ -203,27 +203,29 @@ export function ProfilePage() {
               {/* Stats row */}
               <div className="flex flex-wrap gap-6 text-sm text-gray-800">
                 <div>
-                  <span>Trees Registered: </span>
+                  <span>Total Registered: </span>
                   <span className="font-bold text-primary font-mono text-base">{myTrees.length}</span>
                 </div>
                 <div>
-                  <span>Verified: </span>
+                  <span>Tagged (Verified): </span>
                   <span className="font-bold text-emerald-700 font-mono text-base">{verifiedCount}</span>
                 </div>
                 {pendingCount > 0 && (
                   <div>
-                    <span>Pending: </span>
+                    <span>Pending Verification: </span>
                     <span className="font-bold text-amber-600 font-mono text-base">{pendingCount}</span>
                   </div>
                 )}
               </div>
 
-              {/* Tagged Trees List */}
+              {/* Trees List */}
               <div className="pt-2 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-gray-900 tracking-tight">My Tagged Trees</h3>
+                  <h3 className="text-sm font-bold text-gray-900 tracking-tight">My Trees</h3>
                   {myTrees.length > 0 && (
-                    <span className="text-xs text-gray-500 font-semibold">{myTrees.length} tree{myTrees.length !== 1 ? 's' : ''}</span>
+                    <span className="text-xs text-gray-500 font-semibold">
+                      {verifiedCount} Tagged • {pendingCount} Pending
+                    </span>
                   )}
                 </div>
 

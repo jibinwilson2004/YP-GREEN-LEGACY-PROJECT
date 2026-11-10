@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getTreeTagStatus } from '../../utils/treeStatus'
 
 interface VerificationStatusProps {
   status: string
@@ -12,7 +13,7 @@ export function VerificationStatus({
   className = '',
 }: VerificationStatusProps) {
   const [showTooltip, setShowTooltip] = useState(false)
-  const isVerified = status.toUpperCase() === 'VERIFIED'
+  const tagInfo = getTreeTagStatus(status)
 
   return (
     <div
@@ -23,26 +24,30 @@ export function VerificationStatus({
     >
       {/* Icon Beside Tree Name */}
       <span
-        className="inline-flex items-center justify-center text-secondary cursor-pointer"
-        aria-label="Tree Record Verified"
+        className={`inline-flex items-center justify-center cursor-pointer ${
+          tagInfo.isTagged ? 'text-secondary' : 'text-amber-600'
+        }`}
+        aria-label={tagInfo.label}
       >
         <span className="material-symbols-outlined text-[20px] fill-current">
-          verified
+          {tagInfo.iconName}
         </span>
       </span>
 
       {/* Optional Badge */}
       {showBadge && (
-        <span className="ml-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide bg-secondary-container text-on-secondary-container inline-flex items-center gap-1">
-          <span>✓</span>
-          <span>{isVerified ? 'Verified' : status}</span>
+        <span
+          className={`ml-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide border inline-flex items-center gap-1 ${tagInfo.badgeClass}`}
+        >
+          {tagInfo.isTagged && <span>✓</span>}
+          <span>{tagInfo.label}</span>
         </span>
       )}
 
       {/* Tooltip on Hover / Tap */}
       {showTooltip && (
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 rounded-md bg-gray-900 text-white text-[11px] font-medium whitespace-nowrap shadow-lg z-30 pointer-events-none animate-fade-in">
-          Tree Record Verified
+          {tagInfo.tooltip}
           <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
         </div>
       )}

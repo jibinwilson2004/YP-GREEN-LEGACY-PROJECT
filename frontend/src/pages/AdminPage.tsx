@@ -138,6 +138,7 @@ export function AdminPage() {
         'Latitude', 'Longitude', 'Accuracy (m)', 'GPS Source', 'Location Confidence (%)',
         'Location Status', 'Stability Score (%)', 'Reading Count', 'Date of Planting',
         'Captured At', 'Student Planter', 'Submitted By (User)', 'Verification Status',
+        'Tagged Status',
         'Verified By', 'Verification Date', 'Identification Confidence (%)', 'Admin Note',
         'Institution (Public Restriction)',
       ]
@@ -162,6 +163,7 @@ export function AdminPage() {
           t.student || '',
           t.userId || '',
           t.verificationStatus,
+          t.verificationStatus === 'VERIFIED' ? 'Tagged' : 'Pending Verification',
           t.verifiedBy || '',
           t.verificationDate || '',
           String(t.identificationConfidence ?? ''),
@@ -699,14 +701,14 @@ export function AdminPage() {
                       <td className="py-3 px-4 text-xs text-outline font-mono">{t.userId ?? '—'}</td>
                       <td className="py-3 px-4 text-xs text-outline">{new Date(t.capturedAt).toLocaleDateString('en-IN')}</td>
                       <td className="py-3 px-4 text-center">
-                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                        <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase border ${
                           t.verificationStatus === 'VERIFIED'
-                            ? 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
                             : t.verificationStatus === 'PENDING'
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-red-100 text-red-700'
+                              ? 'bg-amber-100 text-amber-900 border-amber-300'
+                              : 'bg-red-100 text-red-700 border-red-200'
                         }`}>
-                          {t.verificationStatus}
+                          {t.verificationStatus === 'VERIFIED' ? 'Tagged' : t.verificationStatus === 'PENDING' ? 'Pending' : t.verificationStatus}
                         </span>
                       </td>
                       <td className="py-3 px-4">

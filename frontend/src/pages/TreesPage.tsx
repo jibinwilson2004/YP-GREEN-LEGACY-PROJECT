@@ -133,11 +133,11 @@ export function TreesPage() {
               <span>IEEE CSTF Precision Registry</span>
             </div>
             <h1 className="font-headline-lg text-3xl font-bold text-primary tracking-tight">
-              {isRegularUser ? 'My Tagged Trees' : 'Tree Registry'}
+              {isRegularUser ? 'My Trees' : 'Tree Registry'}
             </h1>
             <p className="text-body-md text-on-surface-variant mt-1">
               {isRegularUser
-                ? 'View and manage your registered saplings and verification telemetry.'
+                ? 'View your registered trees and verification telemetry. Only verified trees are labelled as tagged.'
                 : 'Browse cryptographically logged sapling verification records and multi-reading geospatial audits.'}
             </p>
           </div>
@@ -163,15 +163,23 @@ export function TreesPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
           <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
             <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Total Tagged</span>
-            <div className="font-mono-metric text-2xl font-bold text-primary mt-1">{total.toLocaleString()}</div>
-            <div className="text-[11px] text-secondary mt-0.5">Global Cluster</div>
+            <div className="font-mono-metric text-2xl font-bold text-emerald-700 mt-1">
+              {(isRegularUser || scopeFilter === 'my'
+                ? trees.filter((t) => t.verificationStatus === 'VERIFIED').length
+                : stats.verifiedTrees
+              ).toLocaleString()}
+            </div>
+            <div className="text-[11px] text-secondary mt-0.5">Verified &amp; Proven</div>
           </div>
           <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
-            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Verified Ratio</span>
-            <div className="font-mono-metric text-2xl font-bold text-secondary mt-1">
-              {total ? `${((stats.verifiedTrees / total) * 100).toFixed(1)}%` : '—'}
+            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Pending Verification</span>
+            <div className="font-mono-metric text-2xl font-bold text-amber-600 mt-1">
+              {(isRegularUser || scopeFilter === 'my'
+                ? trees.filter((t) => t.verificationStatus !== 'VERIFIED').length
+                : Math.max(0, total - stats.verifiedTrees)
+              ).toLocaleString()}
             </div>
-            <div className="text-[11px] text-on-surface-variant mt-0.5">Bi-weekly Audited</div>
+            <div className="text-[11px] text-on-surface-variant mt-0.5">Awaiting Admin Audit</div>
           </div>
           <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
             <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Active Biomes</span>
@@ -225,14 +233,14 @@ export function TreesPage() {
                       : 'text-on-surface-variant hover:text-primary'
                   }`}
                 >
-                  My Tagged Trees
+                  My Trees
                 </button>
               </div>
             )}
             {isRegularUser && (
               <div className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-1.5 shadow-xs">
                 <span className="material-symbols-outlined text-[16px] text-emerald-600">person</span>
-                <span>My Tagged Trees</span>
+                <span>My Trees</span>
               </div>
             )}
 
@@ -242,7 +250,7 @@ export function TreesPage() {
               className="bg-surface-container-low text-xs font-label-md px-3 py-2 rounded-lg border border-outline-variant/30 text-primary focus:outline-none"
             >
               <option value="ALL">All Verification Statuses</option>
-              <option value="VERIFIED">Verified</option>
+              <option value="VERIFIED">Tagged (Verified)</option>
               <option value="PENDING">Pending Verification</option>
               <option value="FLAGGED">Flagged for Audit</option>
             </select>

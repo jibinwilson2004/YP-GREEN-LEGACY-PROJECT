@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import type { Tree } from '../types/tree'
 import { classifyAccuracy, accuracyLabel } from '../services/gps/gpsAccuracy'
 import { fetchTreeById } from '../services/api'
+import { getTreeTagStatus } from '../utils/treeStatus'
 
 export function TreeDetailPage() {
   const { id } = useParams()
@@ -126,10 +127,17 @@ export function TreeDetailPage() {
           </Link>
           <div className="flex items-center gap-2">
             <span className="text-xs text-outline font-mono">Tree ID: #{tree.id}</span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container flex items-center gap-1">
-              <span>✓</span>
-              <span>{tree.verificationStatus}</span>
-            </span>
+            {(() => {
+              const tagInfo = getTreeTagStatus(tree.verificationStatus)
+              return (
+                <span
+                  className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border flex items-center gap-1 ${tagInfo.badgeClass}`}
+                >
+                  {tagInfo.isTagged && <span>✓</span>}
+                  <span>{tagInfo.label}</span>
+                </span>
+              )
+            })()}
           </div>
         </div>
 

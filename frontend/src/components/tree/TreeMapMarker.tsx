@@ -2,6 +2,7 @@ import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { Link } from 'react-router-dom'
 import type { Tree } from '../../types/tree'
+import { getTreeTagStatus } from '../../utils/treeStatus'
 
 interface TreeMapMarkerProps {
   tree: Tree
@@ -48,7 +49,8 @@ const createTreePinIcon = (verified = true) => {
 }
 
 export function TreeMapMarker({ tree, onViewDetails }: TreeMapMarkerProps) {
-  const isVerified = tree.verificationStatus === 'VERIFIED'
+  const tagInfo = getTreeTagStatus(tree.verificationStatus)
+  const isVerified = tagInfo.isTagged
   const icon = createTreePinIcon(isVerified)
   const commonName = tree.commonName || 'Neem'
   const botanicalName = tree.botanicalName || tree.species || 'Azadirachta indica'
@@ -62,9 +64,11 @@ export function TreeMapMarker({ tree, onViewDetails }: TreeMapMarkerProps) {
           {/* Header Tag */}
           <div className="flex items-center justify-between gap-2 border-b border-surface-variant/60 pb-2 mb-2">
             <span className="font-mono text-xs font-bold text-primary">#{tree.id}</span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-secondary px-2 py-0.5 rounded-full bg-secondary-container">
-              <span>✓</span>
-              <span>{isVerified ? 'Verified' : tree.verificationStatus}</span>
+            <span
+              className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full border ${tagInfo.badgeClass}`}
+            >
+              {tagInfo.isTagged && <span>✓</span>}
+              <span>{tagInfo.shortLabel}</span>
             </span>
           </div>
 

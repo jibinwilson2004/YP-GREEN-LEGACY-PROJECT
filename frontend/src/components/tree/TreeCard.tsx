@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import type { Tree } from '../../types/tree'
 import { IMAGES } from '../../constants/assets'
+import { getTreeTagStatus } from '../../utils/treeStatus'
 
 export function TreeCard({ tree }: { tree: Tree }) {
+  const tagInfo = getTreeTagStatus(tree.verificationStatus)
+
   return (
     <Link
       to={`/trees/${tree.id}`}
@@ -17,10 +20,13 @@ export function TreeCard({ tree }: { tree: Tree }) {
           />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-1">
             <span className="font-mono text-xs text-secondary font-bold">#{tree.id}</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold uppercase">
-              {tree.verificationStatus}
+            <span
+              className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border flex items-center gap-1 ${tagInfo.badgeClass}`}
+            >
+              {tagInfo.isTagged && <span>✓</span>}
+              <span>{tagInfo.shortLabel}</span>
             </span>
           </div>
           <h3 className="font-headline-sm text-base font-bold text-primary truncate mt-0.5">{tree.species}</h3>
@@ -37,4 +43,3 @@ export function TreeCard({ tree }: { tree: Tree }) {
     </Link>
   )
 }
-

@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom'
 import { AppHeader } from '../components/layout/AppHeader'
 import { AppFooter } from '../components/layout/AppFooter'
 import { IMAGES, SITE_NAME } from '../constants/assets'
-import { fetchTrees } from '../services/api'
+import { fetchPublicStatsApi, fetchTrees } from '../services/api'
 import { ActivityIdeasCanvas } from '../components/home/ActivityIdeasCanvas'
 
 export function HomePage() {
-  const [total, setTotal] = useState(0)
+  const [taggedTotal, setTaggedTotal] = useState(0)
 
   useEffect(() => {
-    void fetchTrees({ limit: 1 })
-      .then((response) => setTotal(response.total))
-      .catch((error) => console.error('[Tree totals unavailable]', error))
+    // Only verified trees should be labelled as tagged
+    void fetchPublicStatsApi()
+      .then((stats) => {
+        setTaggedTotal(stats.verifiedTrees)
+      })
+      .catch(() => {
+        void fetchTrees({ limit: 1, status: 'VERIFIED' })
+          .then((response) => setTaggedTotal(response.total))
+          .catch((error) => console.error('[Tree totals unavailable]', error))
+      })
   }, [])
 
   return (
@@ -51,7 +58,7 @@ export function HomePage() {
                 <span className="material-symbols-outlined text-secondary-fixed text-[20px]">forest</span>
                 <span className="font-body-md text-body-md text-on-primary font-medium">Trees tagged:</span>
                 <span className="font-mono-metric text-mono-metric text-secondary-fixed font-bold tracking-tight">
-                  {total.toLocaleString()}
+                  {taggedTotal.toLocaleString()}
                 </span>
               </div>
               {/* CTA Buttons */}

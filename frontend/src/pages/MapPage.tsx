@@ -79,12 +79,12 @@ export function MapPage() {
                 onChange={(event) => setStatusFilter(event.target.value)}
               >
                 <option value="">All visible statuses</option>
-                <option value="VERIFIED">Verified</option>
+                <option value="VERIFIED">Tagged (Verified)</option>
                 {authService.isAdmin() && (
                   <>
-                    <option value="PENDING">Pending</option>
+                    <option value="PENDING">Pending Verification</option>
                     <option value="REJECTED">Rejected</option>
-                    <option value="FLAGGED">Flagged</option>
+                    <option value="FLAGGED">Flagged for Audit</option>
                   </>
                 )}
               </select>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { TreeImageGallery } from './TreeImageGallery'
 import { VerificationStatus } from './VerificationStatus'
+import { getTreeTagStatus } from '../../utils/treeStatus'
 import { formatGpsSource } from '../../types/gps'
 import { formatDisplayName } from '../../services/authService'
 import { classifyAccuracy, accuracyLabel } from '../../services/gps/gpsAccuracy'
@@ -242,27 +243,32 @@ export function TreeDetailsCard({
         </div>
 
         {/* Audit & Verification Block */}
-        <div className="space-y-1 text-[11px] bg-emerald-50/60 p-2.5 rounded-lg border border-emerald-100">
-          <div className="flex justify-between items-center">
-            <span className="text-outline text-[10px] uppercase font-semibold">Verification:</span>
-            <span className="font-bold text-secondary flex items-center gap-1">
-              <span>✓</span>
-              <span>{tree.verificationStatus}</span>
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-outline text-[10px]">Verified By:</span>
-            <span className="font-medium text-primary text-[11px]">{tree.verifiedBy || 'IEEE YP CSTF'}</span>
-          </div>
-          {tree.verificationDate && (
-            <div className="flex justify-between items-center">
-              <span className="text-outline text-[10px]">Audit Date:</span>
-              <span className="font-mono text-primary text-[10px]">
-                {new Date(tree.verificationDate).toLocaleDateString('en-IN')}
-              </span>
+        {(() => {
+          const tagInfo = getTreeTagStatus(tree.verificationStatus)
+          return (
+            <div className={`space-y-1 text-[11px] p-2.5 rounded-lg border ${tagInfo.isTagged ? 'bg-emerald-50/70 border-emerald-200' : 'bg-amber-50/70 border-amber-200'}`}>
+              <div className="flex justify-between items-center">
+                <span className="text-outline text-[10px] uppercase font-semibold">Status:</span>
+                <span className={`font-bold flex items-center gap-1 ${tagInfo.isTagged ? 'text-secondary' : 'text-amber-800'}`}>
+                  {tagInfo.isTagged && <span>✓</span>}
+                  <span>{tagInfo.label}</span>
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-outline text-[10px]">Verified By:</span>
+                <span className="font-medium text-primary text-[11px]">{tree.verifiedBy || (tagInfo.isTagged ? 'IEEE YP CSTF' : 'Pending Review')}</span>
+              </div>
+              {tree.verificationDate && (
+                <div className="flex justify-between items-center">
+                  <span className="text-outline text-[10px]">Audit Date:</span>
+                  <span className="font-mono text-primary text-[10px]">
+                    {new Date(tree.verificationDate).toLocaleDateString('en-IN')}
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          )
+        })()}
       </div>
     </div>
   )
