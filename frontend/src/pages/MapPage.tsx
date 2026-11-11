@@ -17,19 +17,13 @@ export function MapPage() {
 
   const [search] = useState('')
   const [viewMode] = useState<'clusters' | 'heatmap' | 'satellite'>('clusters')
-  const [institutionFilter, setInstitutionFilter] = useState('')
-  const [clusterFilter, setClusterFilter] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
   const [mapError, setMapError] = useState<string | null>(null)
   const [selectedTree, setSelectedTree] = useState<Tree | null>(null)
   const [popoverOpen, setPopoverOpen] = useState(isUserFilter)
   const [userTab, setUserTab] = useState<'all' | 'user'>(isUserFilter ? 'user' : 'all')
   const mapFilters = useMemo(() => ({
-    institution: institutionFilter.trim() || undefined,
-    cluster: clusterFilter.trim() || undefined,
-    status: statusFilter || undefined,
     userId: userParam || (userTab === 'user' ? authService.getCurrentUser()?.email : undefined),
-  }), [institutionFilter, clusterFilter, statusFilter, userParam, userTab])
+  }), [userParam, userTab])
 
   useEffect(() => {
     if (!treeParam) return
@@ -58,44 +52,6 @@ export function MapPage() {
       {/* MAIN MAP INSPECTION CONSOLE */}
       <main className="w-full pt-4 bg-background flex-1 max-w-[1280px] mx-auto px-grid-margin-mobile md:px-grid-margin-desktop mb-spacing-4xl">
         <div className="flex flex-col w-full">
-          <div className="mb-3 grid grid-cols-1 sm:grid-cols-3 gap-2 rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-3">
-            <label className="text-xs font-semibold text-on-surface-variant">
-              Institution
-              <input
-                className="mt-1 w-full rounded-md border border-outline-variant/50 bg-white px-2.5 py-2 text-sm text-on-surface"
-                value={institutionFilter}
-                onChange={(event) => setInstitutionFilter(event.target.value)}
-                placeholder="All institutions"
-              />
-            </label>
-            <label className="text-xs font-semibold text-on-surface-variant">
-              Cluster
-              <input
-                className="mt-1 w-full rounded-md border border-outline-variant/50 bg-white px-2.5 py-2 text-sm text-on-surface"
-                value={clusterFilter}
-                onChange={(event) => setClusterFilter(event.target.value)}
-                placeholder="All clusters"
-              />
-            </label>
-            <label className="text-xs font-semibold text-on-surface-variant">
-              Verification status
-              <select
-                className="mt-1 w-full rounded-md border border-outline-variant/50 bg-white px-2.5 py-2 text-sm text-on-surface"
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-              >
-                <option value="">All visible statuses</option>
-                <option value="VERIFIED">Tagged (Verified)</option>
-                {authService.isAdmin() && (
-                  <>
-                    <option value="PENDING">Pending Verification</option>
-                    <option value="REJECTED">Rejected</option>
-                    <option value="FLAGGED">Flagged for Audit</option>
-                  </>
-                )}
-              </select>
-            </label>
-          </div>
           {mapError && (
             <p className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
               Could not load map records: {mapError}
