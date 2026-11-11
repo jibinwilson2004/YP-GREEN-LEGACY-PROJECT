@@ -56,7 +56,7 @@ class Tree(Base):
         Index("ix_trees_location_gist", "location", postgresql_using="gist"),
     )
 
-    id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    id: Mapped[str] = mapped_column(String(120), primary_key=True)
     species: Mapped[str] = mapped_column(String(250), nullable=False, index=True)
     common_name: Mapped[str | None] = mapped_column(String(250))
     botanical_name: Mapped[str | None] = mapped_column(String(250))
@@ -98,7 +98,7 @@ class TreePhoto(Base):
     __tablename__ = "tree_photos"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    tree_id: Mapped[str] = mapped_column(ForeignKey("trees.id", ondelete="CASCADE"), index=True)
+    tree_id: Mapped[str] = mapped_column(String(120), ForeignKey("trees.id", ondelete="CASCADE"), index=True)
     object_key: Mapped[str] = mapped_column(String(1024), unique=True, nullable=False)
     photo_type: Mapped[str] = mapped_column(String(50), default="primary", nullable=False)
     mime_type: Mapped[str] = mapped_column(String(100), nullable=False)
@@ -116,7 +116,7 @@ class GpsReading(Base):
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    tree_id: Mapped[str] = mapped_column(ForeignKey("trees.id", ondelete="CASCADE"), index=True)
+    tree_id: Mapped[str] = mapped_column(String(120), ForeignKey("trees.id", ondelete="CASCADE"), index=True)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
     longitude: Mapped[float] = mapped_column(Float, nullable=False)
     accuracy: Mapped[float] = mapped_column(Float, nullable=False)
@@ -129,7 +129,7 @@ class Verification(Base):
     __tablename__ = "verifications"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    tree_id: Mapped[str] = mapped_column(ForeignKey("trees.id", ondelete="CASCADE"), index=True)
+    tree_id: Mapped[str] = mapped_column(String(120), ForeignKey("trees.id", ondelete="CASCADE"), index=True)
     reviewer_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"))
     status: Mapped[str] = mapped_column(String(20), nullable=False)
     note: Mapped[str | None] = mapped_column(Text)
@@ -143,7 +143,7 @@ class AuditLog(Base):
     actor_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     action: Mapped[str] = mapped_column(String(100), nullable=False)
     entity_type: Mapped[str] = mapped_column(String(100), nullable=False)
-    entity_id: Mapped[str | None] = mapped_column(String(100))
+    entity_id: Mapped[str | None] = mapped_column(String(200))
     details: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
 

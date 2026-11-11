@@ -28,9 +28,17 @@ app.include_router(resources.router, prefix="/api/v1")
 
 @app.on_event("startup")
 def init_schema():
+    import os
+    if os.environ.get("TESTING") == "1":
+        return
     try:
         with get_session_factory()() as db:
             db.execute(text("ALTER TABLE trees ADD COLUMN IF NOT EXISTS country VARCHAR(100)"))
+            db.execute(text("ALTER TABLE trees ALTER COLUMN id TYPE VARCHAR(120)"))
+            db.execute(text("ALTER TABLE tree_photos ALTER COLUMN tree_id TYPE VARCHAR(120)"))
+            db.execute(text("ALTER TABLE gps_readings ALTER COLUMN tree_id TYPE VARCHAR(120)"))
+            db.execute(text("ALTER TABLE verifications ALTER COLUMN tree_id TYPE VARCHAR(120)"))
+            db.execute(text("ALTER TABLE audit_logs ALTER COLUMN entity_id TYPE VARCHAR(200)"))
             db.commit()
     except Exception:
         logging.getLogger(__name__).warning("Schema auto-patch deferred (DB unreachable or already updated)")

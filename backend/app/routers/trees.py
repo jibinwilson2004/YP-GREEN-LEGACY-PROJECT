@@ -1,6 +1,7 @@
 import csv
 import io
 import math
+import re
 import uuid
 from datetime import datetime, timezone
 from typing import Literal
@@ -22,10 +23,23 @@ from app.schemas.common import (
     TreeRead,
     TreeUpdate,
 )
-from app.services.storage import get_object_url
+from app.services.storage import delete_object, delete_objects_by_prefix, get_object_url
 from app.utils.security import get_current_user, get_optional_user, require_admin
 
 router = APIRouter(tags=["trees"])
+
+
+def generate_tree_tag_id(username_or_email: str | None, country: str | None, ts: int | None = None) -> str:
+    raw_user = (username_or_email or "user").split("@")[0]
+    clean_user = re.sub(r"[^a-zA-Z0-9]", "_", raw_user).lower()
+    clean_user = re.sub(r"_+", "_", clean_user).strip("_") or "user"
+
+    raw_country = (country or "india").lower()
+    clean_country = re.sub(r"[^a-zA-Z0-9]", "_", raw_country).lower()
+    clean_country = re.sub(r"_+", "_", clean_country).strip("_") or "global"
+
+    timestamp = ts if ts is not None else int(datetime.now(timezone.utc).timestamp())
+    return f"{clean_user}_{clean_country}_{timestamp}"
 
 
 def _tree_code() -> str:
@@ -64,12 +78,18 @@ def _visible_tree_query():
 
 @router.post("/trees", response_model=TreeRead, status_code=201)
 def create_tree(payload: TreeCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    code = payload.id or _tree_code()
+    code = payload.id
+    if not code or code.startswith("YP-"):
+        code = generate_tree_tag_id(user.email, payload.country)
     existing = db.get(Tree, code)
     if existing is not None:
         if existing.user_id == user.email and existing.deleted_at is None:
             return _tree_output(existing, db, is_admin=(user.role == "admin"))
-        raise HTTPException(status_code=409, detail="Tree code already exists")
+        suffix = int(datetime.now(timezone.utc).microsecond // 1000)
+        code = f"{code}_{suffix}"
+        existing = db.get(Tree, code)
+        if existing is not None:
+            raise HTTPException(status_code=409, detail="Tree code already exists")
     values = payload.model_dump(exclude={"id", "captured_at"})
     institution = db.scalar(select(Institution).where(Institution.name == payload.institution)) if payload.institution else None
     cluster = db.scalar(select(Cluster).where(Cluster.name == payload.cluster)) if payload.cluster else None
@@ -165,6 +185,30 @@ def delete_tree(tree_id: str, db: Session = Depends(get_db), user: User = Depend
         raise HTTPException(status_code=403, detail="You may only delete your own tree")
     if user.role != "admin" and tree.verification_status == "VERIFIED":
         raise HTTPException(status_code=409, detail="Verified trees cannot be deleted by their owner")
+
+    # Mandatory: permanently delete all photo files from cloud storage (Cloudflare R2)
+    photos = []
+    try:
+        photos = db.scalars(select(TreePhoto).where(TreePhoto.tree_id == tree_id)).all()
+    except Exception:
+        pass
+
+    for p in photos:
+        try:
+            delete_object(p.object_key, ignore_missing=True)
+        except Exception:
+            pass
+        try:
+            db.delete(p)
+        except Exception:
+            pass
+
+    # Purge any remaining files under trees/{tree_id}/ in Cloud Storage
+    try:
+        delete_objects_by_prefix(f"trees/{tree_id}/")
+    except Exception:
+        pass
+
     tree.deleted_at = datetime.now(timezone.utc)
     db.add(AuditLog(actor_id=user.id, action="tree.deleted", entity_type="tree", entity_id=tree.id))
     db.commit()

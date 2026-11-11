@@ -16,15 +16,21 @@ export type CaptureStep =
 
 export function useTreeCapture() {
   const [step, setStep] = useState<CaptureStep>('intro')
-  const [draft, setDraft] = useState<TreeCaptureDraft>({
+  const [draft, setDraft] = useState<TreeCaptureDraft>(() => ({
     species: '',
     identificationConfidence: 0,
     anomalies: [],
     treeIdPreview: treeService.nextTreeId(),
-  })
+  }))
 
   const updateDraft = useCallback((patch: Partial<TreeCaptureDraft>) => {
-    setDraft((d) => ({ ...d, ...patch }))
+    setDraft((d) => {
+      const updated = { ...d, ...patch }
+      if (patch.country && patch.country !== d.country) {
+        updated.treeIdPreview = treeService.nextTreeId(undefined, patch.country)
+      }
+      return updated
+    })
   }, [])
 
   const recomputeAnomalies = useCallback(() => {

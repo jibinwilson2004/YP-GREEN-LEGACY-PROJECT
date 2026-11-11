@@ -63,6 +63,28 @@ export interface ParticipantStats {
   verifiedCount: number
 }
 
+export function generateTreeTagId(
+  usernameOrEmail?: string,
+  country?: string,
+  timestamp?: number
+): string {
+  const rawUser = (usernameOrEmail || 'user').split('@')[0]
+  const cleanUser = rawUser
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_|_$/g, '') || 'user'
+
+  const cleanCountry = (country || 'india')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_|_$/g, '') || 'global'
+
+  const ts = timestamp ?? Math.floor(Date.now() / 1000)
+  return `${cleanUser}_${cleanCountry}_${ts}`
+}
+
 export const treeService = {
   getAll(): Tree[] {
     return [...trees()]
@@ -219,8 +241,9 @@ export const treeService = {
     return Array.from(map.values()).sort((a, b) => b.treeCount - a.treeCount)
   },
 
-  nextTreeId(): string {
-    return `YP-${crypto.randomUUID().replace(/-/g, '').slice(0, 12).toUpperCase()}`
+  nextTreeId(usernameOrEmail?: string, country?: string): string {
+    const user = usernameOrEmail || (typeof window !== 'undefined' ? localStorage.getItem('tree_tag_user_id') || undefined : undefined)
+    return generateTreeTagId(user, country)
   },
 
   async fetchLatestFromDb(): Promise<Tree[]> {
@@ -250,7 +273,11 @@ export const treeService = {
     userId?: string,
   ): Tree | null {
     if (!draft.location || !draft.species) return null
-    const id = draft.treeIdPreview ?? this.nextTreeId()
+    const userIdentifier = userId || (typeof window !== 'undefined' ? localStorage.getItem('tree_tag_user_id') || undefined : undefined)
+    const countryName = draft.country || 'India'
+    const id = (draft.treeIdPreview && !draft.treeIdPreview.startsWith('YP-'))
+      ? draft.treeIdPreview
+      : generateTreeTagId(userIdentifier, countryName)
 
     let studentName: string | undefined
     let institutionName: string | undefined

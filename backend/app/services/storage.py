@@ -100,9 +100,39 @@ def upload_object(object_key: str, data: bytes, mime_type: str) -> None:
         raise HTTPException(status_code=502, detail="Could not upload object to R2") from exc
 
 
-def delete_object(object_key: str) -> None:
+def delete_object(object_key: str, ignore_missing: bool = False) -> None:
     settings = get_settings()
     try:
         _client().delete_object(Bucket=settings.r2_bucket_name, Key=object_key)
+    except HTTPException:
+        if not ignore_missing:
+            raise
     except (BotoCoreError, ClientError) as exc:
-        raise HTTPException(status_code=502, detail="Could not delete the R2 object") from exc
+        if not ignore_missing:
+            raise HTTPException(status_code=502, detail="Could not delete the R2 object") from exc
+
+
+def delete_objects_by_prefix(prefix: str) -> int:
+    """Delete all objects matching a prefix (e.g. 'trees/{tree_id}/') from R2/S3.
+    Returns the count of deleted objects.
+    """
+    settings = get_settings()
+    try:
+        client = _client()
+    except HTTPException:
+        return 0
+
+    deleted_count = 0
+    try:
+        paginator = client.get_paginator("list_objects_v2")
+        for page in paginator.paginate(Bucket=settings.r2_bucket_name, Prefix=prefix):
+            objects = [{"Key": obj["Key"]} for obj in page.get("Contents", [])]
+            if objects:
+                client.delete_objects(
+                    Bucket=settings.r2_bucket_name,
+                    Delete={"Objects": objects, "Quiet": True},
+                )
+                deleted_count += len(objects)
+        return deleted_count
+    except (BotoCoreError, ClientError):
+        return deleted_count

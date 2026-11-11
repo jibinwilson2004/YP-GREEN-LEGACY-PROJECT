@@ -52,7 +52,7 @@ class TokenResponse(ApiModel):
 
 
 class TreeCreate(ApiModel):
-    id: str | None = Field(default=None, max_length=40)
+    id: str | None = Field(default=None, max_length=120)
     species: str = Field(min_length=1, max_length=250)
     common_name: str | None = None
     botanical_name: str | None = None
@@ -73,13 +73,12 @@ class TreeCreate(ApiModel):
     cluster: str | None = None
     institution: str | None = None
     country: str | None = None
-    country: str | None = None
     identification_confidence: int = Field(default=0, ge=0, le=100)
 
     @field_validator("id")
     @classmethod
     def valid_tree_code(cls, value: str | None) -> str | None:
-        if value is not None and not re.fullmatch(r"[A-Za-z0-9_-]{1,40}", value):
+        if value is not None and not re.fullmatch(r"[A-Za-z0-9_.-]{1,120}", value):
             raise ValueError("Tree code contains invalid characters")
         return value
 

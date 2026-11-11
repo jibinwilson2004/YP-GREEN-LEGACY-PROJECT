@@ -1,8 +1,11 @@
+import os
 import sys
 from pathlib import Path
 from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+os.environ["TESTING"] = "1"
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
 import pytest
 from fastapi import HTTPException
@@ -13,16 +16,24 @@ from app.routers.trees import delete_tree
 
 
 class FakeDatabase:
-    def __init__(self, tree):
+    def __init__(self, tree, photos=None):
         self.tree = tree
+        self.photos = photos or []
         self.added = []
+        self.deleted = []
         self.committed = False
 
     def scalar(self, _query):
         return self.tree
 
+    def scalars(self, _query):
+        return SimpleNamespace(all=lambda: list(self.photos))
+
     def add(self, item):
         self.added.append(item)
+
+    def delete(self, item):
+        self.deleted.append(item)
 
     def commit(self):
         self.committed = True
@@ -155,4 +166,50 @@ def test_institution_hidden_from_public_in_tree_output():
     assert admin_output.institution == "APJAKTU NSSCELL"
     assert admin_output.college == "GEC Barton Hill"
     assert admin_output.institution_id == 1
+
+
+def test_generate_tree_tag_id_format():
+    from app.routers.trees import generate_tree_tag_id
+
+    tag_id = generate_tree_tag_id("dummy@gmail.com", "India", ts=1731302839)
+    assert tag_id == "dummy_india_1731302839"
+
+    tag_id_spaces = generate_tree_tag_id("john.doe@yp.ieee.org", "United States", ts=1731302839)
+    assert tag_id_spaces == "john_doe_united_states_1731302839"
+
+
+def test_delete_tree_purges_associated_photos(monkeypatch):
+    deleted_storage_keys = []
+    deleted_prefixes = []
+
+    def fake_delete_object(key, ignore_missing=False):
+        deleted_storage_keys.append(key)
+
+    def fake_delete_objects_by_prefix(prefix):
+        deleted_prefixes.append(prefix)
+        return 1
+
+    monkeypatch.setattr("app.routers.trees.delete_object", fake_delete_object)
+    monkeypatch.setattr("app.routers.trees.delete_objects_by_prefix", fake_delete_objects_by_prefix)
+
+    photo1 = SimpleNamespace(id=1, tree_id="tree_123", object_key="trees/tree_123/primary/a.jpg")
+    photo2 = SimpleNamespace(id=2, tree_id="tree_123", object_key="trees/tree_123/primary/b.jpg")
+    tree = SimpleNamespace(
+        id="tree_123",
+        user_id="owner@example.com",
+        verification_status="PENDING",
+        deleted_at=None,
+    )
+    db = FakeDatabase(tree, photos=[photo1, photo2])
+    admin_user = SimpleNamespace(id=99, email="admin@example.com", role="admin")
+
+    delete_tree("tree_123", db, admin_user)
+
+    assert "trees/tree_123/primary/a.jpg" in deleted_storage_keys
+    assert "trees/tree_123/primary/b.jpg" in deleted_storage_keys
+    assert "trees/tree_123/" in deleted_prefixes
+    assert photo1 in db.deleted
+    assert photo2 in db.deleted
+    assert tree.deleted_at is not None
+
 
