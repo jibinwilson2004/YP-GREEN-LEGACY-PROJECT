@@ -104,15 +104,15 @@ export function useGPS() {
     }
 
     try {
-      // 1. Direct explicit browser prompt triggered from click user-activation
+      // 1. Direct explicit browser prompt triggered from click user-activation (use standard accuracy to avoid timeout)
       await new Promise<GeolocationPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
+          enableHighAccuracy: false,
           timeout: 10000,
-          maximumAge: 0,
+          maximumAge: 60000,
         })
       })
-      // 2. Permission granted! Now proceed with standard high-precision collection
+      // 2. Permission granted! Now proceed with collection
       await startCollection()
     } catch (e: unknown) {
       const err = e as GeolocationPositionError

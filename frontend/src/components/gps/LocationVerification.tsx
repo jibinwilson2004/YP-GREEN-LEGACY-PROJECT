@@ -95,32 +95,51 @@ export function LocationVerification({
             </div>
             <div className="space-y-1.5 flex-1">
               <h3 className="font-bold text-base text-error">
-                {isDenied ? 'Location Permission Denied' : 'GPS Location Unavailable'}
+                {isDenied
+                  ? 'Location Permission Denied'
+                  : error.toLowerCase().includes('timeout')
+                    ? 'GPS Signal Acquisition Delayed'
+                    : 'GPS Location Unavailable'}
               </h3>
               <p className="text-sm text-on-error-container leading-relaxed">
                 {isDenied
                   ? 'Location permission was rejected while collecting GPS. Accurate coordinates are required to record the tree on the live map and verify the planting.'
-                  : error}
+                  : error.toLowerCase().includes('timeout')
+                    ? 'Hardware GPS satellite lock took longer than expected. Click "Try Again" below to instantly acquire coordinates with network-assisted positioning.'
+                    : error}
               </p>
 
               {/* Action Buttons */}
               <div className="pt-3 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={handleRerequest}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary hover:bg-secondary text-on-primary font-bold text-sm shadow-sm transition-all cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-[18px]">near_me</span>
-                  <span>Re-request Location Permission</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={onStart}
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface text-xs font-semibold transition-colors cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-[16px]">refresh</span>
-                  <span>Try Again</span>
-                </button>
+                {isDenied ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleRerequest}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary hover:bg-secondary text-on-primary font-bold text-sm shadow-sm transition-all cursor-pointer"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">near_me</span>
+                      <span>Re-request Location Permission</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={onStart}
+                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface text-xs font-semibold transition-colors cursor-pointer"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">refresh</span>
+                      <span>Try Again</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={onStart}
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary hover:bg-secondary text-on-primary font-bold text-sm shadow-sm transition-all cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">refresh</span>
+                    <span>Try Again (Assisted GPS)</span>
+                  </button>
+                )}
               </div>
 
               {/* Browser settings guidance toggle */}

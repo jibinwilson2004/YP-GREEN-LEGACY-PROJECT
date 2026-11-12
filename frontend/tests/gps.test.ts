@@ -139,4 +139,54 @@ describe('GPS Accuracy & Confidence Engine', () => {
     await expect(collectGpsReadings(failingProvider, undefined, 5000)).rejects.toThrow('User denied Geolocation')
     expect(stopped).toBe(true)
   })
+
+  it('falls back from high-accuracy timeout to standard accuracy positioning', async () => {
+    let callCount = 0
+    const mockGeolocation = {
+      getCurrentPosition: (success: (pos: any) => void, error: (err: any) => void, options: any) => {
+        callCount++
+        if (options.enableHighAccuracy) {
+          // Simulate timeout on high-accuracy satellite attempt
+          error({ code: 3, message: 'Timeout expired' })
+        } else {
+          // Success on fallback standard network positioning
+          success({
+            coords: {
+              latitude: 10.0528,
+              longitude: 76.6346,
+              accuracy: 12.0,
+            },
+            timestamp: Date.now(),
+          })
+        }
+      },
+      watchPosition: () => 1,
+      clearWatch: () => {},
+    }
+
+    const originalGeo = globalThis.navigator.geolocation
+    Object.defineProperty(globalThis.navigator, 'geolocation', {
+      value: mockGeolocation,
+      configurable: true,
+      writable: true,
+    })
+
+    try {
+      const { SmartphoneGPSProvider } = await import('../src/services/gps/positionProvider')
+      const provider = new SmartphoneGPSProvider()
+      await provider.start()
+      const pos = await provider.getPosition()
+
+      expect(pos.latitude).toBeCloseTo(10.0528)
+      expect(pos.longitude).toBeCloseTo(76.6346)
+      expect(callCount).toBeGreaterThanOrEqual(2) // At least 1 high-accuracy attempt + 1 fallback attempt
+      provider.stop()
+    } finally {
+      Object.defineProperty(globalThis.navigator, 'geolocation', {
+        value: originalGeo,
+        configurable: true,
+        writable: true,
+      })
+    }
+  })
 })
