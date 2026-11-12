@@ -112,7 +112,20 @@ export const treeService = {
   },
 
   getByUser(userId: string): Tree[] {
-    return trees().filter((t) => t.userId === userId)
+    const target = (userId || '').trim().toLowerCase()
+    if (!target) return []
+    const prefix = target.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '')
+    return trees().filter((t) => {
+      const u = (t.userId || '').trim().toLowerCase()
+      const s = (t.student || '').trim().toLowerCase()
+      const id = (t.id || '').trim().toLowerCase()
+      return (
+        u === target ||
+        (prefix && u === prefix) ||
+        (s && (s === target || s === prefix)) ||
+        (prefix && id.startsWith(`${prefix}_`))
+      )
+    })
   },
 
   getPending(): Tree[] {

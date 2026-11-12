@@ -125,7 +125,7 @@ export function CapturePage() {
       ...capture.draft,
       identificationConfidence: capture.identificationConfidence,
     }
-    const userId = localStorage.getItem('tree_tag_user_id') || 'field-worker'
+    const userId = authUser?.email || localStorage.getItem('tree_tag_user_id') || 'field-worker'
     const tree = treeService.buildTreeFromDraft(draft, userId)
     if (!tree) {
       setRegisterError('Registration failure — incomplete data')

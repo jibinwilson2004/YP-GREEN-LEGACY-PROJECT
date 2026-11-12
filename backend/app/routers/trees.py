@@ -135,7 +135,13 @@ def list_trees(
     if user_id:
         if not is_admin and (user is None or user_id.lower() != user.email.lower()):
             raise HTTPException(status_code=403, detail="You may only access your own tree-tagging records")
-        query = query.where(func.lower(Tree.user_id) == user_id.lower())
+        user_clean = user_id.lower()
+        user_prefix = re.sub(r"[^a-zA-Z0-9]", "_", user_clean.split("@")[0]).strip("_")
+        query = query.where(
+            (func.lower(Tree.user_id) == user_clean)
+            | (func.lower(Tree.user_id) == user_prefix)
+            | (Tree.id.ilike(f"{user_prefix}_%"))
+        )
     total = db.scalar(select(func.count()).select_from(query.subquery())) or 0
     items = db.scalars(query.order_by(Tree.created_at.desc()).offset((page - 1) * limit).limit(limit)).all()
     return TreeList(trees=[_tree_output(item, db, is_admin=is_admin) for item in items], total=total, page=page, total_pages=math.ceil(total / limit))

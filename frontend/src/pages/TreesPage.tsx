@@ -57,11 +57,32 @@ export function TreesPage() {
       userId: effectiveUserId,
     }).then((response) => {
       if (!active) return
-      setTrees(response.trees)
-      setTotal(response.total)
+      if (response.trees.length > 0 || !effectiveUserId) {
+        setTrees(response.trees)
+        setTotal(response.total)
+      } else {
+        const local = treeService.getByUser(effectiveUserId)
+        if (local.length > 0) {
+          setTrees(local)
+          setTotal(local.length)
+        } else {
+          setTrees([])
+          setTotal(0)
+        }
+      }
       setLoadError(null)
     }).catch((error) => {
-      if (active) setLoadError(error instanceof Error ? error.message : 'Failed to load tree records.')
+      if (!active) return
+      if (effectiveUserId) {
+        const local = treeService.getByUser(effectiveUserId)
+        if (local.length > 0) {
+          setTrees(local)
+          setTotal(local.length)
+          setLoadError(null)
+          return
+        }
+      }
+      setLoadError(error instanceof Error ? error.message : 'Failed to load tree records.')
     })
     return () => { active = false }
   }, [page, pageSize, search, statusFilter, speciesFilter, scopeFilter, currentUserId, isRegularUser, authUser])
