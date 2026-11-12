@@ -17,13 +17,12 @@ import { SITE_NAME } from '../constants/assets'
 import { reverseGeocodeCountry } from '../services/gps/reverseGeocoding'
 
 const STEPS = [
-  'Capture Tree',
-  'Request Location',
-  'GPS Verification',
+  'Introduction',
+  'GPS Location',
   'Tree Photo',
   'Tree Details',
   'Review',
-  'Register',
+  'Registration',
 ]
 
 export function CapturePage() {
@@ -93,12 +92,12 @@ export function CapturePage() {
       : capture.step === 'location'
         ? 1
         : capture.step === 'photo'
-          ? 3
+          ? 2
           : capture.step === 'details'
-            ? 4
+            ? 3
             : capture.step === 'review'
-              ? 5
-              : 6
+              ? 4
+              : 5
 
   async function handlePhoto(file: File) {
     try {
@@ -354,12 +353,29 @@ export function CapturePage() {
           <div className="bg-secondary-container/40 rounded-xl p-8 text-center border border-secondary/30">
             <span className="material-symbols-outlined text-[48px] text-secondary">check_circle</span>
             <h2 className="font-headline-md text-primary mt-4">Tree Registered</h2>
-            <p className="text-body-md text-on-surface-variant mt-2">
-              {registeredTreeId || capture.draft.treeIdPreview} has been submitted for backend verification.
+            <p className="text-body-md text-on-surface-variant mt-2 max-w-md mx-auto">
+              <span className="font-mono font-semibold text-primary">{registeredTreeId || capture.draft.treeIdPreview}</span> has been submitted for administrator verification. Once verified, it will be labeled as Tagged.
             </p>
-            <Link to="/trees" className="inline-block mt-6 text-secondary font-label-md font-semibold hover:underline">
-              View registry →
-            </Link>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to="/my-trees"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary hover:bg-secondary text-on-primary font-semibold text-sm shadow-sm transition-colors"
+              >
+                <span className="material-symbols-outlined text-[18px]">park</span>
+                View My Trees
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  capture.reset()
+                  gps.reset()
+                }}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-outline-variant bg-white hover:bg-surface-container text-on-surface text-sm font-semibold transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">add_a_photo</span>
+                Register Another Tree
+              </button>
+            </div>
           </div>
         )}
 

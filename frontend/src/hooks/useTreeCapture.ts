@@ -90,6 +90,16 @@ export function useTreeCapture() {
     if (i > 0) setStep(order[i - 1])
   }, [step])
 
+  const reset = useCallback(() => {
+    setDraft({
+      species: '',
+      identificationConfidence: 0,
+      anomalies: [],
+      treeIdPreview: treeService.nextTreeId(),
+    })
+    setStep('intro')
+  }, [])
+
   return {
     step,
     setStep,
@@ -99,5 +109,6 @@ export function useTreeCapture() {
     recomputeAnomalies,
     goNext,
     goBack,
+    reset,
   }
 }

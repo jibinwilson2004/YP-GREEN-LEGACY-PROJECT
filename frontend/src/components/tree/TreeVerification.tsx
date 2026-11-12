@@ -98,7 +98,7 @@ export function TreeVerification({
             {draft.anomalies.map((a) => (
               <li key={a.type} className="flex items-center gap-2 text-error font-label-md">
                 <span className="material-symbols-outlined text-[18px]">warning</span>
-                ⚠ {a.message}
+                <span>{a.message}</span>
               </li>
             ))}
           </ul>

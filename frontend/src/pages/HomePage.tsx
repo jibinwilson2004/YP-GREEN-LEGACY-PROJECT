@@ -10,7 +10,7 @@ export function HomePage() {
   const [taggedTotal, setTaggedTotal] = useState(0)
 
   useEffect(() => {
-    // Only verified trees should be labelled as tagged
+    // Only verified trees should be labeled as tagged
     void fetchPublicStatsApi()
       .then((stats) => {
         setTaggedTotal(stats.verifiedTrees)
@@ -100,7 +100,7 @@ export function HomePage() {
               </span>
             </div>
             <h2 className="font-headline-lg text-3xl sm:text-4xl text-primary tracking-tight font-bold max-w-2xl leading-snug">
-              Precision telemetry meet scalable ecological restoration.
+              Precision telemetry meets scalable ecological restoration.
             </h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">
               Modular, auditable services tailored to corporate sustainability, verified registry credits, and community stewardship.
@@ -233,7 +233,7 @@ export function HomePage() {
               <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-spacing-xl">
                 {SITE_NAME} aspires to create a nature-conscious community. The publicly sponsored trees in our system
                 are planted in the premises of social service institutions, like schools, colleges, old-age homes,
-                orphanages, and rehabilitation centres. Through our enterprise, we aspire to help businesses and
+                orphanages, and rehabilitation centers. Through our enterprise, we aspire to help businesses and
                 individuals make nature-conscious decisions.
               </p>
 

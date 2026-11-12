@@ -10,9 +10,9 @@ export interface TreeTagStatusInfo {
 }
 
 /**
- * Ensures ONLY trees that are verified are labelled as 'Tagged'.
+ * Ensures ONLY trees that are verified are labeled as 'Tagged'.
  * If a tree is rejected, it is prominently marked as 'Rejected'.
- * Pending trees are explicitly labelled as 'Pending Verification'.
+ * Pending trees are explicitly labeled as 'Pending Verification'.
  */
 export function getTreeTagStatus(status?: string | null): TreeTagStatusInfo {
   const normalized = (status || '').toUpperCase()

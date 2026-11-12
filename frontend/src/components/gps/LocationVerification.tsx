@@ -78,7 +78,7 @@ export function LocationVerification({
               className="text-xs text-secondary hover:text-primary underline cursor-pointer"
               title="Click if prompt did not appear"
             >
-              Re-request prompt
+              Prompt for Permission Again
             </button>
           </div>
           <GPSReadings readings={readings} />

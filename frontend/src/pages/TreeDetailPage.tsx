@@ -151,7 +151,7 @@ export function TreeDetailPage() {
                 Tree Record Marked as Rejected
               </h3>
               <p className="text-xs text-red-800 mt-1 leading-relaxed">
-                This tree record was audited by an administrator and marked as <strong>Rejected</strong>. It is not approved as an active tagged sapling.
+                This tree record was audited by an administrator and marked as <strong>Rejected</strong>. It is not approved as an active tagged tree.
               </p>
               {tree.adminNote && (
                 <div className="mt-2.5 p-3 rounded-lg bg-red-100/70 border border-red-200 text-xs text-red-950 font-medium">

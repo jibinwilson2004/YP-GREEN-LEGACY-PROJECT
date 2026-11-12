@@ -137,7 +137,7 @@ export function TreesPage() {
             </h1>
             <p className="text-body-md text-on-surface-variant mt-1">
               {isRegularUser
-                ? 'View your registered trees and verification telemetry. Only verified trees are labelled as tagged.'
+                ? 'View your registered trees and verification telemetry. Only verified trees are labeled as Tagged.'
                 : 'Browse cryptographically logged sapling verification records and multi-reading geospatial audits.'}
             </p>
           </div>

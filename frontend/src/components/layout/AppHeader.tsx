@@ -65,13 +65,13 @@ function PartnerModal({ onClose }: { onClose: () => void }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label className="block">
-                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Organisation Name *</span>
+                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Organization Name *</span>
                 <input required autoComplete="on" value={form.orgName} onChange={set('orgName')} className="mt-1.5 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all" />
               </label>
               <label className="block">
-                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Organisation Type</span>
+                <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Organization Type</span>
                 <select value={form.orgType} onChange={set('orgType')} className="mt-1.5 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition-all">
-                  {['NGO / Non-Profit', 'Corporate / CSR', 'Academic Institution', 'Government Body', 'Research Organisation', 'IEEE Chapter / Section', 'Other'].map((t) => (
+                  {['NGO / Non-Profit', 'Corporate / CSR', 'Academic Institution', 'Government Body', 'Research Organization', 'IEEE Chapter / Section', 'Other'].map((t) => (
                     <option key={t}>{t}</option>
                   ))}
                 </select>
@@ -251,7 +251,7 @@ export function AppHeader({ mapActive }: { mapActive?: boolean }) {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-bold text-base tracking-tight text-white">{SITE_NAME}</span>
-                <span className="text-[9px] uppercase tracking-widest text-white/90 font-semibold mt-0.5">Biometric Forest Registry</span>
+                <span className="text-[9px] uppercase tracking-widest text-white/90 font-semibold mt-0.5">Geospatial Tree Registry</span>
               </div>
             </Link>
 
