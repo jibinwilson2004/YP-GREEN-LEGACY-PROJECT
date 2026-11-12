@@ -120,4 +120,23 @@ describe('GPS Accuracy & Confidence Engine', () => {
     expect(speedAnomaly).not.toBeNull()
     expect(speedAnomaly?.type).toBe('SUSPICIOUS_MOVEMENT')
   })
+
+  it('handles permission rejection gracefully during GPS collection', async () => {
+    let stopped = false
+    const failingProvider = {
+      start: async () => {
+        throw new Error('User denied Geolocation')
+      },
+      stop: () => {
+        stopped = true
+      },
+      getPosition: async () => {
+        throw new Error('User denied Geolocation')
+      },
+    }
+
+    const { collectGpsReadings } = await import('../src/services/gps/gpsService')
+    await expect(collectGpsReadings(failingProvider, undefined, 5000)).rejects.toThrow('User denied Geolocation')
+    expect(stopped).toBe(true)
+  })
 })

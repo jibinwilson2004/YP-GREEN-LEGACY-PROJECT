@@ -21,3 +21,4 @@ def downgrade() -> None:
     op.execute("ALTER TABLE gps_readings ALTER COLUMN tree_id TYPE VARCHAR(40)")
     op.execute("ALTER TABLE tree_photos ALTER COLUMN tree_id TYPE VARCHAR(40)")
     op.execute("ALTER TABLE trees ALTER COLUMN id TYPE VARCHAR(40)")
+

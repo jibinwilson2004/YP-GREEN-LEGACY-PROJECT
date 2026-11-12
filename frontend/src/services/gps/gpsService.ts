@@ -49,7 +49,12 @@ export async function collectGpsReadings(
   durationMs = 10000,
 ): Promise<GeoReading[]> {
   const ms = Math.min(COLLECTION_MS_MAX, Math.max(COLLECTION_MS_MIN, durationMs))
-  await provider.start()
+  try {
+    await provider.start()
+  } catch (err) {
+    provider.stop()
+    throw err
+  }
   const readings: GeoReading[] = []
   const started = Date.now()
 

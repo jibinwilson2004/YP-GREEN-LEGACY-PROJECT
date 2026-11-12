@@ -39,7 +39,10 @@ export class SmartphoneGPSProvider implements PositionProvider {
           this.latest = geoToReading(pos)
           resolve()
         },
-        (err) => reject(new Error(err.message)),
+        (err) => {
+          this.stop()
+          reject(new Error(err.message || 'Location permission denied'))
+        },
         { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 },
       )
     })
@@ -47,9 +50,14 @@ export class SmartphoneGPSProvider implements PositionProvider {
 
   stop(): void {
     if (this.watchId !== null) {
-      navigator.geolocation.clearWatch(this.watchId)
+      try {
+        navigator.geolocation.clearWatch(this.watchId)
+      } catch {
+        /* ignore */
+      }
       this.watchId = null
     }
+    this.latest = null
   }
 
   getPosition(): Promise<Position> {

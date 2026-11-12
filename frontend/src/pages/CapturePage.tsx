@@ -231,7 +231,9 @@ export function CapturePage() {
               readings={gps.readings}
               verified={gps.verified}
               error={gps.error}
+              isPermissionDenied={gps.isPermissionDenied}
               onStart={() => void gps.startCollection()}
+              onRerequestPermission={() => void gps.rerequestPermission()}
             />
             {gps.verified && (
               <button
