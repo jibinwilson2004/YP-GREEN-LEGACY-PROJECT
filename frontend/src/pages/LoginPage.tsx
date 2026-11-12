@@ -81,7 +81,7 @@ export function LoginPage() {
       {resetModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-200">
-            <div className="bg-gradient-to-r from-[#004d36] to-[#0a2118] text-white p-6 relative">
+            <div className="bg-gradient-to-r from-[#0a4634] via-[#093527] to-[#041d15] text-white p-6 relative">
               <button
                 type="button"
                 onClick={() => setResetModalOpen(false)}

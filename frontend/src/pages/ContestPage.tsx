@@ -15,7 +15,13 @@ export function ContestPage() {
             className="absolute inset-0 w-full h-full bg-cover bg-center opacity-20"
             style={{ backgroundImage: `url('${IMAGES.pineForestAerial}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary-container/85 to-background" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(4, 32, 23, 0.92) 0%, rgba(10, 48, 36, 0.82) 45%, rgba(18, 70, 52, 0.65) 75%, #f4fbf4 100%)',
+            }}
+          />
 
           <div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-12 flex flex-col items-center text-center">
             {/* Pill badge */}

@@ -184,20 +184,27 @@ export function CapturePage() {
             <span className="material-symbols-outlined text-[16px]">arrow_back</span>
             {SITE_NAME}
           </Link>
-          <h1 className="font-headline-lg text-headline-lg text-primary mt-4">Capture Tree</h1>
+          <h1 className="font-headline-lg text-headline-lg text-primary mt-4 font-bold">Capture Tree</h1>
           <div className="flex flex-wrap gap-2 mt-4">
-            {STEPS.map((label, i) => (
-              <span
-                key={label}
-                className={`px-2.5 py-1 rounded-full text-label-sm font-label-sm ${
-                  i <= stepIndex
-                    ? 'bg-secondary-container text-on-secondary-container'
-                    : 'bg-surface-container-high text-on-surface-variant'
-                }`}
-              >
-                {label}
-              </span>
-            ))}
+            {STEPS.map((label, i) => {
+              const isCurrent = i === stepIndex
+              const isDone = i < stepIndex
+              return (
+                <span
+                  key={label}
+                  className={`px-3 py-1 rounded-full text-xs transition-all flex items-center gap-1 ${
+                    isCurrent
+                      ? 'bg-primary text-white font-bold shadow-xs ring-2 ring-primary/20'
+                      : isDone
+                        ? 'bg-emerald-100/90 text-emerald-900 border border-emerald-300 font-semibold'
+                        : 'bg-surface-container-high text-on-surface-variant/70 font-medium'
+                  }`}
+                >
+                  {isDone && <span className="material-symbols-outlined text-[13px] text-emerald-700">check</span>}
+                  <span>{label}</span>
+                </span>
+              )
+            })}
           </div>
           {!offline.isOnline && (
             <p className="mt-3 text-body-sm text-on-surface-variant flex items-center gap-2">
@@ -209,15 +216,18 @@ export function CapturePage() {
         </div>
 
         {capture.step === 'intro' && (
-          <div className="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/40 text-center shadow-sm">
-            <span className="material-symbols-outlined text-[56px] text-secondary">forest</span>
-            <p className="text-body-lg text-on-surface-variant mt-4 max-w-lg mx-auto">
+          <div className="bg-gradient-to-b from-white to-[#f7fbf8] rounded-2xl p-8 border border-outline-variant/40 text-center shadow-sm">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto text-secondary shadow-2xs">
+              <span className="material-symbols-outlined text-[36px]">forest</span>
+            </div>
+            <h2 className="font-headline-md text-xl text-primary font-bold mt-4">Tree Tag Field Registration</h2>
+            <p className="text-body-md text-on-surface-variant mt-2 max-w-lg mx-auto">
               Field registration collects stable GPS, tree photo, and species data before verification.
             </p>
             <button
               type="button"
               onClick={() => capture.setStep('location')}
-              className="mt-8 bg-primary text-on-primary font-label-md px-8 py-3 rounded-lg shadow-sm cursor-pointer hover:bg-secondary transition-colors"
+              className="mt-6 bg-primary text-on-primary font-label-md px-8 py-3 rounded-lg shadow-sm cursor-pointer hover:bg-secondary transition-colors font-semibold"
             >
               Start Capture
             </button>

@@ -144,7 +144,7 @@ export function TreeDetailPage() {
         {/* 1. TOP HERO: LIVE INTERACTIVE MAP (Primary Visual Element: Where the tree is) */}
         {/* Rejection Alert Banner if Rejected */}
         {tree.verificationStatus === 'REJECTED' && (
-          <div className="mt-4 mb-2 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 flex items-start gap-3 shadow-xs">
+          <div className="mt-4 mb-2 p-4 rounded-xl bg-gradient-to-r from-red-50 to-[#fff5f5] border border-red-200 text-red-900 flex items-start gap-3 shadow-xs">
             <span className="material-symbols-outlined text-red-600 text-[26px] flex-shrink-0 mt-0.5">cancel</span>
             <div className="min-w-0 flex-1">
               <h3 className="text-sm font-bold text-red-900 uppercase tracking-wide">
@@ -154,7 +154,7 @@ export function TreeDetailPage() {
                 This tree record was audited by an administrator and marked as <strong>Rejected</strong>. It is not approved as an active tagged sapling.
               </p>
               {tree.adminNote && (
-                <div className="mt-2.5 p-3 rounded-lg bg-red-100/80 border border-red-200 text-xs text-red-950 font-medium">
+                <div className="mt-2.5 p-3 rounded-lg bg-red-100/70 border border-red-200 text-xs text-red-950 font-medium">
                   <span className="font-bold text-red-900">Rejection Reason: </span>
                   <span>{tree.adminNote}</span>
                 </div>
@@ -163,7 +163,7 @@ export function TreeDetailPage() {
           </div>
         )}
 
-        <div className="mt-6 rounded-2xl overflow-hidden shadow-xl border border-outline-variant/50 bg-[#e5ede9]">
+        <div className="mt-6 rounded-2xl overflow-hidden shadow-xl border border-outline-variant/40 bg-[#e5ede9]">
           <TreeLocationMap
             tree={tree}
             height="360px"

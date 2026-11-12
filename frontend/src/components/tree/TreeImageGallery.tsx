@@ -44,7 +44,7 @@ export function TreeImageGallery({
           alt={`${speciesName} photo ${currentIndex + 1}`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#031d15]/65 via-transparent to-[#031d15]/25 pointer-events-none" />
 
         {/* Top Left Label: Supporting Evidence */}
         {showBadge && (

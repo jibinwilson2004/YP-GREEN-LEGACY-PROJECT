@@ -32,12 +32,19 @@ export function HomePage() {
           id="mission"
           className="relative w-full overflow-hidden bg-primary-container text-on-primary min-h-[640px] flex items-center justify-center"
         >
-          {/* Full-Bleed Misty Canopy Background with Gradient Overlay */}
+          {/* Full-Bleed Misty Canopy Background with Natural Foliage Gradient */}
           <div
             className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-1000 ease-out scale-105"
             style={{ backgroundImage: `url('${IMAGES.heroForest}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary-container/75 to-background" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(3, 33, 24, 0.88) 0%, rgba(9, 48, 36, 0.74) 38%, rgba(17, 74, 55, 0.62) 68%, #f4fbf4 100%)',
+            }}
+          />
+          <div className="absolute top-0 inset-x-0 h-72 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none" />
 
           {/* Hero Content Container */}
           <div className="relative z-10 max-w-[1280px] mx-auto px-grid-margin-mobile lg:px-grid-margin-desktop pt-24 pb-spacing-3xl flex flex-col items-center text-center">
@@ -255,25 +262,21 @@ export function HomePage() {
         </section>
 
         {/* 8. AFFORESTATION REGISTRY & TELEMETRY CTA */}
-        <section className="w-full bg-[#0a261c] text-white pt-32 pb-24 px-grid-margin-mobile lg:px-grid-margin-desktop relative overflow-hidden">
-          {/* Top Seamless Feathered Smudge Merge: Starts with 100% #f4fbf4 at the top edge so the division line is completely invisible */}
+        <section
+          className="w-full text-white pt-28 pb-24 px-grid-margin-mobile lg:px-grid-margin-desktop relative overflow-hidden"
+          style={{
+            background:
+              'linear-gradient(180deg, #f4fbf4 0%, #e2efe5 14%, #73b392 32%, #18543f 56%, #0b3224 78%, #041d14 100%)',
+          }}
+        >
+          {/* Subtle Organic Canopy Sunlight Glow */}
           <div
-            className="absolute top-0 inset-x-0 h-52 sm:h-64 pointer-events-none select-none z-0"
+            className="absolute inset-0 pointer-events-none opacity-30 select-none z-0"
             style={{
               background:
-                'linear-gradient(180deg, #f4fbf4 0%, rgba(244, 251, 244, 0.88) 18%, rgba(244, 251, 244, 0.5) 40%, rgba(10, 38, 28, 0.6) 72%, transparent 100%)',
+                'radial-gradient(ellipse 70% 50% at 50% 35%, rgba(162, 240, 204, 0.3) 0%, transparent 70%)',
             }}
           />
-
-          {/* Ambient Soft White Misty Wash: Smudges the full top green area with white softly */}
-          <div
-            className="absolute top-0 inset-x-0 h-80 sm:h-96 pointer-events-none select-none z-0 opacity-75"
-            style={{
-              background:
-                'radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.1) 45%, transparent 75%)',
-            }}
-          />
-          <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[1300px] max-w-[130vw] h-64 bg-white/20 rounded-[100%] blur-3xl pointer-events-none select-none z-0" />
 
           <div className="max-w-[1280px] mx-auto flex flex-col items-center text-center relative z-10">
             <h2 className="font-display-hero text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-spacing-md text-white">

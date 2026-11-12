@@ -97,7 +97,7 @@ export function SignUpPage() {
       <div className="relative w-full flex-1 flex flex-col justify-center items-center py-10 px-4">
         <div className="w-full max-w-[620px] bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#004d36] to-[#0a2118] text-white p-6 sm:p-8 text-center relative">
+          <div className="bg-gradient-to-r from-[#0a4634] via-[#093527] to-[#041d15] text-white p-6 sm:p-8 text-center relative">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 mb-3">
               <span className="material-symbols-outlined text-[28px] text-[#a2f0cc]">
                 {step === 'success' ? 'check_circle' : 'person_add'}

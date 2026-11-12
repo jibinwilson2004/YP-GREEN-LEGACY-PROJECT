@@ -35,7 +35,7 @@ function PartnerModal({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#004d36] to-[#0a2118] text-white px-7 py-6 relative">
+        <div className="bg-gradient-to-r from-[#0a4634] via-[#093527] to-[#041d15] text-white px-7 py-6 relative">
           <button type="button" onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer">
             <span className="material-symbols-outlined text-[18px]">close</span>
           </button>

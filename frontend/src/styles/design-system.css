@@ -52,10 +52,48 @@
   --ieee-top-bar-alt: #1f5d82;
   --ieee-orange: #f47716;
 
-  /* Shadows */
-  --shadow-level-1: 0 2px 8px -2px rgba(15, 56, 44, 0.04), 0 1px 2px 0 rgba(15, 56, 44, 0.02);
-  --shadow-level-2: 0 12px 24px -6px rgba(15, 56, 44, 0.08), 0 4px 8px -2px rgba(15, 56, 44, 0.03);
-  --shadow-level-3: 0 24px 48px -12px rgba(15, 56, 44, 0.14);
+  /* Natural Organic Shadows */
+  --shadow-level-1: 0 2px 8px -2px rgba(10, 42, 32, 0.05), 0 1px 3px 0 rgba(10, 42, 32, 0.03);
+  --shadow-level-2: 0 10px 24px -5px rgba(10, 42, 32, 0.08), 0 4px 10px -2px rgba(10, 42, 32, 0.04);
+  --shadow-level-3: 0 20px 40px -10px rgba(10, 42, 32, 0.12), 0 8px 16px -4px rgba(10, 42, 32, 0.05);
+
+  /* Natural Gradients */
+  --grad-forest: linear-gradient(135deg, #052118 0%, #0e402f 52%, #1b624b 100%);
+  --grad-leaf: linear-gradient(135deg, #10553e 0%, #1a7153 100%);
+  --grad-card: linear-gradient(180deg, #ffffff 0%, #f7fbf8 100%);
+  --grad-amber: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+/* Natural Gradient Utility Classes */
+.bg-natural-forest {
+  background: var(--grad-forest);
+}
+
+.bg-natural-leaf {
+  background: var(--grad-leaf);
+}
+
+.bg-natural-card {
+  background: var(--grad-card);
+}
+
+.bg-natural-amber {
+  background: var(--grad-amber);
+}
+
+/* Glassmorphism Natural Accents */
+.glass-natural {
+  background-color: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(22, 107, 79, 0.12);
+}
+
+.glass-natural-dark {
+  background-color: rgba(4, 30, 22, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(162, 240, 204, 0.18);
 }
 
 /* Typography Classes */

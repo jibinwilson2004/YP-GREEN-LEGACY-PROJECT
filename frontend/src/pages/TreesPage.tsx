@@ -160,38 +160,56 @@ export function TreesPage() {
         </div>
 
         {/* Stats Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
-            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Total Tagged</span>
-            <div className="font-mono-metric text-2xl font-bold text-emerald-700 mt-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-6">
+          <div className="bg-gradient-to-b from-white to-[#f7fbf8] p-4 rounded-xl border border-outline-variant/40 shadow-xs border-l-4 border-l-emerald-600">
+            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline flex items-center justify-between">
+              <span>Total Tagged</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </span>
+            <div className="font-mono-metric text-2xl font-bold text-emerald-800 mt-1">
               {(isRegularUser || scopeFilter === 'my'
                 ? trees.filter((t) => t.verificationStatus === 'VERIFIED').length
                 : stats.verifiedTrees
               ).toLocaleString()}
             </div>
-            <div className="text-[11px] text-secondary mt-0.5">Verified &amp; Proven</div>
+            <div className="text-[11px] text-emerald-700 font-medium mt-0.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">check_circle</span>
+              <span>Verified &amp; Proven</span>
+            </div>
           </div>
-          <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
-            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Pending Verification</span>
-            <div className="font-mono-metric text-2xl font-bold text-amber-600 mt-1">
+          <div className="bg-gradient-to-b from-white to-[#f7fbf8] p-4 rounded-xl border border-outline-variant/40 shadow-xs border-l-4 border-l-amber-500">
+            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline flex items-center justify-between">
+              <span>Pending Review</span>
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+            </span>
+            <div className="font-mono-metric text-2xl font-bold text-amber-700 mt-1">
               {(isRegularUser || scopeFilter === 'my'
                 ? trees.filter((t) => t.verificationStatus !== 'VERIFIED').length
                 : Math.max(0, total - stats.verifiedTrees)
               ).toLocaleString()}
             </div>
-            <div className="text-[11px] text-on-surface-variant mt-0.5">Awaiting Admin Audit</div>
+            <div className="text-[11px] text-amber-800 font-medium mt-0.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">hourglass_top</span>
+              <span>Awaiting Audit</span>
+            </div>
           </div>
-          <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
-            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Active Biomes</span>
+          <div className="bg-gradient-to-b from-white to-[#f7fbf8] p-4 rounded-xl border border-outline-variant/40 shadow-xs border-l-4 border-l-secondary">
+            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline flex items-center justify-between">
+              <span>Active Biomes</span>
+              <span className="material-symbols-outlined text-[14px] text-secondary">domain</span>
+            </span>
             <div className="font-mono-metric text-2xl font-bold text-primary mt-1">{stats.institutionCount}</div>
-            <div className="text-[11px] text-on-surface-variant mt-0.5">Registered institutions</div>
+            <div className="text-[11px] text-on-surface-variant mt-0.5">Institutions logged</div>
           </div>
-          <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-xs">
-            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline">Avg GPS Accuracy</span>
+          <div className="bg-gradient-to-b from-white to-[#f7fbf8] p-4 rounded-xl border border-outline-variant/40 shadow-xs border-l-4 border-l-[#1f5d82]">
+            <span className="text-[11px] font-label-sm uppercase tracking-wider text-outline flex items-center justify-between">
+              <span>Avg Accuracy</span>
+              <span className="material-symbols-outlined text-[14px] text-[#1f5d82]">gps_fixed</span>
+            </span>
             <div className="font-mono-metric text-2xl font-bold text-primary mt-1">
               {stats.averageAccuracy === null ? '—' : `${stats.averageAccuracy.toFixed(1)} m`}
             </div>
-            <div className="text-[11px] text-secondary mt-0.5">High Precision Tier</div>
+            <div className="text-[11px] text-[#1f5d82] font-medium mt-0.5">High Precision Tier</div>
           </div>
         </div>
 

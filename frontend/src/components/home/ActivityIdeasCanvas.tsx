@@ -29,7 +29,7 @@ const ACTIVITY_IDEAS: ActivityIdea[] = [
     image: IMAGES.activityAdoptTree,
     icon: 'emoji_events',
     stats: '1,420+ Saplings Adopted',
-    gradient: 'from-emerald-900/80 via-black/40 to-transparent',
+    gradient: 'from-[#042017]/95 via-[#042017]/55 to-transparent',
   },
   {
     id: 'tree-mapping-workshop',
@@ -43,7 +43,7 @@ const ACTIVITY_IDEAS: ActivityIdea[] = [
     image: IMAGES.activityMappingWorkshop,
     icon: 'pin_drop',
     stats: '38 Sessions Completed',
-    gradient: 'from-teal-950/80 via-black/40 to-transparent',
+    gradient: 'from-[#03231f]/95 via-[#03231f]/55 to-transparent',
   },
   {
     id: 'organize-mapathon',
@@ -57,7 +57,7 @@ const ACTIVITY_IDEAS: ActivityIdea[] = [
     image: IMAGES.activityOrganizeMapathon,
     icon: 'travel_explore',
     stats: '12,800+ Canopy Points',
-    gradient: 'from-sky-950/80 via-black/40 to-transparent',
+    gradient: 'from-[#082329]/95 via-[#082329]/55 to-transparent',
   },
   {
     id: 'community-plantation-pledge',
@@ -71,7 +71,7 @@ const ACTIVITY_IDEAS: ActivityIdea[] = [
     image: IMAGES.activityCommunityPledge,
     icon: 'volunteer_activism',
     stats: '95% Multi-Year Survival',
-    gradient: 'from-green-950/80 via-black/40 to-transparent',
+    gradient: 'from-[#06241a]/95 via-[#06241a]/55 to-transparent',
   },
   {
     id: 'endangered-species-discovery',
@@ -85,7 +85,7 @@ const ACTIVITY_IDEAS: ActivityIdea[] = [
     image: IMAGES.activityEndangeredSpecies,
     icon: 'nature_people',
     stats: '47 Rare Species Mapped',
-    gradient: 'from-stone-950/80 via-black/40 to-transparent',
+    gradient: 'from-[#1a2318]/95 via-[#1a2318]/55 to-transparent',
   },
 ]
 
@@ -175,7 +175,7 @@ export function ActivityIdeasCanvas() {
               <div
                 className={`absolute inset-0 bg-gradient-to-t ${idea.gradient} pointer-events-none`}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#041a12]/35 via-transparent to-[#041a12]/80 pointer-events-none" />
 
               {/* Top Idea Category Badge */}
               <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
